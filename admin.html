@@ -11,271 +11,217 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Hind Siliguri',sans-serif;background:#0d0608;color:#e2e8f0;min-height:100vh}
 
-/* ── LOGIN ── */
+/* LOGIN */
 #loginPage{display:flex;align-items:center;justify-content:center;min-height:100vh;
-  background:radial-gradient(ellipse at top,#3d0a0a,#0d0608 60%)}
+  background:radial-gradient(ellipse at top,#3d0a0a 0%,#0d0608 65%)}
 .login-card{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);
   border:1px solid rgba(212,160,23,.3);border-radius:24px;padding:2.5rem;
   width:100%;max-width:420px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
 
-/* ── LAYOUT ── */
+/* LAYOUT */
 #adminApp{display:none;min-height:100vh}
-#sidebar{width:260px;background:linear-gradient(180deg,#1a0505 0%,#2a0707 100%);
+#sidebar{width:250px;background:linear-gradient(180deg,#1a0505,#2a0707);
   border-right:1px solid rgba(212,160,23,.15);position:fixed;top:0;left:0;bottom:0;
-  overflow-y:auto;transition:transform .3s ease;z-index:40;scrollbar-width:thin;
-  scrollbar-color:rgba(212,160,23,.2) transparent}
-#mainContent{margin-left:260px;min-height:100vh;background:#0d0608}
+  overflow-y:auto;transition:transform .3s;z-index:40;
+  scrollbar-width:thin;scrollbar-color:rgba(212,160,23,.2) transparent}
+#mainContent{margin-left:250px;min-height:100vh}
 @media(max-width:1024px){
-  #sidebar{transform:translateX(-260px)}
+  #sidebar{transform:translateX(-250px)}
   #sidebar.open{transform:translateX(0)}
   #mainContent{margin-left:0}
 }
 
-/* ── NAV ITEMS ── */
-.nav-item{display:flex;align-items:center;gap:.75rem;padding:.7rem 1.1rem;border-radius:10px;
-  cursor:pointer;transition:all .2s;font-size:.875rem;color:rgba(255,255,255,.6);
-  text-decoration:none;margin:2px 8px;border:1px solid transparent}
+/* NAV */
+.nav-item{display:flex;align-items:center;gap:.7rem;padding:.65rem 1rem;border-radius:10px;
+  cursor:pointer;transition:all .2s;font-size:.85rem;color:rgba(255,255,255,.6);
+  text-decoration:none;margin:1px 6px}
 .nav-item:hover{background:rgba(212,160,23,.1);color:#F5C842}
 .nav-item.active{background:linear-gradient(135deg,rgba(196,30,58,.3),rgba(212,160,23,.1));
-  color:#F5C842;border-color:rgba(212,160,23,.2)}
-.nav-section-label{padding:.5rem 1.25rem .25rem;font-size:.68rem;font-weight:700;
-  text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.2)}
+  color:#F5C842;border-left:3px solid #D4A017}
+.nav-label{padding:.5rem 1rem .2rem;font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:rgba(255,255,255,.2)}
 
-/* ── TOP BAR ── */
+/* TOPBAR */
 #topbar{background:rgba(13,6,8,.95);backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(212,160,23,.15);padding:.9rem 1.5rem;
+  border-bottom:1px solid rgba(212,160,23,.15);padding:.85rem 1.25rem;
   display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:30}
 
-/* ── SECTION PANELS ── */
-.section-panel{display:none;padding:1.5rem;animation:fadeIn .3s ease}
-.section-panel.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* PANELS */
+.panel{display:none;padding:1.25rem;animation:fadeIn .3s ease}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-/* ── CARDS ── */
+/* CARDS */
 .stat-card{background:linear-gradient(135deg,rgba(196,30,58,.15),rgba(212,160,23,.08));
-  border:1px solid rgba(212,160,23,.2);border-radius:16px;padding:1.25rem;
-  transition:transform .25s,box-shadow .25s}
-.stat-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(196,30,58,.15)}
-.content-card{background:rgba(255,255,255,.04);border:1px solid rgba(212,160,23,.15);
-  border-radius:16px;overflow:hidden}
+  border:1px solid rgba(212,160,23,.2);border-radius:14px;padding:1.1rem;transition:transform .2s}
+.stat-card:hover{transform:translateY(-3px)}
+.box{background:rgba(255,255,255,.04);border:1px solid rgba(212,160,23,.15);border-radius:14px;overflow:hidden}
 
-/* ── FORM ELEMENTS ── */
-.admin-label{display:block;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.55);
-  margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.06em}
-.admin-input{width:100%;background:rgba(255,255,255,.06);
-  border:1.5px solid rgba(212,160,23,.2);border-radius:10px;
-  padding:.7rem 1rem;color:#e2e8f0;font-family:'Hind Siliguri',sans-serif;
-  font-size:.9rem;outline:none;transition:border-color .3s,background .3s}
-.admin-input:focus{border-color:#D4A017;background:rgba(255,255,255,.09)}
-.admin-input option{background:#1a0505;color:#e2e8f0}
-.admin-textarea{resize:vertical;min-height:90px}
+/* FORM */
+.lbl{display:block;font-size:.75rem;font-weight:700;color:rgba(255,255,255,.5);
+  margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em}
+.inp{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(212,160,23,.2);
+  border-radius:9px;padding:.65rem .9rem;color:#e2e8f0;font-family:'Hind Siliguri',sans-serif;
+  font-size:.875rem;outline:none;transition:border-color .3s,background .3s}
+.inp:focus{border-color:#D4A017;background:rgba(255,255,255,.09)}
+.inp option{background:#1a0505;color:#e2e8f0}
+.inp-area{resize:vertical;min-height:80px}
 
-/* ── BUTTONS ── */
-.btn-red{background:linear-gradient(135deg,#C41E3A,#8B0000);color:white;border:none;
-  border-radius:10px;padding:.65rem 1.4rem;font-family:'Hind Siliguri',sans-serif;
-  font-size:.875rem;font-weight:600;cursor:pointer;transition:all .25s;
-  display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap}
-.btn-red:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,30,58,.4)}
-.btn-red:disabled{opacity:.5;cursor:not-allowed}
-.btn-gold{background:rgba(212,160,23,.15);color:#D4A017;
-  border:1px solid rgba(212,160,23,.3);border-radius:10px;padding:.65rem 1.4rem;
-  font-family:'Hind Siliguri',sans-serif;font-size:.875rem;cursor:pointer;
-  transition:all .25s;display:inline-flex;align-items:center;gap:.5rem}
-.btn-gold:hover{background:rgba(212,160,23,.25)}
-.btn-del{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25);
-  border-radius:8px;padding:.4rem .8rem;font-size:.78rem;cursor:pointer;
-  transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
-.btn-del:hover{background:rgba(239,68,68,.25)}
-.btn-edit{background:rgba(212,160,23,.12);color:#fbbf24;border:1px solid rgba(212,160,23,.25);
-  border-radius:8px;padding:.4rem .8rem;font-size:.78rem;cursor:pointer;
-  transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
-.btn-edit:hover{background:rgba(212,160,23,.22)}
+/* BUTTONS */
+.btn-r{background:linear-gradient(135deg,#C41E3A,#8B0000);color:white;border:none;
+  border-radius:9px;padding:.6rem 1.3rem;font-family:'Hind Siliguri',sans-serif;
+  font-size:.85rem;font-weight:600;cursor:pointer;transition:all .25s;
+  display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap}
+.btn-r:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,30,58,.4)}
+.btn-r:disabled{opacity:.5;cursor:not-allowed}
+.btn-g{background:rgba(212,160,23,.12);color:#D4A017;border:1px solid rgba(212,160,23,.25);
+  border-radius:9px;padding:.6rem 1.3rem;font-family:'Hind Siliguri',sans-serif;
+  font-size:.85rem;cursor:pointer;transition:all .25s;
+  display:inline-flex;align-items:center;gap:.45rem}
+.btn-g:hover{background:rgba(212,160,23,.22)}
+.btn-d{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25);
+  border-radius:7px;padding:.35rem .75rem;font-size:.78rem;cursor:pointer;transition:all .2s;
+  display:inline-flex;align-items:center;gap:.3rem}
+.btn-d:hover{background:rgba(239,68,68,.25)}
+.btn-e{background:rgba(212,160,23,.12);color:#fbbf24;border:1px solid rgba(212,160,23,.25);
+  border-radius:7px;padding:.35rem .75rem;font-size:.78rem;cursor:pointer;transition:all .2s;
+  display:inline-flex;align-items:center;gap:.3rem}
+.btn-e:hover{background:rgba(212,160,23,.22)}
 
-/* ── TABLE ── */
-.data-table{width:100%;border-collapse:separate;border-spacing:0 5px}
-.data-table thead th{text-align:left;padding:.6rem 1rem;color:rgba(212,160,23,.7);
-  font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+/* TABLE */
+.tbl{width:100%;border-collapse:separate;border-spacing:0 4px}
+.tbl thead th{text-align:left;padding:.55rem .9rem;color:rgba(212,160,23,.7);
+  font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
   background:rgba(255,255,255,.03)}
-.data-table tbody td{padding:.7rem 1rem;background:rgba(255,255,255,.03);
-  font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04)}
-.data-table tbody tr:hover td{background:rgba(255,255,255,.06)}
+.tbl tbody td{padding:.65rem .9rem;background:rgba(255,255,255,.03);font-size:.83rem;
+  border-bottom:1px solid rgba(255,255,255,.04)}
+.tbl tbody tr:hover td{background:rgba(255,255,255,.06)}
 
-/* ── MODAL ── */
+/* MODAL */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);
-  z-index:100;align-items:center;justify-content:center;padding:1rem;
-  backdrop-filter:blur(4px)}
+  z-index:100;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
 .modal-bg.open{display:flex}
 .modal-box{background:linear-gradient(160deg,#1a0505,#200808);
-  border:1px solid rgba(212,160,23,.25);border-radius:20px;
-  padding:1.75rem;width:100%;max-width:540px;max-height:90vh;
-  overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  border:1px solid rgba(212,160,23,.25);border-radius:18px;
+  padding:1.5rem;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;
+  box-shadow:0 30px 80px rgba(0,0,0,.6)}
 
-/* ── TOAST ── */
-#toast{position:fixed;bottom:2rem;right:2rem;z-index:9999;
-  padding:.9rem 1.5rem;border-radius:12px;font-size:.875rem;font-weight:600;
-  transform:translateY(80px);opacity:0;transition:all .35s ease;
-  box-shadow:0 8px 25px rgba(0,0,0,.4);max-width:320px;pointer-events:none}
-#toast.show-ok{background:linear-gradient(135deg,#064e3b,#065f46);
-  color:#6ee7b7;border:1px solid rgba(110,231,183,.2);transform:translateY(0);opacity:1}
-#toast.show-err{background:linear-gradient(135deg,#7f1d1d,#991b1b);
-  color:#fca5a5;border:1px solid rgba(252,165,165,.2);transform:translateY(0);opacity:1}
+/* TOAST */
+#toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;
+  padding:.8rem 1.3rem;border-radius:11px;font-size:.85rem;font-weight:600;
+  transform:translateY(70px);opacity:0;transition:all .3s;
+  pointer-events:none;max-width:300px}
+#toast.ok{background:linear-gradient(135deg,#064e3b,#065f46);color:#6ee7b7;
+  border:1px solid rgba(110,231,183,.2);transform:translateY(0);opacity:1}
+#toast.err{background:linear-gradient(135deg,#7f1d1d,#991b1b);color:#fca5a5;
+  border:1px solid rgba(252,165,165,.2);transform:translateY(0);opacity:1}
 
-/* ── UPLOAD AREA ── */
-.upload-zone{border:2px dashed rgba(212,160,23,.25);border-radius:12px;
-  padding:1.5rem;text-align:center;cursor:pointer;transition:all .3s;
-  background:rgba(255,255,255,.02)}
-.upload-zone:hover{border-color:#D4A017;background:rgba(212,160,23,.04)}
-.img-thumb{width:72px;height:72px;object-fit:cover;border-radius:8px;
-  border:2px solid rgba(212,160,23,.3)}
-.big-thumb{width:100%;height:160px;object-fit:cover;border-radius:10px;
-  border:2px solid rgba(212,160,23,.2)}
-
-/* ── TOGGLE ── */
-.tog{position:relative;width:46px;height:26px;display:inline-block;flex-shrink:0}
+/* TOGGLE */
+.tog{position:relative;width:44px;height:24px;display:inline-block;flex-shrink:0}
 .tog input{opacity:0;width:0;height:0}
-.tog-slider{position:absolute;inset:0;background:#374151;border-radius:13px;
-  cursor:pointer;transition:.3s}
-.tog-slider::before{content:'';position:absolute;width:20px;height:20px;
-  left:3px;top:3px;background:white;border-radius:50%;transition:.3s}
-input:checked+.tog-slider{background:#C41E3A}
-input:checked+.tog-slider::before{transform:translateX(20px)}
+.tog-sl{position:absolute;inset:0;background:#374151;border-radius:12px;cursor:pointer;transition:.3s}
+.tog-sl::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;
+  background:white;border-radius:50%;transition:.3s}
+input:checked+.tog-sl{background:#C41E3A}
+input:checked+.tog-sl::before{transform:translateX(18px)}
 
-/* ── BADGE ── */
-.bdg{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.7rem;font-weight:700}
+/* BADGE */
+.bdg{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.7rem;font-weight:700}
 .bdg-new{background:rgba(245,200,66,.15);color:#F5C842;border:1px solid rgba(245,200,66,.3)}
 .bdg-old{background:rgba(255,255,255,.07);color:#9ca3af}
 
-/* ── SECTION HEADING ── */
-.sec-head{font-size:1.35rem;font-weight:700;color:#F5C842;margin-bottom:1.5rem;
-  display:flex;align-items:center;gap:.75rem;padding-bottom:.75rem;
+/* SEC HEADING */
+.sh{font-size:1.25rem;font-weight:700;color:#F5C842;margin-bottom:1.25rem;
+  display:flex;align-items:center;gap:.65rem;padding-bottom:.65rem;
   border-bottom:1px solid rgba(212,160,23,.18)}
 
-/* ── FORM GROUP ── */
-.form-group{display:flex;flex-direction:column;gap:.4rem}
+/* IMG thumb */
+.thumb{width:68px;height:68px;object-fit:cover;border-radius:8px;border:2px solid rgba(212,160,23,.3)}
+.big-thumb{width:100%;height:150px;object-fit:cover;border-radius:9px;border:2px solid rgba(212,160,23,.2)}
 
-/* Color picker */
-.color-preview{width:32px;height:32px;border-radius:6px;border:1px solid rgba(255,255,255,.2);cursor:pointer;flex-shrink:0}
+/* Overlay */
+#sideOv{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:39}
+#sideOv.on{display:block}
 
-/* Firebase error box */
-.firebase-error{background:rgba(127,29,29,.4);border:1px solid rgba(239,68,68,.3);
-  border-radius:10px;padding:.75rem 1rem;font-size:.82rem;color:#fca5a5;margin-top:.5rem}
+/* Error box */
+.err-box{background:rgba(127,29,29,.4);border:1px solid rgba(239,68,68,.3);
+  border-radius:9px;padding:.65rem .9rem;font-size:.8rem;color:#fca5a5;margin-top:.4rem}
 
-/* Overlay for sidebar on mobile */
-#sidebarOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:39}
-#sidebarOverlay.show{display:block}
+/* Mobile gallery grid */
+@media(max-width:640px){
+  .gal-admin-grid{grid-template-columns:repeat(2,1fr)!important}
+  .act-admin-grid{grid-template-columns:1fr!important}
+  .com-admin-grid{grid-template-columns:1fr!important}
+  .stat-grid{grid-template-columns:repeat(2,1fr)!important}
+}
 </style>
 </head>
 <body>
 
-<!-- ===================== LOGIN ===================== -->
+<!-- ============ LOGIN ============ -->
 <div id="loginPage">
   <div class="login-card">
-    <div class="text-center mb-7">
+    <div class="text-center mb-6">
       <div class="w-16 h-16 rounded-full bg-gradient-to-br from-red-700 to-red-900 flex items-center justify-center text-3xl mx-auto mb-3 border-2 border-yellow-400/40">🪷</div>
       <h1 class="text-2xl font-bold text-yellow-400">Admin Panel</h1>
       <p class="text-white/40 text-sm mt-1">পুষ্পাঞ্জলি যুব সংঘ</p>
     </div>
-
-    <!-- Rules warning -->
-    <div class="bg-yellow-900/30 border border-yellow-500/30 rounded-xl p-3 mb-5 text-xs text-yellow-300">
-      <i class="fas fa-exclamation-triangle mr-1"></i>
-      <strong>মনে রাখুন:</strong> Firebase Console → Firestore → Rules-এ নিচের কোড সেট করুন:
-      <pre class="mt-2 text-yellow-200/70 text-xs overflow-x-auto">allow read: if true;
-allow write: if request.auth != null;</pre>
-    </div>
-
-    <div id="loginErr" class="hidden firebase-error mb-4"></div>
+    <div id="loginErr" class="err-box hidden mb-4"></div>
     <div class="space-y-4">
-      <div class="form-group">
-        <label class="admin-label">Email</label>
-        <input type="email" id="loginEmail" placeholder="admin@pushpanjali.org" class="admin-input"/>
-      </div>
-      <div class="form-group">
-        <label class="admin-label">Password</label>
-        <input type="password" id="loginPass" placeholder="••••••••" class="admin-input"
-               onkeydown="if(event.key==='Enter')doLogin()"/>
-      </div>
-      <button onclick="doLogin()" id="loginBtn" class="btn-red w-full justify-center py-3 mt-1">
+      <div><label class="lbl">Email</label>
+        <input type="email" id="loginEmail" placeholder="admin@pushpanjali.org" class="inp"/></div>
+      <div><label class="lbl">Password</label>
+        <input type="password" id="loginPass" placeholder="••••••••" class="inp"
+               onkeydown="if(event.key==='Enter')doLogin()"/></div>
+      <button onclick="doLogin()" id="loginBtn" class="btn-r w-full justify-center py-3 mt-1">
         <i class="fas fa-sign-in-alt"></i> লগইন করুন
       </button>
     </div>
-    <p class="text-center text-white/20 text-xs mt-6">© <span id="loginYear"></span> Pushpanjali Yuva Sangh</p>
+    <p class="text-center text-white/20 text-xs mt-5">© <span id="ly"></span> Pushpanjali Yuva Sangh</p>
   </div>
 </div>
 
-<!-- ===================== ADMIN APP ===================== -->
+<!-- ============ ADMIN APP ============ -->
 <div id="adminApp">
-
-  <!-- SIDEBAR OVERLAY (mobile) -->
-  <div id="sidebarOverlay" onclick="closeSidebar()"></div>
+  <div id="sideOv" onclick="closeSide()"></div>
 
   <!-- SIDEBAR -->
   <aside id="sidebar">
     <div class="p-4 border-b border-yellow-400/15 flex items-center gap-3">
-      <div id="sidebarLogo" class="w-10 h-10 rounded-full bg-gradient-to-br from-red-700 to-red-900 flex items-center justify-center text-xl border border-yellow-400/30 overflow-hidden">🪷</div>
-      <div>
-        <div class="text-yellow-400 text-sm font-bold leading-none">Admin Panel</div>
-        <div class="text-white/35 text-xs mt-0.5">পুষ্পাঞ্জলি যুব সংঘ</div>
+      <div id="sbLogo" class="w-10 h-10 rounded-full bg-gradient-to-br from-red-700 to-red-900 flex items-center justify-center text-xl border border-yellow-400/30 overflow-hidden flex-shrink-0">🪷</div>
+      <div class="overflow-hidden">
+        <div class="text-yellow-400 text-sm font-bold leading-none truncate">Admin Panel</div>
+        <div class="text-white/35 text-xs mt-0.5 truncate">পুষ্পাঞ্জলি যুব সংঘ</div>
       </div>
     </div>
-    <nav class="py-3">
-      <p class="nav-section-label">Dashboard</p>
-      <a class="nav-item active" onclick="nav('dashboard',this)">
-        <i class="fas fa-th-large w-4"></i> Dashboard
-      </a>
-
-      <p class="nav-section-label mt-3">কন্টেন্ট</p>
-      <a class="nav-item" onclick="nav('notices',this)">
-        <i class="fas fa-bullhorn w-4"></i> নোটিশ বোর্ড
-      </a>
-      <a class="nav-item" onclick="nav('activities',this)">
-        <i class="fas fa-star w-4"></i> কার্যক্রম
-      </a>
-      <a class="nav-item" onclick="nav('committee',this)">
-        <i class="fas fa-users w-4"></i> কমিটি
-      </a>
-      <a class="nav-item" onclick="nav('gallery',this)">
-        <i class="fas fa-images w-4"></i> গ্যালারি
-      </a>
-      <a class="nav-item" onclick="nav('upcoming',this)">
-        <i class="fas fa-calendar-alt w-4"></i> আসন্ন অনুষ্ঠান
-      </a>
-
-      <p class="nav-section-label mt-3">সেটিংস</p>
-      <a class="nav-item" onclick="nav('site',this)">
-        <i class="fas fa-globe w-4"></i> সাইট সেটিংস
-      </a>
-      <a class="nav-item" onclick="nav('social',this)">
-        <i class="fas fa-share-alt w-4"></i> সোশ্যাল মিডিয়া
-      </a>
-      <a class="nav-item" onclick="nav('payment',this)">
-        <i class="fas fa-university w-4"></i> পেমেন্ট সেটিংস
-      </a>
-      <a class="nav-item" onclick="nav('appearance',this)">
-        <i class="fas fa-paint-brush w-4"></i> লোগো ও ব্যানার
-      </a>
-
-      <p class="nav-section-label mt-3">অন্যান্য</p>
-      <a class="nav-item" href="index.html" target="_blank">
-        <i class="fas fa-external-link-alt w-4"></i> ওয়েবসাইট দেখুন
-      </a>
-      <a class="nav-item text-red-400 hover:text-red-300" onclick="doLogout()">
-        <i class="fas fa-sign-out-alt w-4"></i> লগআউট
-      </a>
+    <nav class="py-2">
+      <p class="nav-label">Dashboard</p>
+      <a class="nav-item active" onclick="goPanel('dashboard',this)"><i class="fas fa-th-large w-4 text-center"></i> Dashboard</a>
+      <p class="nav-label mt-3">কন্টেন্ট</p>
+      <a class="nav-item" onclick="goPanel('notices',this)"><i class="fas fa-bullhorn w-4 text-center"></i> নোটিশ বোর্ড</a>
+      <a class="nav-item" onclick="goPanel('activities',this)"><i class="fas fa-star w-4 text-center"></i> কার্যক্রম</a>
+      <a class="nav-item" onclick="goPanel('committee',this)"><i class="fas fa-users w-4 text-center"></i> কমিটি</a>
+      <a class="nav-item" onclick="goPanel('gallery',this)"><i class="fas fa-images w-4 text-center"></i> গ্যালারি</a>
+      <a class="nav-item" onclick="goPanel('upcoming',this)"><i class="fas fa-calendar-alt w-4 text-center"></i> আসন্ন অনুষ্ঠান</a>
+      <p class="nav-label mt-3">সেটিংস</p>
+      <a class="nav-item" onclick="goPanel('site',this)"><i class="fas fa-globe w-4 text-center"></i> সাইট সেটিংস</a>
+      <a class="nav-item" onclick="goPanel('about',this)"><i class="fas fa-pen w-4 text-center"></i> আমাদের সম্পর্কে</a>
+      <a class="nav-item" onclick="goPanel('social',this)"><i class="fas fa-share-alt w-4 text-center"></i> সোশ্যাল মিডিয়া</a>
+      <a class="nav-item" onclick="goPanel('payment',this)"><i class="fas fa-money-bill w-4 text-center"></i> পেমেন্ট তথ্য</a>
+      <a class="nav-item" onclick="goPanel('appearance',this)"><i class="fas fa-paint-brush w-4 text-center"></i> লোগো ও ছবি</a>
+      <p class="nav-label mt-3">অন্যান্য</p>
+      <a class="nav-item" href="index.html" target="_blank"><i class="fas fa-eye w-4 text-center"></i> ওয়েবসাইট দেখুন</a>
+      <a class="nav-item text-red-400/80 hover:text-red-300" onclick="doLogout()"><i class="fas fa-sign-out-alt w-4 text-center"></i> লগআউট</a>
     </nav>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <div id="mainContent">
-
-    <!-- TOP BAR -->
+    <!-- TOPBAR -->
     <div id="topbar">
       <div class="flex items-center gap-3">
-        <button onclick="toggleSidebar()" class="text-white/60 hover:text-white text-xl transition-colors lg:hidden">
-          <i class="fas fa-bars"></i>
-        </button>
-        <button onclick="toggleSidebar()" class="text-white/60 hover:text-white text-xl transition-colors hidden lg:block">
+        <button onclick="toggleSide()" class="text-white/60 hover:text-white text-lg transition-colors">
           <i class="fas fa-bars"></i>
         </button>
         <div>
@@ -283,169 +229,106 @@ allow write: if request.auth != null;</pre>
           <p class="text-white/30 text-xs mt-0.5">পুষ্পাঞ্জলি যুব সংঘ</p>
         </div>
       </div>
-      <div class="flex items-center gap-3">
-        <div id="fbStatusDot" class="w-2 h-2 rounded-full bg-gray-500" title="Firebase Status"></div>
-        <span class="text-white/35 text-xs hidden sm:block" id="adminEmail"></span>
-        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center text-red-900 text-sm font-bold" id="adminAv">A</div>
+      <div class="flex items-center gap-2">
+        <div id="fbDot" class="w-2 h-2 rounded-full bg-gray-600" title="Firebase"></div>
+        <span class="text-white/30 text-xs hidden sm:block" id="adminEmail"></span>
+        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-red-900 text-sm font-bold" id="adminAv">A</div>
       </div>
     </div>
 
-    <div class="px-4 sm:px-6 pb-12">
+    <div class="px-3 sm:px-5 pb-12">
 
       <!-- ===== DASHBOARD ===== -->
-      <div id="sec-dashboard" class="section-panel active">
-        <div class="sec-head"><i class="fas fa-th-large text-yellow-500"></i> Dashboard</div>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div class="stat-card text-center">
-            <div class="text-3xl mb-2">📋</div>
-            <div class="text-2xl font-bold text-yellow-400" id="st-notices">—</div>
-            <div class="text-white/40 text-xs mt-1">নোটিশ</div>
-          </div>
-          <div class="stat-card text-center">
-            <div class="text-3xl mb-2">⚡</div>
-            <div class="text-2xl font-bold text-yellow-400" id="st-act">—</div>
-            <div class="text-white/40 text-xs mt-1">কার্যক্রম</div>
-          </div>
-          <div class="stat-card text-center">
-            <div class="text-3xl mb-2">👥</div>
-            <div class="text-2xl font-bold text-yellow-400" id="st-com">—</div>
-            <div class="text-white/40 text-xs mt-1">কমিটি সদস্য</div>
-          </div>
-          <div class="stat-card text-center">
-            <div class="text-3xl mb-2">📸</div>
-            <div class="text-2xl font-bold text-yellow-400" id="st-gal">—</div>
-            <div class="text-white/40 text-xs mt-1">গ্যালারি ছবি</div>
+      <div id="p-dashboard" class="panel active pt-5">
+        <div class="sh"><i class="fas fa-th-large text-yellow-500"></i> Dashboard</div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5 stat-grid">
+          <div class="stat-card text-center"><div class="text-2xl mb-1">📋</div><div class="text-xl font-bold text-yellow-400" id="st-n">—</div><div class="text-white/40 text-xs mt-1">নোটিশ</div></div>
+          <div class="stat-card text-center"><div class="text-2xl mb-1">⚡</div><div class="text-xl font-bold text-yellow-400" id="st-a">—</div><div class="text-white/40 text-xs mt-1">কার্যক্রম</div></div>
+          <div class="stat-card text-center"><div class="text-2xl mb-1">👥</div><div class="text-xl font-bold text-yellow-400" id="st-c">—</div><div class="text-white/40 text-xs mt-1">কমিটি</div></div>
+          <div class="stat-card text-center"><div class="text-2xl mb-1">📸</div><div class="text-xl font-bold text-yellow-400" id="st-g">—</div><div class="text-white/40 text-xs mt-1">গ্যালারি</div></div>
+        </div>
+        <div class="box p-4">
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">Quick Actions</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <button onclick="goPanel('notices',null)" class="btn-g justify-center py-2.5 text-sm"><i class="fas fa-plus"></i> নোটিশ</button>
+            <button onclick="goPanel('activities',null)" class="btn-g justify-center py-2.5 text-sm"><i class="fas fa-plus"></i> কার্যক্রম</button>
+            <button onclick="goPanel('gallery',null)" class="btn-g justify-center py-2.5 text-sm"><i class="fas fa-upload"></i> ছবি</button>
+            <button onclick="goPanel('committee',null)" class="btn-g justify-center py-2.5 text-sm"><i class="fas fa-user-plus"></i> সদস্য</button>
+            <button onclick="goPanel('site',null)" class="btn-g justify-center py-2.5 text-sm"><i class="fas fa-cog"></i> সেটিংস</button>
+            <a href="index.html" target="_blank" class="btn-g justify-center py-2.5 text-sm"><i class="fas fa-eye"></i> ওয়েবসাইট</a>
           </div>
         </div>
-        <!-- Quick links -->
-        <div class="content-card p-5">
-          <h3 class="text-yellow-400/80 font-semibold text-sm mb-4 flex items-center gap-2">
-            <i class="fas fa-bolt"></i> Quick Actions
-          </h3>
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <button onclick="nav('notices',null)" class="btn-gold justify-center py-3 text-sm">
-              <i class="fas fa-plus"></i> নতুন নোটিশ
-            </button>
-            <button onclick="nav('activities',null)" class="btn-gold justify-center py-3 text-sm">
-              <i class="fas fa-plus"></i> নতুন কার্যক্রম
-            </button>
-            <button onclick="nav('gallery',null)" class="btn-gold justify-center py-3 text-sm">
-              <i class="fas fa-upload"></i> ছবি আপলোড
-            </button>
-            <button onclick="nav('committee',null)" class="btn-gold justify-center py-3 text-sm">
-              <i class="fas fa-user-plus"></i> সদস্য যোগ
-            </button>
-            <button onclick="nav('site',null)" class="btn-gold justify-center py-3 text-sm">
-              <i class="fas fa-cog"></i> সাইট সেটিংস
-            </button>
-            <a href="index.html" target="_blank" class="btn-gold justify-center py-3 text-sm">
-              <i class="fas fa-eye"></i> ওয়েবসাইট
-            </a>
-          </div>
-        </div>
-
-        <!-- Firebase connection test -->
-        <div class="content-card p-5 mt-4">
-          <h3 class="text-yellow-400/80 font-semibold text-sm mb-3 flex items-center gap-2">
-            <i class="fas fa-plug"></i> Firebase সংযোগ পরীক্ষা
-          </h3>
-          <button onclick="testFirebase()" class="btn-red text-sm">
-            <i class="fas fa-vial"></i> সংযোগ পরীক্ষা করুন
-          </button>
-          <div id="fbTestResult" class="mt-3 hidden text-sm rounded-lg p-3"></div>
+        <!-- Firebase test -->
+        <div class="box p-4 mt-4">
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">Firebase সংযোগ পরীক্ষা</h3>
+          <button onclick="testFb()" class="btn-r text-sm"><i class="fas fa-vial"></i> পরীক্ষা করুন</button>
+          <div id="fbTestRes" class="mt-3 hidden text-sm rounded-lg p-3"></div>
         </div>
       </div>
 
       <!-- ===== NOTICES ===== -->
-      <div id="sec-notices" class="section-panel">
-        <div class="sec-head"><i class="fas fa-bullhorn text-yellow-500"></i> নোটিশ বোর্ড</div>
-
-        <!-- Add form -->
-        <div class="content-card p-5 mb-5">
-          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-4">নতুন নোটিশ যোগ করুন</h3>
+      <div id="p-notices" class="panel">
+        <div class="sh"><i class="fas fa-bullhorn text-yellow-500"></i> নোটিশ বোর্ড</div>
+        <div class="box p-4 mb-4">
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">নতুন নোটিশ যোগ করুন</h3>
           <div class="space-y-3">
-            <div class="form-group">
-              <label class="admin-label">নোটিশের বিষয় *</label>
-              <input type="text" id="nTitle" placeholder="দুর্গাপুজো প্রস্তুতি সভা ২৫ জুলাই বিকেল ৫টায়" class="admin-input"/>
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-              <div class="form-group">
-                <label class="admin-label">তারিখ (বাংলায়)</label>
-                <input type="text" id="nDate" placeholder="২০ জুলাই ২০২৫" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">NEW Badge</label>
-                <div class="flex items-center gap-3 mt-1">
-                  <label class="tog"><input type="checkbox" id="nNew" checked/><span class="tog-slider"></span></label>
-                  <span class="text-white/50 text-sm">চালু করুন</span>
-                </div>
+            <div><label class="lbl">নোটিশের বিষয় *</label>
+              <input type="text" id="nTitle" placeholder="নোটিশের বিষয় লিখুন..." class="inp"/></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div><label class="lbl">তারিখ (বাংলায়)</label>
+                <input type="text" id="nDate" placeholder="২০ জুলাই ২০২৫" class="inp"/></div>
+              <div class="flex items-end gap-3 pb-1">
+                <label class="tog"><input type="checkbox" id="nNew" checked/><span class="tog-sl"></span></label>
+                <span class="text-white/50 text-sm">NEW Badge দেখাবে</span>
               </div>
             </div>
-            <div id="noticeErr" class="hidden firebase-error"></div>
-            <button onclick="addNotice()" id="btnAddNotice" class="btn-red">
-              <i class="fas fa-plus"></i> নোটিশ যোগ করুন
-            </button>
+            <div id="nErr" class="err-box hidden"></div>
+            <button onclick="addNotice()" id="btnAN" class="btn-r text-sm"><i class="fas fa-plus"></i> নোটিশ যোগ করুন</button>
           </div>
         </div>
-
-        <!-- List -->
-        <div class="content-card">
-          <div class="p-4 border-b border-white/5 flex items-center justify-between">
+        <div class="box overflow-x-auto">
+          <div class="p-3 border-b border-white/5 flex items-center justify-between">
             <span class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider">সকল নোটিশ</span>
-            <button onclick="loadNotices()" class="text-white/30 hover:text-white/60 text-sm"><i class="fas fa-sync-alt"></i></button>
+            <button onclick="loadNotices()" class="text-white/30 hover:text-white/60"><i class="fas fa-sync-alt text-sm"></i></button>
           </div>
-          <div class="overflow-x-auto">
-            <table class="data-table">
-              <thead><tr><th>নোটিশ</th><th>তারিখ</th><th>Badge</th><th>কার্যক্রম</th></tr></thead>
-              <tbody id="noticesTbl"><tr><td colspan="4" class="text-center text-white/30 py-8">লোড হচ্ছে...</td></tr></tbody>
-            </table>
-          </div>
+          <table class="tbl"><thead><tr><th>নোটিশ</th><th>তারিখ</th><th>Badge</th><th>মুছুন</th></tr></thead>
+          <tbody id="nTbl"><tr><td colspan="4" class="text-center text-white/30 py-6">লোড হচ্ছে...</td></tr></tbody></table>
         </div>
       </div>
 
       <!-- ===== ACTIVITIES ===== -->
-      <div id="sec-activities" class="section-panel">
-        <div class="sec-head"><i class="fas fa-star text-yellow-500"></i> কার্যক্রম</div>
-        <button onclick="openActModal()" class="btn-red mb-5">
-          <i class="fas fa-plus"></i> নতুন কার্যক্রম যোগ করুন
-        </button>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="actGrid">
-          <div class="col-span-3 text-white/30 text-center py-10">লোড হচ্ছে...</div>
+      <div id="p-activities" class="panel">
+        <div class="sh"><i class="fas fa-star text-yellow-500"></i> কার্যক্রম</div>
+        <button onclick="openActModal()" class="btn-r mb-4 text-sm"><i class="fas fa-plus"></i> নতুন কার্যক্রম যোগ করুন</button>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 act-admin-grid" id="actGrid">
+          <div class="col-span-3 text-white/30 text-center py-8">লোড হচ্ছে...</div>
         </div>
       </div>
 
       <!-- ===== COMMITTEE ===== -->
-      <div id="sec-committee" class="section-panel">
-        <div class="sec-head"><i class="fas fa-users text-yellow-500"></i> কমিটি সদস্য</div>
-        <button onclick="openMemModal()" class="btn-red mb-5">
-          <i class="fas fa-user-plus"></i> নতুন সদস্য যোগ করুন
-        </button>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="comGrid">
-          <div class="col-span-3 text-white/30 text-center py-10">লোড হচ্ছে...</div>
+      <div id="p-committee" class="panel">
+        <div class="sh"><i class="fas fa-users text-yellow-500"></i> কমিটি সদস্য</div>
+        <button onclick="openMemModal()" class="btn-r mb-4 text-sm"><i class="fas fa-user-plus"></i> নতুন সদস্য যোগ করুন</button>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 com-admin-grid" id="comGrid">
+          <div class="col-span-3 text-white/30 text-center py-8">লোড হচ্ছে...</div>
         </div>
       </div>
 
       <!-- ===== GALLERY ===== -->
-      <div id="sec-gallery" class="section-panel">
-        <div class="sec-head"><i class="fas fa-images text-yellow-500"></i> গ্যালারি</div>
-        <div class="content-card p-5 mb-5">
-          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-4">নতুন ছবি যোগ করুন</h3>
+      <div id="p-gallery" class="panel">
+        <div class="sh"><i class="fas fa-images text-yellow-500"></i> গ্যালারি</div>
+        <div class="box p-4 mb-4">
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">নতুন ছবি যোগ করুন</h3>
           <div class="space-y-3">
-            <div class="form-group">
-              <label class="admin-label">ছবি আপলোড করুন (Cloudinary)</label>
-              <input type="file" id="galFile" accept="image/*" class="admin-input" onchange="previewImg('galFile','galPrev','galPrevWrap')"/>
-              <div id="galPrevWrap" class="mt-2 hidden">
-                <img id="galPrev" class="img-thumb"/>
-              </div>
+            <div><label class="lbl">ছবি আপলোড করুন</label>
+              <input type="file" id="galFile" accept="image/*" class="inp" onchange="prevImg('galFile','galPv','galPvW')"/>
+              <div id="galPvW" class="mt-2 hidden"><img id="galPv" class="thumb"/></div>
             </div>
-            <div class="grid grid-cols-2 gap-3">
-              <div class="form-group">
-                <label class="admin-label">ক্যাপশন</label>
-                <input type="text" id="galCaption" placeholder="দুর্গাপুজো ২০২৪" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">ক্যাটাগরি</label>
-                <select id="galCat" class="admin-input">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div><label class="lbl">ক্যাপশন</label>
+                <input type="text" id="galCap" placeholder="দুর্গাপুজো ২০২৪" class="inp"/></div>
+              <div><label class="lbl">ক্যাটাগরি</label>
+                <select id="galCat" class="inp">
                   <option value="puja">পুজো</option>
                   <option value="social">সমাজসেবা</option>
                   <option value="sports">ক্রীড়া</option>
@@ -453,339 +336,224 @@ allow write: if request.auth != null;</pre>
                 </select>
               </div>
             </div>
-            <div id="galErr" class="hidden firebase-error"></div>
-            <button onclick="uploadGallery()" id="btnGalUp" class="btn-red">
-              <i class="fas fa-upload"></i> আপলোড করুন
-            </button>
+            <div id="galErr" class="err-box hidden"></div>
+            <button onclick="uploadGallery()" id="btnGUp" class="btn-r text-sm"><i class="fas fa-upload"></i> আপলোড করুন</button>
           </div>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3" id="galGrid">
-          <div class="col-span-4 text-white/30 text-center py-10">লোড হচ্ছে...</div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 gal-admin-grid" id="galGrid">
+          <div class="col-span-4 text-white/30 text-center py-8">লোড হচ্ছে...</div>
         </div>
       </div>
 
       <!-- ===== UPCOMING ===== -->
-      <div id="sec-upcoming" class="section-panel">
-        <div class="sec-head"><i class="fas fa-calendar-alt text-yellow-500"></i> আসন্ন অনুষ্ঠান</div>
-        <div class="content-card p-5 mb-5">
-          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-4">নতুন অনুষ্ঠান যোগ করুন</h3>
-          <div class="grid grid-cols-2 gap-3 mb-3">
-            <div class="form-group">
-              <label class="admin-label">অনুষ্ঠানের নাম *</label>
-              <input type="text" id="evTitle" placeholder="রক্তদান শিবির" class="admin-input"/>
-            </div>
-            <div class="form-group">
-              <label class="admin-label">ইমোজি</label>
-              <input type="text" id="evIcon" placeholder="🩸" class="admin-input"/>
-            </div>
-            <div class="form-group">
-              <label class="admin-label">তারিখ</label>
-              <input type="text" id="evDate" placeholder="২০ আগস্ট" class="admin-input"/>
-            </div>
-            <div class="form-group">
-              <label class="admin-label">মাস ও বছর</label>
-              <input type="text" id="evMonth" placeholder="২০২৫" class="admin-input"/>
-            </div>
-            <div class="form-group col-span-2">
-              <label class="admin-label">স্থান</label>
-              <input type="text" id="evLoc" placeholder="কমিউনিটি হল" class="admin-input"/>
-            </div>
+      <div id="p-upcoming" class="panel">
+        <div class="sh"><i class="fas fa-calendar-alt text-yellow-500"></i> আসন্ন অনুষ্ঠান</div>
+        <div class="box p-4 mb-4">
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">নতুন অনুষ্ঠান যোগ করুন</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+            <div><label class="lbl">অনুষ্ঠানের নাম *</label><input type="text" id="evT" placeholder="রক্তদান শিবির" class="inp"/></div>
+            <div><label class="lbl">ইমোজি</label><input type="text" id="evI" placeholder="🩸" class="inp"/></div>
+            <div><label class="lbl">তারিখ</label><input type="text" id="evD" placeholder="২০ আগস্ট" class="inp"/></div>
+            <div><label class="lbl">মাস ও বছর</label><input type="text" id="evM" placeholder="২০২৫" class="inp"/></div>
+            <div class="sm:col-span-2"><label class="lbl">স্থান</label><input type="text" id="evL" placeholder="কমিউনিটি হল" class="inp"/></div>
           </div>
-          <div id="evErr" class="hidden firebase-error"></div>
-          <button onclick="addEvent()" class="btn-red"><i class="fas fa-plus"></i> অনুষ্ঠান যোগ করুন</button>
+          <div id="evErr" class="err-box hidden"></div>
+          <button onclick="addEvent()" class="btn-r text-sm"><i class="fas fa-plus"></i> যোগ করুন</button>
         </div>
-        <div class="content-card overflow-x-auto">
-          <table class="data-table">
-            <thead><tr><th>অনুষ্ঠান</th><th>তারিখ</th><th>স্থান</th><th>কার্যক্রম</th></tr></thead>
-            <tbody id="evTbl"><tr><td colspan="4" class="text-center text-white/30 py-8">লোড হচ্ছে...</td></tr></tbody>
-          </table>
+        <div class="box overflow-x-auto">
+          <table class="tbl"><thead><tr><th>অনুষ্ঠান</th><th>তারিখ</th><th>স্থান</th><th>মুছুন</th></tr></thead>
+          <tbody id="evTbl"><tr><td colspan="4" class="text-center text-white/30 py-6">লোড হচ্ছে...</td></tr></tbody></table>
         </div>
       </div>
 
       <!-- ===== SITE SETTINGS ===== -->
-      <div id="sec-site" class="section-panel">
-        <div class="sec-head"><i class="fas fa-globe text-yellow-500"></i> সাইট সেটিংস</div>
-        <div class="content-card p-5 space-y-5">
-          <!-- Basic info -->
-          <div>
-            <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-4">মৌলিক তথ্য</h3>
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div class="form-group">
-                <label class="admin-label">সংগঠনের নাম (বাংলা)</label>
-                <input type="text" id="sOrgBn" placeholder="পুষ্পাঞ্জলি যুব সংঘ" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">Organisation Name (English)</label>
-                <input type="text" id="sOrgEn" placeholder="Pushpanjali Yuva Sangh" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">স্লোগান (বাংলা)</label>
-                <input type="text" id="sTagBn" placeholder="ধর্ম, সংস্কৃতি ও সমাজের উন্নতিতে নিবেদিত" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">Slogan (English)</label>
-                <input type="text" id="sTagEn" placeholder="Devoted to Religion, Culture & Community Service" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">প্রতিষ্ঠা বছর</label>
-                <input type="text" id="sYear" placeholder="2009" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">উৎসবের নাম (Countdown-এ দেখাবে)</label>
-                <input type="text" id="sFestName" placeholder="দুর্গাপুজো ২০২৫" class="admin-input"/>
-              </div>
-              <div class="form-group col-span-2">
-                <label class="admin-label">উৎসবের তারিখ ও সময় (Countdown)</label>
-                <input type="datetime-local" id="sFestDate" class="admin-input max-w-xs"/>
-              </div>
+      <div id="p-site" class="panel">
+        <div class="sh"><i class="fas fa-globe text-yellow-500"></i> সাইট সেটিংস</div>
+        <div class="box p-4 space-y-4">
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider">মৌলিক তথ্য</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="lbl">সংগঠনের নাম (বাংলা)</label><input type="text" id="sOBn" placeholder="পুষ্পাঞ্জলি যুব সংঘ" class="inp"/></div>
+            <div><label class="lbl">Organisation Name (English)</label><input type="text" id="sOEn" placeholder="Pushpanjali Yuva Sangh" class="inp"/></div>
+            <div><label class="lbl">স্লোগান (বাংলা)</label><input type="text" id="sTBn" placeholder="ধর্ম, সংস্কৃতি ও সমাজের..." class="inp"/></div>
+            <div><label class="lbl">Slogan (English)</label><input type="text" id="sTEn" placeholder="Devoted to Religion..." class="inp"/></div>
+            <div><label class="lbl">প্রতিষ্ঠা বছর</label><input type="text" id="sYear" placeholder="২০০৯" class="inp"/></div>
+            <div><label class="lbl">উৎসবের নাম (Countdown-এ)</label><input type="text" id="sFN" placeholder="দুর্গাপুজো ২০২৫" class="inp"/></div>
+            <div class="sm:col-span-2"><label class="lbl">উৎসবের তারিখ (Countdown)</label><input type="datetime-local" id="sFD" class="inp max-w-xs"/></div>
+          </div>
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider pt-2 border-t border-white/5">যোগাযোগের তথ্য</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="sm:col-span-2"><label class="lbl">ঠিকানা</label><input type="text" id="sAddr" placeholder="বহরিয়া মির্জাপুর, টাঙ্গাইল" class="inp"/></div>
+            <div><label class="lbl">মোবাইল ১</label><input type="tel" id="sP1" placeholder="01728018956" class="inp"/></div>
+            <div><label class="lbl">মোবাইল ২</label><input type="tel" id="sP2" placeholder="01XXXXXXXXX" class="inp"/></div>
+            <div><label class="lbl">ইমেইল</label><input type="email" id="sEmail" placeholder="pushpanjaliyuvasangh@gmail.com" class="inp"/></div>
+            <div><label class="lbl">WhatsApp নম্বর</label><input type="tel" id="sWA" placeholder="01728018956" class="inp"/></div>
+          </div>
+          <!-- MAP SECTION -->
+          <div class="pt-2 border-t border-white/5">
+            <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">Google Maps লোকেশন</h3>
+            <div class="bg-blue-900/20 border border-blue-400/20 rounded-lg p-3 mb-3 text-xs text-blue-300">
+              <i class="fas fa-info-circle mr-1"></i>
+              <strong>কীভাবে Map URL পাবেন:</strong><br/>
+              ① Google Maps-এ আপনার লোকেশন খুঁজুন → Share → Embed a map → Copy HTML<br/>
+              ② src="..." এর ভেতরের URL টুকু কপি করে নিচে বসান
+            </div>
+            <div><label class="lbl">Google Maps Embed URL</label>
+              <textarea id="sMap" rows="3" placeholder="https://www.google.com/maps/embed?pb=!1m18!..." class="inp inp-area"></textarea>
+            </div>
+            <!-- Map preview -->
+            <div class="mt-2">
+              <button onclick="previewMap()" class="btn-g text-xs"><i class="fas fa-map-marker-alt"></i> Map Preview দেখুন</button>
+            </div>
+            <div id="mapPreviewBox" class="mt-3 hidden rounded-xl overflow-hidden border-2 border-yellow-400/20">
+              <iframe id="mapPreviewFrame" src="" width="100%" height="200" style="border:0" allowfullscreen="" loading="lazy"></iframe>
             </div>
           </div>
+          <div id="siteErr" class="err-box hidden"></div>
+          <button onclick="saveSet('site')" id="btnSS" class="btn-r text-sm"><i class="fas fa-save"></i> সেটিংস সেভ করুন</button>
+        </div>
+      </div>
 
-          <!-- Contact -->
-          <div class="border-t border-white/5 pt-5">
-            <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-4">যোগাযোগের তথ্য</h3>
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div class="form-group col-span-2">
-                <label class="admin-label">ঠিকানা</label>
-                <input type="text" id="sAddr" placeholder="১২৩, মন্দির রোড, কলকাতা - ৭০০০০১" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">ফোন নম্বর ১</label>
-                <input type="tel" id="sPhone1" placeholder="+91 98765 43210" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">ফোন নম্বর ২</label>
-                <input type="tel" id="sPhone2" placeholder="+91 98765 43211" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">ইমেইল</label>
-                <input type="email" id="sEmail" placeholder="info@pushpanjali.org" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">WhatsApp নম্বর</label>
-                <input type="tel" id="sWhatsapp" placeholder="+91 98765 43210" class="admin-input"/>
-              </div>
-              <div class="form-group col-span-2">
-                <label class="admin-label">Google Maps Embed URL</label>
-                <textarea id="sMapUrl" rows="2" placeholder="https://www.google.com/maps/embed?pb=..." class="admin-input admin-textarea"></textarea>
-              </div>
-            </div>
+      <!-- ===== ABOUT US TEXT ===== -->
+      <div id="p-about" class="panel">
+        <div class="sh"><i class="fas fa-pen text-yellow-500"></i> আমাদের সম্পর্কে</div>
+        <div class="box p-4 space-y-4">
+          <div class="bg-yellow-900/20 border border-yellow-400/20 rounded-lg p-3 text-xs text-yellow-300">
+            <i class="fas fa-lightbulb mr-1"></i> এখানে যা লিখবেন তা ওয়েবসাইটের "আমাদের সম্পর্কে" সেকশনে দেখাবে।
           </div>
-
-          <div id="siteErr" class="hidden firebase-error"></div>
-          <button onclick="saveSettings('site')" id="btnSaveSite" class="btn-red">
-            <i class="fas fa-save"></i> সেটিংস সেভ করুন
-          </button>
+          <div><label class="lbl">বাংলা প্যারাগ্রাফ ১</label>
+            <textarea id="ab1" rows="3" placeholder="পুষ্পাঞ্জলি যুব সংঘ একটি হিন্দু ধর্মীয়..." class="inp inp-area"></textarea></div>
+          <div><label class="lbl">বাংলা প্যারাগ্রাফ ২</label>
+            <textarea id="ab2" rows="3" placeholder="আমরা প্রতিষ্ঠার পর থেকে..." class="inp inp-area"></textarea></div>
+          <div><label class="lbl">English Paragraph</label>
+            <textarea id="abEn" rows="3" placeholder="Pushpanjali Yuva Sangh is dedicated to..." class="inp inp-area"></textarea></div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-white/5">
+            <div><label class="lbl">সক্রিয় সদস্য সংখ্যা</label><input type="text" id="abM" placeholder="২০০+" class="inp"/></div>
+            <div><label class="lbl">বার্ষিক উৎসব</label><input type="text" id="abF" placeholder="৫০+" class="inp"/></div>
+            <div><label class="lbl">লক্ষ্যমাত্রা ১</label><input type="text" id="abG1" placeholder="ধর্মীয় অনুষ্ঠান আয়োজন" class="inp"/></div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="lbl">লক্ষ্যমাত্রা ২</label><input type="text" id="abG2" placeholder="সমাজসেবামূলক কাজ" class="inp"/></div>
+            <div><label class="lbl">লক্ষ্যমাত্রা ৩</label><input type="text" id="abG3" placeholder="ক্রীড়া ও সাংস্কৃতিক বিকাশ" class="inp"/></div>
+            <div><label class="lbl">লক্ষ্যমাত্রা ৪</label><input type="text" id="abG4" placeholder="পরিবেশ সংরক্ষণ" class="inp"/></div>
+            <div><label class="lbl">লক্ষ্যমাত্রা ৫</label><input type="text" id="abG5" placeholder="সামাজিক সচেতনতা বৃদ্ধি" class="inp"/></div>
+          </div>
+          <div id="aboutErr" class="err-box hidden"></div>
+          <button onclick="saveSet('about')" id="btnSA" class="btn-r text-sm"><i class="fas fa-save"></i> সেভ করুন</button>
         </div>
       </div>
 
       <!-- ===== SOCIAL MEDIA ===== -->
-      <div id="sec-social" class="section-panel">
-        <div class="sec-head"><i class="fas fa-share-alt text-yellow-500"></i> সোশ্যাল মিডিয়া লিংক</div>
-        <div class="content-card p-5 space-y-4">
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div class="form-group">
-              <label class="admin-label"><i class="fab fa-facebook text-blue-400 mr-1"></i> Facebook Page URL</label>
-              <input type="url" id="sFb" placeholder="https://facebook.com/yourpage" class="admin-input"/>
-            </div>
-            <div class="form-group">
-              <label class="admin-label"><i class="fab fa-instagram text-pink-400 mr-1"></i> Instagram URL</label>
-              <input type="url" id="sIg" placeholder="https://instagram.com/yourpage" class="admin-input"/>
-            </div>
-            <div class="form-group">
-              <label class="admin-label"><i class="fab fa-youtube text-red-400 mr-1"></i> YouTube Channel URL</label>
-              <input type="url" id="sYt" placeholder="https://youtube.com/channel/..." class="admin-input"/>
-            </div>
-            <div class="form-group">
-              <label class="admin-label"><i class="fab fa-whatsapp text-green-400 mr-1"></i> WhatsApp Group Link</label>
-              <input type="url" id="sWa" placeholder="https://chat.whatsapp.com/..." class="admin-input"/>
-            </div>
-            <div class="form-group">
-              <label class="admin-label"><i class="fab fa-twitter text-sky-400 mr-1"></i> Twitter / X URL</label>
-              <input type="url" id="sTw" placeholder="https://twitter.com/yourpage" class="admin-input"/>
-            </div>
-            <div class="form-group">
-              <label class="admin-label"><i class="fab fa-telegram text-blue-400 mr-1"></i> Telegram Channel</label>
-              <input type="url" id="sTg" placeholder="https://t.me/yourpage" class="admin-input"/>
-            </div>
+      <div id="p-social" class="panel">
+        <div class="sh"><i class="fas fa-share-alt text-yellow-500"></i> সোশ্যাল মিডিয়া</div>
+        <div class="box p-4 space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="lbl"><i class="fab fa-facebook text-blue-400 mr-1"></i> Facebook URL</label><input type="url" id="soFb" placeholder="https://facebook.com/yourpage" class="inp"/></div>
+            <div><label class="lbl"><i class="fab fa-instagram text-pink-400 mr-1"></i> Instagram URL</label><input type="url" id="soIg" placeholder="https://instagram.com/yourpage" class="inp"/></div>
+            <div><label class="lbl"><i class="fab fa-youtube text-red-400 mr-1"></i> YouTube URL</label><input type="url" id="soYt" placeholder="https://youtube.com/channel/..." class="inp"/></div>
+            <div><label class="lbl"><i class="fab fa-whatsapp text-green-400 mr-1"></i> WhatsApp Group</label><input type="url" id="soWa" placeholder="https://chat.whatsapp.com/..." class="inp"/></div>
+            <div><label class="lbl"><i class="fab fa-telegram text-blue-400 mr-1"></i> Telegram Channel</label><input type="url" id="soTg" placeholder="https://t.me/yourpage" class="inp"/></div>
           </div>
-          <div id="socialErr" class="hidden firebase-error"></div>
-          <button onclick="saveSettings('social')" id="btnSaveSocial" class="btn-red">
-            <i class="fas fa-save"></i> লিংক সেভ করুন
-          </button>
+          <div id="socialErr" class="err-box hidden"></div>
+          <button onclick="saveSet('social')" id="btnSSoc" class="btn-r text-sm"><i class="fas fa-save"></i> লিংক সেভ করুন</button>
         </div>
       </div>
 
       <!-- ===== PAYMENT ===== -->
-      <div id="sec-payment" class="section-panel">
-        <div class="sec-head"><i class="fas fa-university text-yellow-500"></i> পেমেন্ট ও ব্যাংক সেটিংস</div>
-        <div class="content-card p-5 space-y-5">
-          <!-- UPI -->
-          <div>
-            <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-4">UPI / QR Code</h3>
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div class="form-group">
-                <label class="admin-label">UPI ID</label>
-                <input type="text" id="pUpi" placeholder="pushpanjali@upi" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">QR Code ছবি আপলোড</label>
-                <input type="file" id="qrFile" accept="image/*" class="admin-input" onchange="previewImg('qrFile','qrPrev','qrPrevWrap')"/>
-                <div id="qrPrevWrap" class="mt-2 hidden"><img id="qrPrev" class="img-thumb"/></div>
-              </div>
+      <div id="p-payment" class="panel">
+        <div class="sh"><i class="fas fa-money-bill text-yellow-500"></i> পেমেন্ট ও ব্যাংক তথ্য</div>
+        <div class="box p-4 space-y-4">
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider">মোবাইল ব্যাংকিং / QR Code</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="lbl">bKash / Nagad নম্বর</label><input type="text" id="pBkash" placeholder="01XXXXXXXXX" class="inp"/></div>
+            <div><label class="lbl">QR Code ছবি আপলোড</label>
+              <input type="file" id="qrFile" accept="image/*" class="inp" onchange="prevImg('qrFile','qrPv','qrPvW')"/>
+              <div id="qrPvW" class="mt-2 hidden"><img id="qrPv" class="thumb"/></div>
             </div>
           </div>
-          <!-- Bank -->
-          <div class="border-t border-white/5 pt-5">
-            <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-4">ব্যাংক বিবরণ</h3>
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div class="form-group">
-                <label class="admin-label">Account Name</label>
-                <input type="text" id="pAccName" placeholder="Pushpanjali Yuva Sangh" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">Account Number</label>
-                <input type="text" id="pAccNum" placeholder="1234 5678 9012 3456" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">IFSC Code</label>
-                <input type="text" id="pIfsc" placeholder="SBIN0001234" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">Bank Name</label>
-                <input type="text" id="pBank" placeholder="State Bank of India" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">Branch</label>
-                <input type="text" id="pBranch" placeholder="Kolkata Main Branch" class="admin-input"/>
-              </div>
-              <div class="form-group">
-                <label class="admin-label">Account Type</label>
-                <select id="pAccType" class="admin-input">
-                  <option value="Savings">Savings</option>
-                  <option value="Current">Current</option>
-                </select>
-              </div>
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider pt-3 border-t border-white/5">ব্যাংক বিবরণ</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="lbl">Account Name</label><input type="text" id="pAN" placeholder="Pushpanjali Yuva Sangh" class="inp"/></div>
+            <div><label class="lbl">Account Number</label><input type="text" id="pNum" placeholder="১২৩৪৫৬৭৮৯০" class="inp"/></div>
+            <div><label class="lbl">Routing Number</label><input type="text" id="pRoute" placeholder="২৬০২৭০৫৩৫" class="inp"/></div>
+            <div><label class="lbl">Bank Name</label><input type="text" id="pBank" placeholder="ইসলামী ব্যাংক বাংলাদেশ" class="inp"/></div>
+            <div><label class="lbl">Branch</label><input type="text" id="pBranch" placeholder="টাঙ্গাইল শাখা" class="inp"/></div>
+            <div><label class="lbl">Account Type</label>
+              <select id="pType" class="inp"><option value="সঞ্চয়">সঞ্চয় (Savings)</option><option value="চলতি">চলতি (Current)</option></select>
             </div>
           </div>
-          <div id="payErr" class="hidden firebase-error"></div>
-          <button onclick="saveSettings('payment')" id="btnSavePay" class="btn-red">
-            <i class="fas fa-save"></i> পেমেন্ট সেটিংস সেভ করুন
-          </button>
+          <div id="payErr" class="err-box hidden"></div>
+          <button onclick="saveSet('payment')" id="btnSPay" class="btn-r text-sm"><i class="fas fa-save"></i> সেভ করুন</button>
         </div>
       </div>
 
       <!-- ===== APPEARANCE ===== -->
-      <div id="sec-appearance" class="section-panel">
-        <div class="sec-head"><i class="fas fa-paint-brush text-yellow-500"></i> লোগো ও ব্যানার</div>
-        <div class="content-card p-5 space-y-6">
+      <div id="p-appearance" class="panel">
+        <div class="sh"><i class="fas fa-paint-brush text-yellow-500"></i> লোগো ও ছবি</div>
+        <div class="box p-4 space-y-5">
           <!-- Logo -->
           <div>
-            <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-4">সংগঠনের লোগো</h3>
-            <div class="flex items-start gap-5 flex-wrap">
-              <div>
-                <div class="w-20 h-20 rounded-full border-2 border-yellow-400/30 overflow-hidden bg-red-900/30 flex items-center justify-center text-3xl" id="logoPreviewCircle">🪷</div>
-                <p class="text-white/30 text-xs mt-1 text-center">বর্তমান লোগো</p>
-              </div>
+            <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">সংগঠনের লোগো</h3>
+            <div class="flex items-start gap-4 flex-wrap">
+              <div class="w-20 h-20 rounded-full border-2 border-yellow-400/30 overflow-hidden bg-red-900/30 flex items-center justify-center text-3xl flex-shrink-0" id="logoPv">🪷</div>
               <div class="flex-1 min-w-0">
-                <div class="form-group">
-                  <label class="admin-label">লোগো ছবি আপলোড (PNG/SVG, স্বচ্ছ পটভূমি)</label>
-                  <input type="file" id="logoFile" accept="image/*" class="admin-input" onchange="previewLogo(event)"/>
-                </div>
-                <p class="text-white/30 text-xs mt-2">সুপারিশ: ১৫০×১৫০px, PNG ফরম্যাট, স্বচ্ছ পটভূমি</p>
-                <button onclick="uploadLogo()" id="btnLogoUp" class="btn-red mt-3 text-sm">
-                  <i class="fas fa-upload"></i> লোগো আপলোড করুন
-                </button>
+                <div><label class="lbl">লোগো ছবি (PNG, স্বচ্ছ পটভূমি)</label>
+                  <input type="file" id="logoFile" accept="image/*" class="inp" onchange="prevLogoFn(event)"/></div>
+                <p class="text-white/30 text-xs mt-1">সুপারিশ: ১৫০×১৫০px PNG</p>
+                <button onclick="upLogo()" id="btnLogo" class="btn-r mt-2 text-sm"><i class="fas fa-upload"></i> লোগো আপলোড</button>
               </div>
             </div>
           </div>
-
-          <!-- Hero Banner -->
-          <div class="border-t border-white/5 pt-5">
-            <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-4">হিরো ব্যানার ছবি</h3>
-            <div id="heroPrevWrap" class="mb-3 hidden">
-              <img id="heroPrev" class="big-thumb"/>
-            </div>
-            <div class="form-group">
-              <label class="admin-label">ব্যানার ছবি আপলোড (১৯২০×১০৮০px প্রস্তাবিত)</label>
-              <input type="file" id="heroFile" accept="image/*" class="admin-input" onchange="previewImg('heroFile','heroPrev','heroPrevWrap')"/>
-            </div>
-            <button onclick="uploadHero()" id="btnHeroUp" class="btn-red mt-3 text-sm">
-              <i class="fas fa-upload"></i> ব্যানার আপলোড করুন
-            </button>
+          <!-- Hero -->
+          <div class="border-t border-white/5 pt-4">
+            <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">হিরো ব্যানার</h3>
+            <div id="heroPvW" class="mb-3 hidden"><img id="heroPv" class="big-thumb"/></div>
+            <div><label class="lbl">ব্যানার ছবি (১৯২০×১০৮০px)</label>
+              <input type="file" id="heroFile" accept="image/*" class="inp" onchange="prevImg('heroFile','heroPv','heroPvW')"/></div>
+            <button onclick="upHero()" id="btnHero" class="btn-r mt-2 text-sm"><i class="fas fa-upload"></i> ব্যানার আপলোড</button>
           </div>
-
-          <!-- About image -->
-          <div class="border-t border-white/5 pt-5">
-            <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-4">About সেকশনের ছবি</h3>
-            <div id="aboutPrevWrap" class="mb-3 hidden">
-              <img id="aboutPrev" class="big-thumb"/>
-            </div>
-            <div class="form-group">
-              <label class="admin-label">About সেকশনের ছবি আপলোড</label>
-              <input type="file" id="aboutFile" accept="image/*" class="admin-input" onchange="previewImg('aboutFile','aboutPrev','aboutPrevWrap')"/>
-            </div>
-            <button onclick="uploadAboutImg()" id="btnAboutUp" class="btn-red mt-3 text-sm">
-              <i class="fas fa-upload"></i> ছবি আপলোড করুন
-            </button>
+          <!-- About img -->
+          <div class="border-t border-white/5 pt-4">
+            <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">About সেকশনের ছবি</h3>
+            <div id="aboutImgPvW" class="mb-3 hidden"><img id="aboutImgPv" class="big-thumb"/></div>
+            <div><label class="lbl">ছবি আপলোড</label>
+              <input type="file" id="aboutImgFile" accept="image/*" class="inp" onchange="prevImg('aboutImgFile','aboutImgPv','aboutImgPvW')"/></div>
+            <button onclick="upAboutImg()" id="btnAbout" class="btn-r mt-2 text-sm"><i class="fas fa-upload"></i> ছবি আপলোড</button>
           </div>
-
-          <div id="appErr" class="hidden firebase-error"></div>
+          <div id="appErr" class="err-box hidden"></div>
         </div>
       </div>
 
-    </div><!-- /px-4 -->
+    </div><!-- /px-3 -->
   </div><!-- /mainContent -->
 </div><!-- /adminApp -->
 
 <!-- ===== ACTIVITY MODAL ===== -->
 <div class="modal-bg" id="actModal">
   <div class="modal-box">
-    <div class="flex items-center justify-between mb-5">
-      <h3 class="text-yellow-400 font-bold text-lg" id="actModalTitle">কার্যক্রম যোগ করুন</h3>
-      <button onclick="closeModal('actModal')" class="text-white/40 hover:text-white text-2xl leading-none">×</button>
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-yellow-400 font-bold text-base" id="actMT">কার্যক্রম যোগ করুন</h3>
+      <button onclick="closeM('actModal')" class="text-white/40 hover:text-white text-2xl leading-none">×</button>
     </div>
-    <input type="hidden" id="actEditId"/>
+    <input type="hidden" id="actEId"/>
     <div class="space-y-3">
-      <div class="grid grid-cols-2 gap-3">
-        <div class="form-group">
-          <label class="admin-label">বাংলা শিরোনাম *</label>
-          <input type="text" id="actBn" placeholder="পুজো ও ধর্মীয় অনুষ্ঠান" class="admin-input"/>
-        </div>
-        <div class="form-group">
-          <label class="admin-label">English Title</label>
-          <input type="text" id="actEn" placeholder="Puja & Religious Events" class="admin-input"/>
-        </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div><label class="lbl">বাংলা শিরোনাম *</label><input type="text" id="actBn" placeholder="পুজো ও ধর্মীয় অনুষ্ঠান" class="inp"/></div>
+        <div><label class="lbl">English Title</label><input type="text" id="actEn" placeholder="Puja & Religious Events" class="inp"/></div>
       </div>
-      <div class="form-group">
-        <label class="admin-label">বিবরণ</label>
-        <textarea id="actDesc" rows="3" placeholder="কার্যক্রমের বিস্তারিত..." class="admin-input admin-textarea"></textarea>
-      </div>
+      <div><label class="lbl">বিবরণ</label><textarea id="actDesc" rows="3" class="inp inp-area" placeholder="কার্যক্রমের বিস্তারিত..."></textarea></div>
       <div class="grid grid-cols-3 gap-3">
-        <div class="form-group">
-          <label class="admin-label">ইমোজি</label>
-          <input type="text" id="actEmoji" placeholder="🪷" class="admin-input text-center text-xl"/>
-        </div>
-        <div class="form-group">
-          <label class="admin-label">Tag</label>
-          <input type="text" id="actTag" placeholder="ধর্মীয়" class="admin-input"/>
-        </div>
-        <div class="form-group">
-          <label class="admin-label">ক্রম #</label>
-          <input type="number" id="actOrder" placeholder="1" class="admin-input"/>
-        </div>
+        <div><label class="lbl">ইমোজি</label><input type="text" id="actEmoji" placeholder="🪷" class="inp text-xl text-center"/></div>
+        <div><label class="lbl">Tag</label><input type="text" id="actTag" placeholder="ধর্মীয়" class="inp"/></div>
+        <div><label class="lbl">ক্রম #</label><input type="number" id="actOrd" placeholder="1" class="inp"/></div>
       </div>
-      <div class="form-group">
-        <label class="admin-label">ছবি আপলোড</label>
-        <input type="file" id="actFile" accept="image/*" class="admin-input" onchange="previewImg('actFile','actPrev','actPrevWrap')"/>
-        <div id="actPrevWrap" class="mt-2 hidden"><img id="actPrev" class="img-thumb"/></div>
+      <div><label class="lbl">ছবি আপলোড</label>
+        <input type="file" id="actFile" accept="image/*" class="inp" onchange="prevImg('actFile','actPv','actPvW')"/>
+        <div id="actPvW" class="mt-2 hidden"><img id="actPv" class="thumb"/></div>
       </div>
-      <div id="actErr" class="hidden firebase-error"></div>
+      <div id="actErr" class="err-box hidden"></div>
       <div class="flex gap-3 pt-1">
-        <button onclick="saveAct()" id="btnSaveAct" class="btn-red flex-1 justify-center">
-          <i class="fas fa-save"></i> সেভ করুন
-        </button>
-        <button onclick="closeModal('actModal')" class="btn-gold flex-1 justify-center">বাতিল</button>
+        <button onclick="saveAct()" id="btnSAct" class="btn-r flex-1 justify-center text-sm"><i class="fas fa-save"></i> সেভ করুন</button>
+        <button onclick="closeM('actModal')" class="btn-g flex-1 justify-center text-sm">বাতিল</button>
       </div>
     </div>
   </div>
@@ -794,41 +562,26 @@ allow write: if request.auth != null;</pre>
 <!-- ===== MEMBER MODAL ===== -->
 <div class="modal-bg" id="memModal">
   <div class="modal-box">
-    <div class="flex items-center justify-between mb-5">
-      <h3 class="text-yellow-400 font-bold text-lg" id="memModalTitle">সদস্য যোগ করুন</h3>
-      <button onclick="closeModal('memModal')" class="text-white/40 hover:text-white text-2xl leading-none">×</button>
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-yellow-400 font-bold text-base" id="memMT">সদস্য যোগ করুন</h3>
+      <button onclick="closeM('memModal')" class="text-white/40 hover:text-white text-2xl leading-none">×</button>
     </div>
-    <input type="hidden" id="memEditId"/>
+    <input type="hidden" id="memEId"/>
     <div class="space-y-3">
-      <div class="grid grid-cols-2 gap-3">
-        <div class="form-group">
-          <label class="admin-label">নাম *</label>
-          <input type="text" id="memName" placeholder="রাম কুমার দাস" class="admin-input"/>
-        </div>
-        <div class="form-group">
-          <label class="admin-label">পদবি *</label>
-          <input type="text" id="memRole" placeholder="সভাপতি" class="admin-input"/>
-        </div>
-        <div class="form-group">
-          <label class="admin-label">ফোন</label>
-          <input type="tel" id="memPhone" placeholder="+91 98765 43210" class="admin-input"/>
-        </div>
-        <div class="form-group">
-          <label class="admin-label">ক্রম #</label>
-          <input type="number" id="memOrder" placeholder="1" class="admin-input"/>
-        </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div><label class="lbl">নাম *</label><input type="text" id="memName" placeholder="রাম কুমার দাস" class="inp"/></div>
+        <div><label class="lbl">পদবি *</label><input type="text" id="memRole" placeholder="সভাপতি" class="inp"/></div>
+        <div><label class="lbl">মোবাইল</label><input type="tel" id="memPhone" placeholder="01XXXXXXXXX" class="inp"/></div>
+        <div><label class="lbl">ক্রম #</label><input type="number" id="memOrd" placeholder="1" class="inp"/></div>
       </div>
-      <div class="form-group">
-        <label class="admin-label">ছবি আপলোড</label>
-        <input type="file" id="memFile" accept="image/*" class="admin-input" onchange="previewImg('memFile','memPrev','memPrevWrap')"/>
-        <div id="memPrevWrap" class="mt-2 hidden"><img id="memPrev" class="img-thumb"/></div>
+      <div><label class="lbl">ছবি আপলোড</label>
+        <input type="file" id="memFile" accept="image/*" class="inp" onchange="prevImg('memFile','memPv','memPvW')"/>
+        <div id="memPvW" class="mt-2 hidden"><img id="memPv" class="thumb"/></div>
       </div>
-      <div id="memErr" class="hidden firebase-error"></div>
+      <div id="memErr" class="err-box hidden"></div>
       <div class="flex gap-3 pt-1">
-        <button onclick="saveMem()" id="btnSaveMem" class="btn-red flex-1 justify-center">
-          <i class="fas fa-save"></i> সেভ করুন
-        </button>
-        <button onclick="closeModal('memModal')" class="btn-gold flex-1 justify-center">বাতিল</button>
+        <button onclick="saveMem()" id="btnSMem" class="btn-r flex-1 justify-center text-sm"><i class="fas fa-save"></i> সেভ করুন</button>
+        <button onclick="closeM('memModal')" class="btn-g flex-1 justify-center text-sm">বাতিল</button>
       </div>
     </div>
   </div>
@@ -837,10 +590,9 @@ allow write: if request.auth != null;</pre>
 <!-- TOAST -->
 <div id="toast"></div>
 
-<!-- ===================== FIREBASE SCRIPT ===================== -->
+<!-- ============ FIREBASE SCRIPT ============ -->
 <script type="module">
-import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore, collection, getDocs, addDoc, deleteDoc,
   doc, getDoc, setDoc, updateDoc, query, orderBy, serverTimestamp
@@ -849,694 +601,477 @@ import {
   getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-/* ══════════════════════════════════════════
-   FIREBASE CONFIG
-══════════════════════════════════════════ */
-const FB = {
-  apiKey:            "AIzaSyC0izv3_60aDF_qqIcwzn27MFGCIoCYYp4",
-  authDomain:        "pushpanjali-yuva-sangh.firebaseapp.com",
-  projectId:         "pushpanjali-yuva-sangh",
-  storageBucket:     "pushpanjali-yuva-sangh.firebasestorage.app",
-  messagingSenderId: "137246397056",
-  appId:             "1:137246397056:web:3ebaacdcf522cf4b920c65"
+/* ── CONFIG ── */
+const FC = {
+  apiKey:"AIzaSyC0izv3_60aDF_qqIcwzn27MFGCIoCYYp4",
+  authDomain:"pushpanjali-yuva-sangh.firebaseapp.com",
+  projectId:"pushpanjali-yuva-sangh",
+  storageBucket:"pushpanjali-yuva-sangh.firebasestorage.app",
+  messagingSenderId:"137246397056",
+  appId:"1:137246397056:web:3ebaacdcf522cf4b920c65"
 };
-
-/* ══════════════════════════════════════════
-   CLOUDINARY CONFIG
-══════════════════════════════════════════ */
 const CLOUD_NAME   = 'dkt1zlbvx';
 const CLOUD_PRESET = 'pushpanjali_uploads';
 
-const fbApp = initializeApp(FB);
-const db    = getFirestore(fbApp);
-const auth  = getAuth(fbApp);
+const fApp = initializeApp(FC);
+const db   = getFirestore(fApp);
+const auth = getAuth(fApp);
 
-/* ══════════════════════════════════════════
-   AUTH
-══════════════════════════════════════════ */
-onAuthStateChanged(auth, user => {
-  if (user) {
-    document.getElementById('loginPage').style.display = 'none';
-    document.getElementById('adminApp').style.display = 'block';
-    document.getElementById('adminEmail').textContent = user.email || '';
-    document.getElementById('adminAv').textContent = (user.email || 'A')[0].toUpperCase();
-    document.getElementById('fbStatusDot').className = 'w-2 h-2 rounded-full bg-green-400';
+/* ── AUTH ── */
+onAuthStateChanged(auth, u => {
+  if(u){
+    g('loginPage').style.display='none';
+    g('adminApp').style.display='block';
+    g('adminEmail').textContent = u.email||'';
+    g('adminAv').textContent = (u.email||'A')[0].toUpperCase();
+    g('fbDot').className='w-2 h-2 rounded-full bg-green-400';
     initAdmin();
   } else {
-    document.getElementById('loginPage').style.display = 'flex';
-    document.getElementById('adminApp').style.display = 'none';
-    document.getElementById('fbStatusDot').className = 'w-2 h-2 rounded-full bg-gray-500';
+    g('loginPage').style.display='flex';
+    g('adminApp').style.display='none';
+    g('fbDot').className='w-2 h-2 rounded-full bg-gray-600';
   }
 });
 
 window.doLogin = async () => {
-  const email = v('loginEmail'), pass = v('loginPass');
-  const btn = g('loginBtn'), errEl = g('loginErr');
+  const email=v('loginEmail'), pass=v('loginPass');
+  const errEl=g('loginErr');
   errEl.classList.add('hidden');
-  if (!email || !pass) { showErr(errEl, 'Email ও Password দিন'); return; }
-  setBtnLoading(btn, true, 'লগইন হচ্ছে...');
+  if(!email||!pass){showE(errEl,'Email ও Password দিন');return;}
+  setLoad(g('loginBtn'),true,'লগইন হচ্ছে...');
   try {
-    await signInWithEmailAndPassword(auth, email, pass);
+    await signInWithEmailAndPassword(auth,email,pass);
   } catch(e) {
-    const msgs = {
-      'auth/user-not-found':    'এই Email দিয়ে কোনো অ্যাকাউন্ট নেই।',
-      'auth/wrong-password':    'ভুল Password। আবার চেষ্টা করুন।',
+    const m={
       'auth/invalid-credential':'ভুল Email বা Password।',
-      'auth/too-many-requests': 'বারবার ভুল চেষ্টার কারণে অ্যাকাউন্ট সাময়িক বন্ধ।',
-      'auth/invalid-email':     'ভুল Email ফরম্যাট।'
+      'auth/user-not-found':'এই Email-এ কোনো অ্যাকাউন্ট নেই।',
+      'auth/wrong-password':'ভুল Password।',
+      'auth/too-many-requests':'অনেকবার ভুল চেষ্টা। কিছুক্ষণ পরে চেষ্টা করুন।',
+      'auth/invalid-email':'ভুল Email ফরম্যাট।'
     };
-    showErr(errEl, msgs[e.code] || `ত্রুটি: ${e.message}`);
-    setBtnLoading(btn, false, '<i class="fas fa-sign-in-alt"></i> লগইন করুন');
+    showE(errEl, m[e.code]||'লগইন ব্যর্থ হয়েছে।');
+    setLoad(g('loginBtn'),false,'<i class="fas fa-sign-in-alt"></i> লগইন করুন');
   }
 };
+window.doLogout = async () => { if(confirm('লগআউট করবেন?')) await signOut(auth); };
 
-window.doLogout = async () => {
-  if (confirm('লগআউট করতে চান?')) await signOut(auth);
-};
-
-function initAdmin() {
-  loadDashboard();
-  loadNotices();
-  loadActivities();
-  loadCommittee();
-  loadGallery();
-  loadUpcoming();
-  loadAllSettings();
+function initAdmin(){
+  loadDash(); loadNotices(); loadActivities(); loadCommittee();
+  loadGallery(); loadUpcoming(); loadAllSettings();
 }
 
-/* ══════════════════════════════════════════
-   CLOUDINARY UPLOAD
-══════════════════════════════════════════ */
-async function cloudUpload(file) {
-  const fd = new FormData();
-  fd.append('file', file);
-  fd.append('upload_preset', CLOUD_PRESET);
-  const res = await fetch(
-    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-    { method: 'POST', body: fd }
-  );
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || `HTTP ${res.status} — Cloudinary upload failed. Preset "${CLOUD_PRESET}" ও Cloud Name "${CLOUD_NAME}" চেক করুন।`);
+/* ── CLOUDINARY ── */
+async function cloudUp(file){
+  const fd=new FormData();
+  fd.append('file',file);
+  fd.append('upload_preset',CLOUD_PRESET);
+  const r=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,{method:'POST',body:fd});
+  if(!r.ok){
+    const e=await r.json().catch(()=>({}));
+    throw new Error(e.error?.message||`Cloudinary error: "${CLOUD_PRESET}" preset চেক করুন।`);
   }
-  return (await res.json()).secure_url;
+  return (await r.json()).secure_url;
 }
 
-/* ══════════════════════════════════════════
-   FIRESTORE HELPERS
-══════════════════════════════════════════ */
-async function fbSet(col, docId, data) {
-  await setDoc(doc(db, col, docId), data, { merge: true });
-}
-async function fbAdd(col, data) {
-  return await addDoc(collection(db, col), data);
-}
-async function fbUpdate(col, docId, data) {
-  await updateDoc(doc(db, col, docId), data);
-}
-async function fbDel(col, docId) {
-  await deleteDoc(doc(db, col, docId));
-}
-async function fbGetAll(col, ...qArgs) {
-  const q = qArgs.length ? query(collection(db, col), ...qArgs) : collection(db, col);
-  const snap = await getDocs(q);
-  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
-}
-async function fbGetDoc(col, docId) {
-  const snap = await getDoc(doc(db, col, docId));
-  return snap.exists() ? snap.data() : null;
-}
-
-/* ══════════════════════════════════════════
-   FIREBASE TEST
-══════════════════════════════════════════ */
-window.testFirebase = async () => {
-  const el = g('fbTestResult');
-  el.className = 'mt-3 text-sm rounded-lg p-3 bg-yellow-900/30 text-yellow-300';
+/* ── FIREBASE TEST ── */
+window.testFb = async () => {
+  const el=g('fbTestRes');
+  el.className='mt-3 text-sm rounded-lg p-3 bg-yellow-900/30 text-yellow-300';
   el.classList.remove('hidden');
-  el.textContent = '⏳ পরীক্ষা চলছে...';
+  el.textContent='⏳ পরীক্ষা চলছে...';
   try {
-    await fbSet('_test', 'ping', { ts: new Date().toISOString() });
-    el.className = 'mt-3 text-sm rounded-lg p-3 bg-green-900/40 text-green-300';
-    el.innerHTML = '✅ Firebase সংযোগ সফল! Read/Write দুটোই কাজ করছে।';
-    await fbDel('_test', 'ping');
-  } catch(e) {
-    el.className = 'mt-3 text-sm rounded-lg p-3 bg-red-900/40 text-red-300';
-    el.innerHTML = `❌ ত্রুটি: ${e.message}<br/><br/>
-      <strong>সমাধান:</strong> Firebase Console → Firestore → Rules ট্যাবে যান এবং এটি সেট করুন:<br/>
-      <code class="block mt-2 bg-black/30 p-2 rounded text-xs">
-      allow read: if true;<br/>allow write: if request.auth != null;
-      </code>`;
+    await setDoc(doc(db,'_test','ping'),{ts:new Date().toISOString()});
+    el.className='mt-3 text-sm rounded-lg p-3 bg-green-900/40 text-green-300';
+    el.innerHTML='✅ Firebase সংযোগ সফল! সব কাজ করছে।';
+    await deleteDoc(doc(db,'_test','ping'));
+  } catch(e){
+    el.className='mt-3 text-sm rounded-lg p-3 bg-red-900/40 text-red-300';
+    el.innerHTML=`❌ ত্রুটি: ${e.message}<br/><br/><strong>সমাধান:</strong> Firebase Console → Firestore → Rules-এ নিচের কোড সেট করুন:<br/><code class="block mt-2 bg-black/30 p-2 rounded text-xs">allow read: if true;<br/>allow write: if request.auth != null;</code>`;
   }
 };
 
-/* ══════════════════════════════════════════
-   DASHBOARD
-══════════════════════════════════════════ */
-async function loadDashboard() {
-  try {
-    const [n,a,c,gal] = await Promise.all([
-      getDocs(collection(db,'notices')),
-      getDocs(collection(db,'activities')),
-      getDocs(collection(db,'committee')),
-      getDocs(collection(db,'gallery'))
-    ]);
-    g('st-notices').textContent = n.size;
-    g('st-act').textContent     = a.size;
-    g('st-com').textContent     = c.size;
-    g('st-gal').textContent     = gal.size;
-  } catch(e) { console.warn('Dashboard load:', e); }
+/* ── FIRESTORE HELPERS ── */
+async function fbSet(col,docId,data){ await setDoc(doc(db,col,docId),data,{merge:true}); }
+async function fbAdd(col,data){ return await addDoc(collection(db,col),data); }
+async function fbUpd(col,id,data){ await updateDoc(doc(db,col,id),data); }
+async function fbDel(col,id){ await deleteDoc(doc(db,col,id)); }
+async function fbAll(col,...args){
+  const q=args.length?query(collection(db,col),...args):collection(db,col);
+  return (await getDocs(q)).docs.map(d=>({id:d.id,...d.data()}));
+}
+async function fbDoc(col,id){
+  const s=await getDoc(doc(db,col,id));
+  return s.exists()?s.data():null;
 }
 
-/* ══════════════════════════════════════════
-   NOTICES
-══════════════════════════════════════════ */
-async function loadNotices() {
-  try {
-    const items = await fbGetAll('notices', orderBy('created_at','desc'));
-    g('noticesTbl').innerHTML = items.length
-      ? items.map(n => `
-        <tr>
-          <td class="text-white/80 max-w-xs">
-            <div class="truncate max-w-xs">${n.title || '—'}</div>
-          </td>
-          <td class="text-white/50 text-xs whitespace-nowrap">${n.date_bn || '—'}</td>
-          <td><span class="bdg ${n.is_new ? 'bdg-new':'bdg-old'}">${n.is_new ? 'NEW':'পুরানো'}</span></td>
-          <td class="whitespace-nowrap">
-            <button class="btn-del" onclick="delItem('notices','${n.id}',loadNotices)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </td>
-        </tr>`).join('')
-      : '<tr><td colspan="4" class="text-center text-white/30 py-8">কোনো নোটিশ নেই। উপরে যোগ করুন।</td></tr>';
-  } catch(e) {
-    g('noticesTbl').innerHTML = `<tr><td colspan="4" class="text-center py-6"><div class="firebase-error inline-block">${e.message}</div></td></tr>`;
+/* ── DASHBOARD ── */
+async function loadDash(){
+  try{
+    const [n,a,c,gl]=await Promise.all([getDocs(collection(db,'notices')),getDocs(collection(db,'activities')),getDocs(collection(db,'committee')),getDocs(collection(db,'gallery'))]);
+    g('st-n').textContent=n.size;g('st-a').textContent=a.size;g('st-c').textContent=c.size;g('st-g').textContent=gl.size;
+  }catch(e){}
+}
+
+/* ── NOTICES ── */
+async function loadNotices(){
+  try{
+    const items=await fbAll('notices',orderBy('created_at','desc'));
+    g('nTbl').innerHTML=items.length?items.map(n=>`
+      <tr>
+        <td class="text-white/80"><div class="max-w-xs truncate text-sm">${n.title||'—'}</div></td>
+        <td class="text-white/50 text-xs whitespace-nowrap">${n.date_bn||'—'}</td>
+        <td><span class="bdg ${n.is_new?'bdg-new':'bdg-old'}">${n.is_new?'NEW':'পুরানো'}</span></td>
+        <td><button class="btn-d" onclick="delIt('notices','${n.id}',loadNotices)"><i class="fas fa-trash"></i></button></td>
+      </tr>`).join('')
+    :'<tr><td colspan="4" class="text-center text-white/30 py-6">কোনো নোটিশ নেই।</td></tr>';
+  }catch(e){
+    g('nTbl').innerHTML=`<tr><td colspan="4" class="py-3"><div class="err-box m-2">${e.message}</div></td></tr>`;
   }
 }
-
-window.addNotice = async () => {
-  const title = v('nTitle');
-  const errEl = g('noticeErr');
-  if (!title) { showErr(errEl, 'নোটিশের বিষয় লিখুন!'); return; }
+window.addNotice=async()=>{
+  const title=v('nTitle');const errEl=g('nErr');
+  if(!title){showE(errEl,'নোটিশের বিষয় লিখুন!');return;}
   errEl.classList.add('hidden');
-  setBtnLoading(g('btnAddNotice'), true, 'যোগ হচ্ছে...');
-  try {
-    await fbAdd('notices', {
-      title,
-      date_bn: v('nDate'),
-      is_new: g('nNew').checked,
-      created_at: serverTimestamp()
-    });
-    g('nTitle').value = ''; g('nDate').value = '';
-    toast('✅ নোটিশ যোগ হয়েছে!');
-    loadNotices(); loadDashboard();
-  } catch(e) {
-    showErr(errEl, `ত্রুটি: ${e.message}`);
-  }
-  setBtnLoading(g('btnAddNotice'), false, '<i class="fas fa-plus"></i> নোটিশ যোগ করুন');
+  setLoad(g('btnAN'),true,'যোগ হচ্ছে...');
+  try{
+    await fbAdd('notices',{title,date_bn:v('nDate'),is_new:g('nNew').checked,created_at:serverTimestamp()});
+    g('nTitle').value='';g('nDate').value='';
+    toast('✅ নোটিশ যোগ হয়েছে!'); loadNotices(); loadDash();
+  }catch(e){showE(errEl,`ত্রুটি: ${e.message}`);}
+  setLoad(g('btnAN'),false,'<i class="fas fa-plus"></i> নোটিশ যোগ করুন');
 };
 
-/* ══════════════════════════════════════════
-   ACTIVITIES
-══════════════════════════════════════════ */
-async function loadActivities() {
-  try {
-    const items = await fbGetAll('activities', orderBy('display_order','asc'));
-    g('actGrid').innerHTML = items.length
-      ? items.map(a => `
-        <div class="content-card overflow-hidden">
-          <div class="relative h-32">
-            <img src="${a.image_url || 'https://placehold.co/400x200/C41E3A/FFF8E7?text=Activity'}"
-                 class="w-full h-full object-cover"
-                 onerror="this.src='https://placehold.co/400x200/C41E3A/FFF8E7?text=Photo'"/>
-            ${a.tag ? `<span class="absolute top-2 left-2 bg-red-700 text-white text-xs px-2 py-0.5 rounded-full">${a.tag}</span>` : ''}
+/* ── ACTIVITIES ── */
+async function loadActivities(){
+  try{
+    const items=await fbAll('activities',orderBy('display_order','asc'));
+    g('actGrid').innerHTML=items.length?items.map(a=>`
+      <div class="box overflow-hidden">
+        <div class="relative h-28">
+          <img src="${a.image_url||'https://placehold.co/400x200/C41E3A/FFF8E7?text=Activity'}" class="w-full h-full object-cover"
+               onerror="this.src='https://placehold.co/400x200/C41E3A/FFF8E7?text=Photo'"/>
+          ${a.tag?`<span class="absolute top-2 left-2 bg-red-700 text-white text-xs px-2 py-0.5 rounded-full">${a.tag}</span>`:''}
+        </div>
+        <div class="p-3">
+          <div class="font-semibold text-white text-sm truncate">${a.emoji||''} ${a.title_bn||''}</div>
+          <div class="text-white/40 text-xs mt-0.5 truncate">${a.title_en||''}</div>
+          <div class="flex gap-2 mt-2">
+            <button class="btn-e text-xs" onclick="editAct('${a.id}')"><i class="fas fa-edit"></i></button>
+            <button class="btn-d text-xs" onclick="delIt('activities','${a.id}',loadActivities)"><i class="fas fa-trash"></i></button>
           </div>
-          <div class="p-3">
-            <div class="font-semibold text-white text-sm">${a.emoji||''} ${a.title_bn||''}</div>
-            <div class="text-white/40 text-xs mt-0.5 truncate">${a.title_en||''}</div>
-            <div class="flex gap-2 mt-3">
-              <button class="btn-edit text-xs" onclick="editAct('${a.id}')"><i class="fas fa-edit"></i> সম্পাদনা</button>
-              <button class="btn-del text-xs" onclick="delItem('activities','${a.id}',loadActivities)"><i class="fas fa-trash"></i></button>
-            </div>
-          </div>
-        </div>`).join('')
-      : '<div class="col-span-3 text-white/30 text-center py-10">কোনো কার্যক্রম নেই। উপরে বাটন দিয়ে যোগ করুন।</div>';
-  } catch(e) {
-    g('actGrid').innerHTML = `<div class="col-span-3"><div class="firebase-error">${e.message}</div></div>`;
-  }
+        </div>
+      </div>`).join('')
+    :'<div class="col-span-3 text-white/30 text-center py-8">কোনো কার্যক্রম নেই।</div>';
+  }catch(e){g('actGrid').innerHTML=`<div class="col-span-3"><div class="err-box">${e.message}</div></div>`;}
 }
-
-window.openActModal = (id = null) => {
-  g('actEditId').value = id || '';
-  g('actModalTitle').textContent = id ? 'কার্যক্রম সম্পাদনা' : 'কার্যক্রম যোগ করুন';
-  if (!id) { ['actBn','actEn','actDesc','actEmoji','actTag','actOrder'].forEach(i => g(i).value = ''); g('actPrevWrap').classList.add('hidden'); }
+window.openActModal=(id=null)=>{
+  g('actEId').value=id||'';
+  g('actMT').textContent=id?'কার্যক্রম সম্পাদনা':'কার্যক্রম যোগ করুন';
+  if(!id){['actBn','actEn','actDesc','actEmoji','actTag','actOrd'].forEach(i=>g(i).value='');g('actPvW').classList.add('hidden');}
   g('actErr').classList.add('hidden');
-  openModal('actModal');
+  openM('actModal');
 };
-
-window.editAct = async (id) => {
-  try {
-    const a = await fbGetDoc('activities', id);
-    if (!a) return;
-    g('actBn').value    = a.title_bn    || '';
-    g('actEn').value    = a.title_en    || '';
-    g('actDesc').value  = a.description || '';
-    g('actEmoji').value = a.emoji       || '';
-    g('actTag').value   = a.tag         || '';
-    g('actOrder').value = a.display_order || 0;
-    if (a.image_url) { g('actPrev').src = a.image_url; g('actPrevWrap').classList.remove('hidden'); }
+window.editAct=async(id)=>{
+  try{
+    const a=await fbDoc('activities',id);if(!a)return;
+    g('actBn').value=a.title_bn||'';g('actEn').value=a.title_en||'';g('actDesc').value=a.description||'';
+    g('actEmoji').value=a.emoji||'';g('actTag').value=a.tag||'';g('actOrd').value=a.display_order||0;
+    if(a.image_url){g('actPv').src=a.image_url;g('actPvW').classList.remove('hidden');}
     openActModal(id);
-  } catch(e) { toast('লোড ত্রুটি: ' + e.message, true); }
+  }catch(e){toast('লোড ত্রুটি: '+e.message,true);}
 };
-
-window.saveAct = async () => {
-  const bn = v('actBn');
-  const errEl = g('actErr');
-  if (!bn) { showErr(errEl, 'বাংলা শিরোনাম লিখুন!'); return; }
+window.saveAct=async()=>{
+  const bn=v('actBn');const errEl=g('actErr');
+  if(!bn){showE(errEl,'বাংলা শিরোনাম লিখুন!');return;}
   errEl.classList.add('hidden');
-  setBtnLoading(g('btnSaveAct'), true, 'সেভ হচ্ছে...');
-  try {
-    let imgUrl = g('actPrev').src || '';
-    if (g('actPrev').src && g('actPrev').src.startsWith('blob:')) imgUrl = '';
-    const file = g('actFile').files[0];
-    if (file) imgUrl = await cloudUpload(file);
-
-    const data = {
-      title_bn: bn,
-      title_en: v('actEn'),
-      description: v('actDesc'),
-      emoji: v('actEmoji') || '🪷',
-      tag: v('actTag'),
-      display_order: parseInt(v('actOrder')) || 0,
-      image_url: imgUrl
-    };
-    const eid = v('actEditId');
-    if (eid) await fbUpdate('activities', eid, data);
-    else await fbAdd('activities', data);
-
-    toast('✅ কার্যক্রম সেভ হয়েছে!');
-    closeModal('actModal');
-    loadActivities(); loadDashboard();
-  } catch(e) {
-    showErr(errEl, `ত্রুটি: ${e.message}`);
-  }
-  setBtnLoading(g('btnSaveAct'), false, '<i class="fas fa-save"></i> সেভ করুন');
+  setLoad(g('btnSAct'),true,'সেভ হচ্ছে...');
+  try{
+    let img='';
+    const cur=g('actPv').src;
+    if(cur&&!cur.startsWith('data:')&&!cur.includes('blob:'))img=cur;
+    const file=g('actFile').files[0];
+    if(file)img=await cloudUp(file);
+    const data={title_bn:bn,title_en:v('actEn'),description:v('actDesc'),emoji:v('actEmoji')||'🪷',tag:v('actTag'),display_order:parseInt(v('actOrd'))||0,image_url:img};
+    const eid=v('actEId');
+    if(eid)await fbUpd('activities',eid,data);else await fbAdd('activities',data);
+    toast('✅ কার্যক্রম সেভ হয়েছে!');closeM('actModal');loadActivities();loadDash();
+  }catch(e){showE(errEl,`ত্রুটি: ${e.message}`);}
+  setLoad(g('btnSAct'),false,'<i class="fas fa-save"></i> সেভ করুন');
 };
 
-/* ══════════════════════════════════════════
-   COMMITTEE
-══════════════════════════════════════════ */
-async function loadCommittee() {
-  try {
-    const items = await fbGetAll('committee', orderBy('display_order','asc'));
-    g('comGrid').innerHTML = items.length
-      ? items.map(m => `
-        <div class="content-card overflow-hidden">
-          <div class="relative h-28">
-            <img src="${m.image_url || 'https://placehold.co/300x200/C41E3A/FFF8E7?text=Member'}"
-                 class="w-full h-full object-cover"
-                 onerror="this.src='https://placehold.co/300x200/C41E3A/FFF8E7?text=Photo'"/>
-            <div class="absolute bottom-2 left-2 bg-yellow-400 text-red-900 text-xs font-bold px-2 py-0.5 rounded-full">${m.role || ''}</div>
+/* ── COMMITTEE ── */
+async function loadCommittee(){
+  try{
+    const items=await fbAll('committee',orderBy('display_order','asc'));
+    g('comGrid').innerHTML=items.length?items.map(m=>`
+      <div class="box overflow-hidden">
+        <div class="relative h-24">
+          <img src="${m.image_url||'https://placehold.co/300x150/C41E3A/FFF8E7?text=Member'}" class="w-full h-full object-cover"
+               onerror="this.src='https://placehold.co/300x150/C41E3A/FFF8E7?text=Photo'"/>
+          <div class="absolute bottom-2 left-2 bg-yellow-400 text-red-900 text-xs font-bold px-2 py-0.5 rounded-full">${m.role||''}</div>
+        </div>
+        <div class="p-3">
+          <div class="font-semibold text-white text-sm truncate">${m.name||''}</div>
+          <div class="text-white/40 text-xs mt-0.5">${m.phone||''}</div>
+          <div class="flex gap-2 mt-2">
+            <button class="btn-e text-xs" onclick="editMem('${m.id}')"><i class="fas fa-edit"></i></button>
+            <button class="btn-d text-xs" onclick="delIt('committee','${m.id}',loadCommittee)"><i class="fas fa-trash"></i></button>
           </div>
-          <div class="p-3">
-            <div class="font-semibold text-white text-sm">${m.name || ''}</div>
-            <div class="text-white/40 text-xs mt-0.5">${m.phone || ''}</div>
-            <div class="flex gap-2 mt-3">
-              <button class="btn-edit text-xs" onclick="editMem('${m.id}')"><i class="fas fa-edit"></i> সম্পাদনা</button>
-              <button class="btn-del text-xs" onclick="delItem('committee','${m.id}',loadCommittee)"><i class="fas fa-trash"></i></button>
-            </div>
-          </div>
-        </div>`).join('')
-      : '<div class="col-span-3 text-white/30 text-center py-10">কোনো সদস্য নেই।</div>';
-  } catch(e) {
-    g('comGrid').innerHTML = `<div class="col-span-3"><div class="firebase-error">${e.message}</div></div>`;
-  }
+        </div>
+      </div>`).join('')
+    :'<div class="col-span-3 text-white/30 text-center py-8">কোনো সদস্য নেই।</div>';
+  }catch(e){g('comGrid').innerHTML=`<div class="col-span-3"><div class="err-box">${e.message}</div></div>`;}
 }
-
-window.openMemModal = (id = null) => {
-  g('memEditId').value = id || '';
-  g('memModalTitle').textContent = id ? 'সদস্য সম্পাদনা' : 'নতুন সদস্য যোগ করুন';
-  if (!id) { ['memName','memRole','memPhone','memOrder'].forEach(i => g(i).value = ''); g('memPrevWrap').classList.add('hidden'); }
+window.openMemModal=(id=null)=>{
+  g('memEId').value=id||'';
+  g('memMT').textContent=id?'সদস্য সম্পাদনা':'নতুন সদস্য যোগ করুন';
+  if(!id){['memName','memRole','memPhone','memOrd'].forEach(i=>g(i).value='');g('memPvW').classList.add('hidden');}
   g('memErr').classList.add('hidden');
-  openModal('memModal');
+  openM('memModal');
 };
-
-window.editMem = async (id) => {
-  try {
-    const m = await fbGetDoc('committee', id);
-    if (!m) return;
-    g('memName').value  = m.name          || '';
-    g('memRole').value  = m.role          || '';
-    g('memPhone').value = m.phone         || '';
-    g('memOrder').value = m.display_order || 0;
-    if (m.image_url) { g('memPrev').src = m.image_url; g('memPrevWrap').classList.remove('hidden'); }
+window.editMem=async(id)=>{
+  try{
+    const m=await fbDoc('committee',id);if(!m)return;
+    g('memName').value=m.name||'';g('memRole').value=m.role||'';g('memPhone').value=m.phone||'';g('memOrd').value=m.display_order||0;
+    if(m.image_url){g('memPv').src=m.image_url;g('memPvW').classList.remove('hidden');}
     openMemModal(id);
-  } catch(e) { toast('লোড ত্রুটি: ' + e.message, true); }
+  }catch(e){toast('লোড ত্রুটি: '+e.message,true);}
 };
-
-window.saveMem = async () => {
-  const name = v('memName');
-  const errEl = g('memErr');
-  if (!name) { showErr(errEl, 'নাম লিখুন!'); return; }
+window.saveMem=async()=>{
+  const name=v('memName');const errEl=g('memErr');
+  if(!name){showE(errEl,'নাম লিখুন!');return;}
   errEl.classList.add('hidden');
-  setBtnLoading(g('btnSaveMem'), true, 'সেভ হচ্ছে...');
-  try {
-    let imgUrl = (g('memPrev').src && !g('memPrev').src.startsWith('data:image')) ? g('memPrev').src : '';
-    const file = g('memFile').files[0];
-    if (file) imgUrl = await cloudUpload(file);
-
-    const data = {
-      name,
-      role: v('memRole'),
-      phone: v('memPhone'),
-      display_order: parseInt(v('memOrder')) || 0,
-      image_url: imgUrl
-    };
-    const eid = v('memEditId');
-    if (eid) await fbUpdate('committee', eid, data);
-    else await fbAdd('committee', data);
-
-    toast('✅ সদস্য সেভ হয়েছে!');
-    closeModal('memModal');
-    loadCommittee(); loadDashboard();
-  } catch(e) {
-    showErr(errEl, `ত্রুটি: ${e.message}`);
-  }
-  setBtnLoading(g('btnSaveMem'), false, '<i class="fas fa-save"></i> সেভ করুন');
+  setLoad(g('btnSMem'),true,'সেভ হচ্ছে...');
+  try{
+    let img='';
+    const cur=g('memPv').src;
+    if(cur&&!cur.startsWith('data:')&&!cur.includes('blob:'))img=cur;
+    const file=g('memFile').files[0];
+    if(file)img=await cloudUp(file);
+    const data={name,role:v('memRole'),phone:v('memPhone'),display_order:parseInt(v('memOrd'))||0,image_url:img};
+    const eid=v('memEId');
+    if(eid)await fbUpd('committee',eid,data);else await fbAdd('committee',data);
+    toast('✅ সদস্য সেভ হয়েছে!');closeM('memModal');loadCommittee();loadDash();
+  }catch(e){showE(errEl,`ত্রুটি: ${e.message}`);}
+  setLoad(g('btnSMem'),false,'<i class="fas fa-save"></i> সেভ করুন');
 };
 
-/* ══════════════════════════════════════════
-   GALLERY
-══════════════════════════════════════════ */
-async function loadGallery() {
-  try {
-    const items = await fbGetAll('gallery');
-    g('galGrid').innerHTML = items.length
-      ? items.map(gal => `
-        <div class="relative rounded-xl overflow-hidden group" style="height:130px">
-          <img src="${gal.image_url || ''}" class="w-full h-full object-cover"
-               onerror="this.src='https://placehold.co/300x200/C41E3A/FFF8E7?text=Photo'"/>
-          <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center gap-2 p-2">
-            <p class="text-white text-xs text-center font-medium leading-tight">${gal.caption || ''}</p>
-            <span class="text-yellow-300 text-xs border border-yellow-400/40 px-2 py-0.5 rounded-full">${gal.category || ''}</span>
-            <button class="btn-del text-xs py-1" onclick="delItem('gallery','${gal.id}',loadGallery)">
-              <i class="fas fa-trash"></i> মুছুন
-            </button>
-          </div>
-        </div>`).join('')
-      : '<div class="col-span-4 text-white/30 text-center py-10">কোনো ছবি নেই।</div>';
-  } catch(e) {
-    g('galGrid').innerHTML = `<div class="col-span-4"><div class="firebase-error">${e.message}</div></div>`;
-  }
+/* ── GALLERY ── */
+async function loadGallery(){
+  try{
+    const items=await fbAll('gallery');
+    g('galGrid').innerHTML=items.length?items.map(gal=>`
+      <div class="relative rounded-xl overflow-hidden group" style="height:120px">
+        <img src="${gal.image_url||''}" class="w-full h-full object-cover"
+             onerror="this.src='https://placehold.co/300x200/C41E3A/FFF8E7?text=Photo'"/>
+        <div class="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center gap-1.5 p-2">
+          <p class="text-white text-xs text-center leading-tight line-clamp-2">${gal.caption||''}</p>
+          <span class="text-yellow-300 text-xs border border-yellow-400/40 px-2 py-0.5 rounded-full">${gal.category||''}</span>
+          <button class="btn-d text-xs py-1 mt-1" onclick="delIt('gallery','${gal.id}',loadGallery)">
+            <i class="fas fa-trash"></i> মুছুন
+          </button>
+        </div>
+      </div>`).join('')
+    :'<div class="col-span-4 text-white/30 text-center py-8">কোনো ছবি নেই।</div>';
+  }catch(e){g('galGrid').innerHTML=`<div class="col-span-4"><div class="err-box">${e.message}</div></div>`;}
 }
-
-window.uploadGallery = async () => {
-  const file = g('galFile').files[0];
-  const errEl = g('galErr');
-  if (!file) { showErr(errEl, 'ছবি বেছে নিন!'); return; }
+window.uploadGallery=async()=>{
+  const file=g('galFile').files[0];const errEl=g('galErr');
+  if(!file){showE(errEl,'ছবি বেছে নিন!');return;}
   errEl.classList.add('hidden');
-  setBtnLoading(g('btnGalUp'), true, 'আপলোড হচ্ছে...');
-  try {
-    const url = await cloudUpload(file);
-    await fbAdd('gallery', {
-      image_url: url,
-      caption: v('galCaption'),
-      category: v('galCat'),
-      is_tall: false
-    });
-    g('galFile').value = ''; g('galCaption').value = '';
-    g('galPrevWrap').classList.add('hidden');
-    toast('✅ ছবি আপলোড হয়েছে!');
-    loadGallery(); loadDashboard();
-  } catch(e) {
-    showErr(errEl, `আপলোড ব্যর্থ: ${e.message}`);
-  }
-  setBtnLoading(g('btnGalUp'), false, '<i class="fas fa-upload"></i> আপলোড করুন');
+  setLoad(g('btnGUp'),true,'আপলোড হচ্ছে...');
+  try{
+    const url=await cloudUp(file);
+    await fbAdd('gallery',{image_url:url,caption:v('galCap'),category:v('galCat'),is_tall:false});
+    g('galFile').value='';g('galCap').value='';g('galPvW').classList.add('hidden');
+    toast('✅ ছবি আপলোড হয়েছে!');loadGallery();loadDash();
+  }catch(e){showE(errEl,`আপলোড ব্যর্থ: ${e.message}`);}
+  setLoad(g('btnGUp'),false,'<i class="fas fa-upload"></i> আপলোড করুন');
 };
 
-/* ══════════════════════════════════════════
-   UPCOMING EVENTS
-══════════════════════════════════════════ */
-async function loadUpcoming() {
-  try {
-    const items = await fbGetAll('upcoming_events');
-    g('evTbl').innerHTML = items.length
-      ? items.map(e => `
-        <tr>
-          <td class="text-white/80">${e.icon||''} ${e.title||'—'}</td>
-          <td class="text-white/50 text-xs">${e.date||''} ${e.month||''}</td>
-          <td class="text-white/50 text-xs">${e.location||'—'}</td>
-          <td><button class="btn-del" onclick="delItem('upcoming_events','${e.id}',loadUpcoming)"><i class="fas fa-trash"></i></button></td>
-        </tr>`).join('')
-      : '<tr><td colspan="4" class="text-center text-white/30 py-8">কোনো অনুষ্ঠান নেই।</td></tr>';
-  } catch(e) {
-    g('evTbl').innerHTML = `<tr><td colspan="4"><div class="firebase-error m-4">${e.message}</div></td></tr>`;
-  }
+/* ── UPCOMING ── */
+async function loadUpcoming(){
+  try{
+    const items=await fbAll('upcoming_events');
+    g('evTbl').innerHTML=items.length?items.map(e=>`
+      <tr>
+        <td class="text-white/80 text-sm">${e.icon||''} ${e.title||'—'}</td>
+        <td class="text-white/50 text-xs whitespace-nowrap">${e.date||''} ${e.month||''}</td>
+        <td class="text-white/50 text-xs">${e.location||'—'}</td>
+        <td><button class="btn-d" onclick="delIt('upcoming_events','${e.id}',loadUpcoming)"><i class="fas fa-trash"></i></button></td>
+      </tr>`).join('')
+    :'<tr><td colspan="4" class="text-center text-white/30 py-6">কোনো অনুষ্ঠান নেই।</td></tr>';
+  }catch(e){g('evTbl').innerHTML=`<tr><td colspan="4"><div class="err-box m-3">${e.message}</div></td></tr>`;}
 }
-
-window.addEvent = async () => {
-  const title = v('evTitle');
-  const errEl = g('evErr');
-  if (!title) { showErr(errEl, 'অনুষ্ঠানের নাম লিখুন!'); return; }
+window.addEvent=async()=>{
+  const title=v('evT');const errEl=g('evErr');
+  if(!title){showE(errEl,'অনুষ্ঠানের নাম লিখুন!');return;}
   errEl.classList.add('hidden');
-  try {
-    await fbAdd('upcoming_events', {
-      title, date: v('evDate'), month: v('evMonth'),
-      location: v('evLoc'), icon: v('evIcon') || '📅'
-    });
-    ['evTitle','evDate','evMonth','evLoc','evIcon'].forEach(i => g(i).value = '');
-    toast('✅ অনুষ্ঠান যোগ হয়েছে!');
-    loadUpcoming();
-  } catch(e) { showErr(errEl, `ত্রুটি: ${e.message}`); }
+  try{
+    await fbAdd('upcoming_events',{title,date:v('evD'),month:v('evM'),location:v('evL'),icon:v('evI')||'📅'});
+    ['evT','evD','evM','evL','evI'].forEach(i=>g(i).value='');
+    toast('✅ অনুষ্ঠান যোগ হয়েছে!');loadUpcoming();
+  }catch(e){showE(errEl,`ত্রুটি: ${e.message}`);}
 };
 
-/* ══════════════════════════════════════════
-   SETTINGS — LOAD
-══════════════════════════════════════════ */
-async function loadAllSettings() {
-  try {
-    const s = await fbGetDoc('settings', 'main') || {};
+/* ── DELETE (with auth check) ── */
+window.delIt=async(col,id,fn)=>{
+  if(!confirm('এটি মুছে ফেলতে চান?'))return;
+  try{
+    await fbDel(col,id);
+    toast('✅ মুছে ফেলা হয়েছে!');fn();loadDash();
+  }catch(e){
+    toast(`মুছতে ব্যর্থ: ${e.message}`,true);
+  }
+};
+
+/* ── MAP PREVIEW ── */
+window.previewMap=()=>{
+  const url=v('sMap');
+  if(!url){toast('Map URL দিন!',true);return;}
+  g('mapPreviewFrame').src=url;
+  g('mapPreviewBox').classList.remove('hidden');
+};
+
+/* ── SETTINGS LOAD ── */
+async function loadAllSettings(){
+  try{
+    const s=await fbDoc('settings','main')||{};
     // Site
-    setVal('sOrgBn', s.org_bn); setVal('sOrgEn', s.org_en);
-    setVal('sTagBn', s.slogan_bn); setVal('sTagEn', s.slogan_en);
-    setVal('sYear',  s.founding_year); setVal('sFestName', s.festival_name);
-    if (s.festival_date) {
-      try { g('sFestDate').value = s.festival_date.slice(0,16); } catch{}
-    }
-    setVal('sAddr',     s.address);   setVal('sPhone1', s.phone1);
-    setVal('sPhone2',   s.phone2);    setVal('sEmail',  s.email);
-    setVal('sWhatsapp', s.whatsapp);  setVal('sMapUrl', s.map_url);
+    sv('sOBn',s.org_bn);sv('sOEn',s.org_en);sv('sTBn',s.slogan_bn);sv('sTEn',s.slogan_en);
+    sv('sYear',s.founding_year);sv('sFN',s.festival_name);
+    if(s.festival_date)try{g('sFD').value=s.festival_date.slice(0,16);}catch{}
+    sv('sAddr',s.address);sv('sP1',s.phone1);sv('sP2',s.phone2);
+    sv('sEmail',s.email);sv('sWA',s.whatsapp);sv('sMap',s.map_url);
+    // About
+    sv('ab1',s.about_p1);sv('ab2',s.about_p2);sv('abEn',s.about_en);
+    sv('abM',s.stat_members);sv('abF',s.stat_events);
+    sv('abG1',s.goal1);sv('abG2',s.goal2);sv('abG3',s.goal3);sv('abG4',s.goal4);sv('abG5',s.goal5);
     // Social
-    setVal('sFb', s.fb); setVal('sIg', s.ig); setVal('sYt', s.yt);
-    setVal('sWa', s.wa); setVal('sTw', s.tw); setVal('sTg', s.tg);
+    sv('soFb',s.fb);sv('soIg',s.ig);sv('soYt',s.yt);sv('soWa',s.wa);sv('soTg',s.tg);
     // Payment
-    setVal('pUpi',     s.upi_id);   setVal('pAccName', s.bank_acc_name);
-    setVal('pAccNum',  s.bank_acc); setVal('pIfsc',    s.ifsc);
-    setVal('pBank',    s.bank_name); setVal('pBranch',  s.bank_branch);
-    if (s.acc_type) g('pAccType').value = s.acc_type;
+    sv('pBkash',s.bkash);sv('pAN',s.bank_acc_name);sv('pNum',s.bank_acc);
+    sv('pRoute',s.bank_routing);sv('pBank',s.bank_name);sv('pBranch',s.bank_branch);
+    if(s.acc_type)g('pType').value=s.acc_type;
     // Appearance
-    if (s.logo_url) {
-      const lp = g('logoPreviewCircle');
-      lp.innerHTML = `<img src="${s.logo_url}" class="w-full h-full object-cover"/>`;
-    }
-    if (s.qr_url) { g('qrPrev').src = s.qr_url; g('qrPrevWrap').classList.remove('hidden'); }
-    if (s.hero_url) { g('heroPrev').src = s.hero_url; g('heroPrevWrap').classList.remove('hidden'); }
-    if (s.about_img) { g('aboutPrev').src = s.about_img; g('aboutPrevWrap').classList.remove('hidden'); }
-  } catch(e) { console.warn('Settings load:', e); }
+    if(s.logo_url){g('logoPv').innerHTML=`<img src="${s.logo_url}" class="w-full h-full object-cover"/>`;g('sbLogo').innerHTML=`<img src="${s.logo_url}" class="w-full h-full object-cover"/>`;}
+    if(s.qr_url){g('qrPv').src=s.qr_url;g('qrPvW').classList.remove('hidden');}
+    if(s.hero_url){g('heroPv').src=s.hero_url;g('heroPvW').classList.remove('hidden');}
+    if(s.about_img){g('aboutImgPv').src=s.about_img;g('aboutImgPvW').classList.remove('hidden');}
+  }catch(e){console.warn('Settings load:',e);}
 }
 
-/* ══════════════════════════════════════════
-   SETTINGS — SAVE
-══════════════════════════════════════════ */
-window.saveSettings = async (section) => {
-  const errMap = { site:'siteErr', social:'socialErr', payment:'payErr' };
-  const btnMap = { site:'btnSaveSite', social:'btnSaveSocial', payment:'btnSavePay' };
-  const errEl = g(errMap[section]);
-  const btn   = g(btnMap[section]);
+/* ── SETTINGS SAVE ── */
+window.saveSet=async(sec)=>{
+  const errMap={site:'siteErr',about:'aboutErr',social:'socialErr',payment:'payErr'};
+  const btnMap={site:'btnSS',about:'btnSA',social:'btnSSoc',payment:'btnSPay'};
+  const errEl=g(errMap[sec]);const btn=g(btnMap[sec]);
   errEl.classList.add('hidden');
-  setBtnLoading(btn, true, 'সেভ হচ্ছে...');
-
-  try {
-    let data = {};
-    if (section === 'site') {
-      const fd = v('sFestDate');
-      data = {
-        org_bn: v('sOrgBn'), org_en: v('sOrgEn'),
-        slogan_bn: v('sTagBn'), slogan_en: v('sTagEn'),
-        founding_year: v('sYear'), festival_name: v('sFestName'),
-        festival_date: fd ? fd.replace('T',' ') + ':00' : '',
-        address: v('sAddr'), phone1: v('sPhone1'), phone2: v('sPhone2'),
-        email: v('sEmail'), whatsapp: v('sWhatsapp'), map_url: v('sMapUrl')
-      };
-    } else if (section === 'social') {
-      data = { fb:v('sFb'), ig:v('sIg'), yt:v('sYt'), wa:v('sWa'), tw:v('sTw'), tg:v('sTg') };
-    } else if (section === 'payment') {
-      data = {
-        upi_id: v('pUpi'), bank_acc_name: v('pAccName'),
-        bank_acc: v('pAccNum'), ifsc: v('pIfsc'),
-        bank_name: v('pBank'), bank_branch: v('pBranch'),
-        acc_type: g('pAccType').value
-      };
+  setLoad(btn,true,'সেভ হচ্ছে...');
+  try{
+    let data={};
+    if(sec==='site'){
+      const fd=v('sFD');
+      data={org_bn:v('sOBn'),org_en:v('sOEn'),slogan_bn:v('sTBn'),slogan_en:v('sTEn'),founding_year:v('sYear'),festival_name:v('sFN'),festival_date:fd?fd.replace('T',' ')+':00':'',address:v('sAddr'),phone1:v('sP1'),phone2:v('sP2'),email:v('sEmail'),whatsapp:v('sWA'),map_url:v('sMap')};
+    } else if(sec==='about'){
+      data={about_p1:v('ab1'),about_p2:v('ab2'),about_en:v('abEn'),stat_members:v('abM'),stat_events:v('abF'),goal1:v('abG1'),goal2:v('abG2'),goal3:v('abG3'),goal4:v('abG4'),goal5:v('abG5')};
+    } else if(sec==='social'){
+      data={fb:v('soFb'),ig:v('soIg'),yt:v('soYt'),wa:v('soWa'),tg:v('soTg')};
+    } else if(sec==='payment'){
+      // Upload QR if new file selected
+      const qrFile=g('qrFile').files[0];
+      let qrUrl='';
+      if(qrFile)qrUrl=await cloudUp(qrFile);
+      data={bkash:v('pBkash'),bank_acc_name:v('pAN'),bank_acc:v('pNum'),bank_routing:v('pRoute'),bank_name:v('pBank'),bank_branch:v('pBranch'),acc_type:g('pType').value};
+      if(qrUrl)data.qr_url=qrUrl;
     }
-
-    await fbSet('settings', 'main', data);
+    await fbSet('settings','main',data);
     toast('✅ সেটিংস সেভ হয়েছে!');
-  } catch(e) {
-    showErr(errEl, `সেভ ব্যর্থ: ${e.message}. Firebase Rules চেক করুন।`);
-  }
-
-  const labels = { site:'<i class="fas fa-save"></i> সেটিংস সেভ করুন', social:'<i class="fas fa-save"></i> লিংক সেভ করুন', payment:'<i class="fas fa-save"></i> পেমেন্ট সেটিংস সেভ করুন' };
-  setBtnLoading(btn, false, labels[section]);
+  }catch(e){showE(errEl,`সেভ ব্যর্থ: ${e.message} — Firebase Rules চেক করুন।`);}
+  const lbls={site:'<i class="fas fa-save"></i> সেটিংস সেভ করুন',about:'<i class="fas fa-save"></i> সেভ করুন',social:'<i class="fas fa-save"></i> লিংক সেভ করুন',payment:'<i class="fas fa-save"></i> সেভ করুন'};
+  setLoad(btn,false,lbls[sec]);
 };
 
-/* ══════════════════════════════════════════
-   APPEARANCE UPLOADS
-══════════════════════════════════════════ */
-window.previewLogo = (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const r = new FileReader();
-  r.onload = ev => {
-    const lp = g('logoPreviewCircle');
-    lp.innerHTML = `<img src="${ev.target.result}" class="w-full h-full object-cover"/>`;
-  };
-  r.readAsDataURL(file);
+/* ── APPEARANCE UPLOADS ── */
+window.prevLogoFn=(e)=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=ev=>{g('logoPv').innerHTML=`<img src="${ev.target.result}" class="w-full h-full object-cover"/>`;};r.readAsDataURL(f);
 };
-
-window.uploadLogo = async () => {
-  const file = g('logoFile').files[0];
-  const errEl = g('appErr');
-  if (!file) { showErr(errEl, 'ছবি বেছে নিন!'); return; }
+window.upLogo=async()=>{
+  const file=g('logoFile').files[0];const errEl=g('appErr');
+  if(!file){showE(errEl,'ছবি বেছে নিন!');return;}
   errEl.classList.add('hidden');
-  setBtnLoading(g('btnLogoUp'), true, 'আপলোড হচ্ছে...');
-  try {
-    const url = await cloudUpload(file);
-    await fbSet('settings', 'main', { logo_url: url });
-    toast('✅ লোগো আপলোড হয়েছে!');
-  } catch(e) { showErr(errEl, `ত্রুটি: ${e.message}`); }
-  setBtnLoading(g('btnLogoUp'), false, '<i class="fas fa-upload"></i> লোগো আপলোড করুন');
+  setLoad(g('btnLogo'),true,'আপলোড হচ্ছে...');
+  try{const url=await cloudUp(file);await fbSet('settings','main',{logo_url:url});toast('✅ লোগো আপলোড হয়েছে!');}
+  catch(e){showE(errEl,`ত্রুটি: ${e.message}`);}
+  setLoad(g('btnLogo'),false,'<i class="fas fa-upload"></i> লোগো আপলোড');
 };
-
-window.uploadHero = async () => {
-  const file = g('heroFile').files[0];
-  const errEl = g('appErr');
-  if (!file) { showErr(errEl, 'ছবি বেছে নিন!'); return; }
+window.upHero=async()=>{
+  const file=g('heroFile').files[0];const errEl=g('appErr');
+  if(!file){showE(errEl,'ছবি বেছে নিন!');return;}
   errEl.classList.add('hidden');
-  setBtnLoading(g('btnHeroUp'), true, 'আপলোড হচ্ছে...');
-  try {
-    const url = await cloudUpload(file);
-    await fbSet('settings', 'main', { hero_url: url });
-    toast('✅ হিরো ব্যানার আপলোড হয়েছে!');
-  } catch(e) { showErr(errEl, `ত্রুটি: ${e.message}`); }
-  setBtnLoading(g('btnHeroUp'), false, '<i class="fas fa-upload"></i> ব্যানার আপলোড করুন');
+  setLoad(g('btnHero'),true,'আপলোড হচ্ছে...');
+  try{const url=await cloudUp(file);await fbSet('settings','main',{hero_url:url});toast('✅ ব্যানার আপলোড হয়েছে!');}
+  catch(e){showE(errEl,`ত্রুটি: ${e.message}`);}
+  setLoad(g('btnHero'),false,'<i class="fas fa-upload"></i> ব্যানার আপলোড');
 };
-
-window.uploadAboutImg = async () => {
-  const file = g('aboutFile').files[0];
-  const errEl = g('appErr');
-  if (!file) { showErr(errEl, 'ছবি বেছে নিন!'); return; }
+window.upAboutImg=async()=>{
+  const file=g('aboutImgFile').files[0];const errEl=g('appErr');
+  if(!file){showE(errEl,'ছবি বেছে নিন!');return;}
   errEl.classList.add('hidden');
-  setBtnLoading(g('btnAboutUp'), true, 'আপলোড হচ্ছে...');
-  try {
-    const url = await cloudUpload(file);
-    await fbSet('settings', 'main', { about_img: url });
-    toast('✅ About ছবি আপলোড হয়েছে!');
-  } catch(e) { showErr(errEl, `ত্রুটি: ${e.message}`); }
-  setBtnLoading(g('btnAboutUp'), false, '<i class="fas fa-upload"></i> ছবি আপলোড করুন');
+  setLoad(g('btnAbout'),true,'আপলোড হচ্ছে...');
+  try{const url=await cloudUp(file);await fbSet('settings','main',{about_img:url});toast('✅ ছবি আপলোড হয়েছে!');}
+  catch(e){showE(errEl,`ত্রুটি: ${e.message}`);}
+  setLoad(g('btnAbout'),false,'<i class="fas fa-upload"></i> ছবি আপলোড');
 };
 
-/* ══════════════════════════════════════════
-   DELETE
-══════════════════════════════════════════ */
-window.delItem = async (col, id, reloadFn) => {
-  if (!confirm('এটি মুছে ফেলতে চান?')) return;
-  try {
-    await fbDel(col, id);
-    toast('✅ মুছে ফেলা হয়েছে!');
-    reloadFn();
-    loadDashboard();
-  } catch(e) { toast('মুছতে ব্যর্থ: ' + e.message, true); }
+/* ── NAV ── */
+const TITLES={dashboard:'Dashboard',notices:'নোটিশ বোর্ড',activities:'কার্যক্রম',committee:'কমিটি',gallery:'গ্যালারি',upcoming:'আসন্ন অনুষ্ঠান',site:'সাইট সেটিংস',about:'আমাদের সম্পর্কে',social:'সোশ্যাল মিডিয়া',payment:'পেমেন্ট তথ্য',appearance:'লোগো ও ছবি'};
+window.goPanel=(id,el)=>{
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  g('p-'+id).classList.add('active');
+  g('pageTitle').textContent=TITLES[id]||id;
+  if(el){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));el.classList.add('active');}
+  closeSide();
 };
-
-/* ══════════════════════════════════════════
-   UI HELPERS
-══════════════════════════════════════════ */
-const g = id => document.getElementById(id);
-const v = id => (g(id)?.value || '').trim();
-const setVal = (id, val) => { const el = g(id); if (el && val !== undefined && val !== null) el.value = val; };
-
-function showErr(el, msg) { el.innerHTML = `<i class="fas fa-exclamation-circle mr-1"></i>${msg}`; el.classList.remove('hidden'); }
-
-function setBtnLoading(btn, loading, label) {
-  if (!btn) return;
-  if (loading) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>' + label; }
-  else { btn.disabled = false; btn.innerHTML = label; }
-}
-
-function toast(msg, isErr = false) {
-  const t = g('toast');
-  t.textContent = msg;
-  t.className = isErr ? 'show-err' : 'show-ok';
-  clearTimeout(window._toastTimer);
-  window._toastTimer = setTimeout(() => { t.className = ''; }, 3500);
-}
-
-window.openModal  = id => g(id).classList.add('open');
-window.closeModal = id => g(id).classList.remove('open');
-
-// Close modal on backdrop click
-document.querySelectorAll('.modal-bg').forEach(m => {
-  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
-});
-
-// Image preview helper
-window.previewImg = (fileInputId, previewId, wrapId) => {
-  const file = g(fileInputId)?.files[0];
-  if (!file) return;
-  const r = new FileReader();
-  r.onload = ev => {
-    g(previewId).src = ev.target.result;
-    g(wrapId).classList.remove('hidden');
-  };
-  r.readAsDataURL(file);
-};
-
-/* ══════════════════════════════════════════
-   NAV
-══════════════════════════════════════════ */
-const SEC_TITLES = {
-  dashboard:'Dashboard', notices:'নোটিশ বোর্ড', activities:'কার্যক্রম',
-  committee:'কমিটি সদস্য', gallery:'গ্যালারি', upcoming:'আসন্ন অনুষ্ঠান',
-  site:'সাইট সেটিংস', social:'সোশ্যাল মিডিয়া', payment:'পেমেন্ট সেটিংস', appearance:'লোগো ও ব্যানার'
-};
-
-window.nav = (id, el) => {
-  document.querySelectorAll('.section-panel').forEach(s => s.classList.remove('active'));
-  g('sec-' + id).classList.add('active');
-  g('pageTitle').textContent = SEC_TITLES[id] || id;
-  if (el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); }
-  if (window.innerWidth < 1024) closeSidebar();
-};
-
-window.toggleSidebar = () => {
-  const s = g('sidebar'), ov = g('sidebarOverlay');
-  if (window.innerWidth < 1024) {
-    s.classList.toggle('open');
-    ov.classList.toggle('show');
-  } else {
-    const mc = g('mainContent');
-    s.classList.toggle('closed');
-    mc.style.marginLeft = s.classList.contains('closed') ? '0' : '260px';
+window.toggleSide=()=>{
+  const s=g('sidebar'),ov=g('sideOv');
+  if(window.innerWidth<1024){s.classList.toggle('open');ov.classList.toggle('on');}
+  else{
+    const mc=g('mainContent');
+    if(s.style.transform==='translateX(-250px)'||s.classList.contains('hidden')){
+      s.style.transform='';mc.style.marginLeft='250px';
+    } else {
+      s.style.transform='translateX(-250px)';mc.style.marginLeft='0';
+    }
   }
 };
-window.closeSidebar = () => {
-  g('sidebar').classList.remove('open');
-  g('sidebarOverlay').classList.remove('show');
+window.closeSide=()=>{
+  if(window.innerWidth<1024){g('sidebar').classList.remove('open');g('sideOv').classList.remove('on');}
 };
 
-/* ── Init ── */
-document.getElementById('loginYear').textContent = new Date().getFullYear();
+/* ── HELPERS ── */
+const g=id=>document.getElementById(id);
+const v=id=>(g(id)?.value||'').trim();
+const sv=(id,val)=>{const el=g(id);if(el&&val!=null)el.value=val;};
+function showE(el,msg){el.innerHTML=`<i class="fas fa-exclamation-circle mr-1"></i>${msg}`;el.classList.remove('hidden');}
+function setLoad(btn,on,label){if(!btn)return;btn.disabled=on;btn.innerHTML=on?`<i class="fas fa-spinner fa-spin mr-1"></i>${label}`:label;}
+function toast(msg,isErr=false){
+  const t=g('toast');t.textContent=msg;
+  t.className=isErr?'err':'ok';
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.className='',3500);
+}
+window.openM=id=>g(id).classList.add('open');
+window.closeM=id=>g(id).classList.remove('open');
+document.querySelectorAll('.modal-bg').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
+window.prevImg=(fi,pi,wi)=>{
+  const f=g(fi)?.files[0];if(!f)return;
+  const r=new FileReader();r.onload=ev=>{g(pi).src=ev.target.result;g(wi).classList.remove('hidden');};r.readAsDataURL(f);
+};
 
+/* Init */
+g('ly').textContent=new Date().getFullYear();
 </script>
 </body>
 </html>
