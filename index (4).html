@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>পুষ্পাঞ্জলি যুব সংঘ | Pushpanjali Yuva Sangh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    *{scroll-behavior:smooth}
+    body{font-family:'Hind Siliguri',sans-serif;background:#FFF8E7;color:#1A0A00;overflow-x:hidden}
+    .gold-line{height:3px;background:linear-gradient(90deg,transparent,#D4A017,#F5C842,#D4A017,transparent)}
+    #navbar{transition:all .4s}
+    #navbar.scrolled{background:rgba(123,13,30,.97)!important;backdrop-filter:blur(12px);box-shadow:0 4px 30px rgba(0,0,0,.4)}
+    .nav-link{position:relative;font-weight:500;transition:color .3s;text-decoration:none}
+    .nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:#D4A017;transition:width .3s}
+    .nav-link:hover::after,.nav-link.active::after{width:100%}
+    .nav-link:hover{color:#F5C842}
+    .hero-section{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;z-index:0;transition:background-image .5s}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(123,13,30,.93),rgba(196,30,58,.85) 40%,rgba(168,80,0,.88));z-index:1}
+    .hero-content{position:relative;z-index:2}
+    .hero-title{font-family:'Cinzel Decorative',serif;text-shadow:0 0 40px rgba(212,160,23,.6),0 4px 20px rgba(0,0,0,.5)}
+    .om-symbol{font-family:'Tiro Devanagari Sanskrit',serif;font-size:7rem;color:rgba(212,160,23,.15);position:absolute;pointer-events:none;animation:float 6s ease-in-out infinite;user-select:none;z-index:2}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+    .sparkle{width:4px;height:4px;border-radius:50%;background:#D4A017;position:absolute;animation:twinkle 3s ease-in-out infinite;z-index:2}
+    @keyframes twinkle{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:1;transform:scale(1.4)}}
+    .countdown-card{background:linear-gradient(135deg,rgba(123,13,30,.9),rgba(196,30,58,.8));border:1px solid rgba(212,160,23,.5);backdrop-filter:blur(10px);border-radius:16px}
+    .countdown-number{font-family:'Cinzel Decorative',serif;font-size:3.5rem;line-height:1;color:#F5C842;text-shadow:0 0 20px rgba(212,160,23,.6)}
+    @media(max-width:640px){.countdown-number{font-size:2.2rem}}
+    .section-badge{display:inline-block;background:linear-gradient(135deg,#C41E3A,#8B0000);color:#F5C842;font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.35rem 1.2rem;border-radius:999px;border:1px solid rgba(212,160,23,.4);margin-bottom:.75rem}
+    .section-title{font-family:'Cinzel Decorative',serif;background:linear-gradient(135deg,#C41E3A,#8B0000);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .activity-card{background:white;border-radius:20px;overflow:hidden;border:1px solid rgba(212,160,23,.2);transition:transform .35s,box-shadow .35s}
+    .activity-card:hover{transform:translateY(-10px) scale(1.01);box-shadow:0 20px 60px rgba(196,30,58,.2)}
+    .notice-board{background:linear-gradient(135deg,#7B0D1E,#C41E3A);border-radius:20px;border:2px solid rgba(212,160,23,.4);overflow:hidden}
+    .notice-scroll-wrapper{height:320px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(212,160,23,.5) transparent}
+    .notice-item{border-bottom:1px solid rgba(255,255,255,.1);transition:background .25s}
+    .notice-item:hover{background:rgba(255,255,255,.08)}
+    .notice-badge-new{background:#F5C842;color:#7B0D1E;font-size:.6rem;font-weight:800;padding:1px 6px;border-radius:999px;animation:pulse-badge 2s ease infinite;display:inline-block}
+    @keyframes pulse-badge{0%,100%{opacity:1}50%{opacity:.7}}
+    .ticker-wrap{overflow:hidden;background:linear-gradient(135deg,#8B0000,#C41E3A)}
+    .ticker-content{display:inline-block;white-space:nowrap;animation:ticker-scroll 35s linear infinite}
+    @keyframes ticker-scroll{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
+    .member-card{background:white;border-radius:20px;overflow:hidden;border:1px solid rgba(212,160,23,.25);transition:transform .3s,box-shadow .3s}
+    .member-card:hover{transform:translateY(-8px);box-shadow:0 16px 50px rgba(196,30,58,.18)}
+    .member-avatar-wrap{position:relative;overflow:hidden;height:12rem}
+    .member-avatar-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(123,13,30,.85));z-index:1}
+    .member-avatar-wrap img{transition:transform .4s;width:100%;height:100%;object-fit:cover}
+    .member-card:hover .member-avatar-wrap img{transform:scale(1.07)}
+    .gallery-item{position:relative;overflow:hidden;border-radius:16px;cursor:pointer;height:12rem}
+    .gallery-item img{transition:transform .45s;width:100%;height:100%;object-fit:cover}
+    .gallery-item:hover img{transform:scale(1.1)}
+    .gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(123,13,30,.85),transparent);opacity:0;transition:opacity .35s;display:flex;align-items:flex-end;padding:1rem}
+    .gallery-item:hover .gallery-overlay{opacity:1}
+    .gallery-filter{background:rgba(255,255,255,.12);border:1.5px solid rgba(212,160,23,.35);color:#F5C842;border-radius:999px;padding:.4rem 1.3rem;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .25s;font-family:'Hind Siliguri',sans-serif}
+    .gallery-filter:hover,.gallery-filter.active-filter{background:#D4A017;color:#7B0D1E;border-color:#D4A017}
+    .qr-box{background:white;border-radius:20px;border:3px solid rgba(212,160,23,.4);box-shadow:0 8px 40px rgba(196,30,58,.15);transition:transform .3s,box-shadow .3s}
+    .qr-box:hover{transform:translateY(-6px)}
+    .bank-detail-row{display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px dashed rgba(212,160,23,.3);font-size:.9rem}
+    .bank-detail-row:last-child{border-bottom:none}
+    .copy-btn{background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.3);border-radius:6px;padding:2px 8px;font-size:.7rem;cursor:pointer;transition:all .2s;color:#D4A017}
+    .copy-btn:hover{background:#D4A017;color:white}
+    .form-input{width:100%;background:white;border:1.5px solid rgba(212,160,23,.3);border-radius:12px;padding:.8rem 1.1rem;font-family:'Hind Siliguri',sans-serif;font-size:.95rem;color:#1A0A00;transition:border-color .3s,box-shadow .3s;outline:none}
+    .form-input:focus{border-color:#C41E3A;box-shadow:0 0 0 3px rgba(196,30,58,.1)}
+    .submit-btn{background:linear-gradient(135deg,#C41E3A,#8B0000);color:white;border:none;border-radius:12px;padding:.85rem 2.5rem;font-family:'Hind Siliguri',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:all .3s;width:100%}
+    .submit-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(196,30,58,.4)}
+    .footer-social a{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.3);color:#D4A017;transition:all .3s;font-size:.95rem;text-decoration:none}
+    .footer-social a:hover{background:#D4A017;color:white;transform:translateY(-3px)}
+    #lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9999;align-items:center;justify-content:center}
+    #lightbox.active{display:flex}
+    #lightbox img{max-width:90vw;max-height:85vh;border-radius:12px;border:3px solid rgba(212,160,23,.4)}
+    #scrollTop{position:fixed;bottom:2rem;right:2rem;width:48px;height:48px;background:linear-gradient(135deg,#C41E3A,#8B0000);color:#F5C842;border:2px solid rgba(212,160,23,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(20px);transition:all .3s;z-index:1000;font-size:1.1rem;box-shadow:0 8px 25px rgba(196,30,58,.4)}
+    #scrollTop.visible{opacity:1;pointer-events:all;transform:translateY(0)}
+    .reveal{opacity:0;transform:translateY(40px);transition:opacity .7s,transform .7s}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-left{opacity:0;transform:translateX(-50px);transition:opacity .7s,transform .7s}
+    .reveal-right{opacity:0;transform:translateX(50px);transition:opacity .7s,transform .7s}
+    .reveal-left.visible,.reveal-right.visible{opacity:1;transform:translateX(0)}
+    #mobileMenu{max-height:0;overflow:hidden;transition:max-height .4s}
+    #mobileMenu.open{max-height:500px}
+    .red-gradient-bg{background:linear-gradient(135deg,#7B0D1E,#C41E3A,#9B1C2E)}
+    /* Admin button floating */
+    #adminFloatBtn{position:fixed;bottom:2rem;left:2rem;background:rgba(13,6,8,.9);
+      color:#D4A017;border:1px solid rgba(212,160,23,.3);border-radius:12px;
+      padding:.6rem 1rem;font-size:.78rem;font-weight:600;cursor:pointer;
+      text-decoration:none;display:flex;align-items:center;gap:.5rem;
+      transition:all .3s;z-index:990;backdrop-filter:blur(8px);
+      opacity:.6}
+    #adminFloatBtn:hover{opacity:1;background:rgba(212,160,23,.15);transform:translateY(-2px)}
+  </style>
+</head>
+<body>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button onclick="closeLightbox()" style="position:absolute;top:1.5rem;right:1.5rem;color:white;font-size:2rem;background:none;border:none;cursor:pointer;z-index:10">✕</button>
+  <img id="lightboxImg" src="" alt=""/>
+</div>
+
+<!-- Scroll to Top -->
+<div id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</div>
+
+<!-- Admin Float Button -->
+<a id="adminFloatBtn" href="admin.html">
+  <i class="fas fa-lock"></i> Admin
+</a>
+
+<!-- ========== NAVBAR ========== -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-transparent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between py-3">
+      <!-- Logo -->
+      <a href="#home" class="flex items-center gap-3 group">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl border-2 border-yellow-400 bg-gradient-to-br from-red-800 to-red-600 shadow-lg overflow-hidden group-hover:scale-105 transition-transform" id="navLogo">🪷</div>
+        <div>
+          <div class="text-white text-xs tracking-widest leading-none opacity-80" style="font-family:'Cinzel Decorative',serif" id="navOrgBn">পুষ্পাঞ্জলি</div>
+          <div class="text-yellow-400 text-sm font-bold" style="font-family:'Cinzel Decorative',serif" id="navOrgEn">YUVA SANGH</div>
+        </div>
+      </a>
+      <!-- Desktop links -->
+      <div class="hidden lg:flex items-center gap-7">
+        <a href="#home"       class="nav-link text-white text-sm">Home</a>
+        <a href="#about"      class="nav-link text-white text-sm">About</a>
+        <a href="#activities" class="nav-link text-white text-sm">Activities</a>
+        <a href="#committee"  class="nav-link text-white text-sm">Committee</a>
+        <a href="#gallery"    class="nav-link text-white text-sm">Gallery</a>
+        <a href="#notice"     class="nav-link text-white text-sm">Notice</a>
+        <a href="#donations"  class="nav-link text-white text-sm">Donations</a>
+        <a href="#contact"    class="nav-link text-white text-sm">Contact</a>
+        <a href="#donations"  class="ml-2 bg-gradient-to-r from-yellow-500 to-yellow-400 text-red-900 text-sm font-bold px-5 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all">
+          <i class="fas fa-hand-holding-heart mr-1"></i>Donate
+        </a>
+      </div>
+      <button id="hamburger" class="lg:hidden text-white text-2xl" onclick="toggleMobile()">
+        <i class="fas fa-bars" id="hamburgerIcon"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="lg:hidden bg-gradient-to-b from-red-900 to-red-800 border-t border-yellow-400/20">
+    <div class="px-4 py-3 flex flex-col gap-1">
+      <a href="#home"       onclick="toggleMobile()" class="text-white hover:text-yellow-400 py-2 border-b border-white/10 font-medium">🏠 Home</a>
+      <a href="#about"      onclick="toggleMobile()" class="text-white hover:text-yellow-400 py-2 border-b border-white/10 font-medium">📖 About</a>
+      <a href="#activities" onclick="toggleMobile()" class="text-white hover:text-yellow-400 py-2 border-b border-white/10 font-medium">🎉 Activities</a>
+      <a href="#committee"  onclick="toggleMobile()" class="text-white hover:text-yellow-400 py-2 border-b border-white/10 font-medium">👥 Committee</a>
+      <a href="#gallery"    onclick="toggleMobile()" class="text-white hover:text-yellow-400 py-2 border-b border-white/10 font-medium">📸 Gallery</a>
+      <a href="#notice"     onclick="toggleMobile()" class="text-white hover:text-yellow-400 py-2 border-b border-white/10 font-medium">📋 Notice</a>
+      <a href="#donations"  onclick="toggleMobile()" class="text-white hover:text-yellow-400 py-2 border-b border-white/10 font-medium">💛 Donations</a>
+      <a href="#contact"    onclick="toggleMobile()" class="text-white hover:text-yellow-400 py-2 font-medium">📞 Contact</a>
+      <a href="admin.html"  class="text-yellow-400 hover:text-yellow-300 py-2 font-medium border-t border-white/10 mt-1">🔐 Admin Panel</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section id="home" class="hero-section text-center px-4">
+  <div class="hero-bg" id="heroBg" style="background-image:url('https://placehold.co/1920x1080/8B0000/FFF8E7?text=+')"></div>
+  <div class="hero-overlay"></div>
+  <span class="om-symbol" style="top:10%;left:5%">ॐ</span>
+  <span class="om-symbol" style="top:65%;right:6%;animation-delay:2s">ॐ</span>
+  <span class="sparkle" style="top:25%;left:20%;animation-delay:.5s"></span>
+  <span class="sparkle" style="top:40%;right:25%;animation-delay:1.2s"></span>
+  <span class="sparkle" style="top:70%;left:35%;animation-delay:2s"></span>
+  <div class="hero-content max-w-4xl mx-auto pt-24 pb-12">
+    <p class="text-yellow-300 text-lg mb-2 tracking-widest" style="font-family:'Tiro Devanagari Sanskrit',serif">॥ জয় মা দুর্গা ॥</p>
+    <div class="gold-line w-48 mx-auto mb-6"></div>
+    <!-- Logo image (if set from admin) -->
+    <div id="heroLogoWrap" class="hidden mb-4 flex justify-center">
+      <img id="heroLogo" src="" alt="Logo" class="h-20 w-20 rounded-full border-2 border-yellow-400 mx-auto object-cover"/>
+    </div>
+    <h1 class="hero-title text-4xl sm:text-5xl lg:text-7xl font-black text-white mb-3 leading-tight" id="heroOrgEn">Pushpanjali</h1>
+    <h2 class="hero-title text-3xl sm:text-4xl lg:text-5xl text-yellow-400 font-bold mb-2" id="heroOrgEn2">Yuva Sangh</h2>
+    <p class="text-2xl sm:text-3xl text-yellow-200 font-semibold mb-6" id="heroOrgBn">পুষ্পাঞ্জলি যুব সংঘ</p>
+    <div class="gold-line w-64 mx-auto mb-6"></div>
+    <p class="text-white text-lg sm:text-xl font-light max-w-2xl mx-auto mb-3 leading-relaxed opacity-90" id="heroSloganBn">ধর্ম, সংস্কৃতি ও সমাজের উন্নতিতে নিবেদিত — এক অনন্য যুব সংগঠন</p>
+    <p class="text-yellow-300 text-base sm:text-lg max-w-xl mx-auto mb-10 italic opacity-80" id="heroSloganEn">"Devoted to Religion, Culture &amp; Community Service"</p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="#about" class="bg-gradient-to-r from-yellow-500 to-yellow-400 text-red-900 font-bold px-8 py-3 rounded-full hover:shadow-2xl hover:scale-105 transition-all shadow-lg">
+        <i class="fas fa-info-circle mr-2"></i>আমাদের সম্পর্কে
+      </a>
+      <a href="#donations" class="bg-transparent border-2 border-yellow-400 text-yellow-300 font-bold px-8 py-3 rounded-full hover:bg-yellow-400 hover:text-red-900 transition-all">
+        <i class="fas fa-hand-holding-heart mr-2"></i>Donate Now
+      </a>
+    </div>
+    <div class="mt-14 animate-bounce">
+      <a href="#countdown" class="text-yellow-400 text-2xl opacity-70 hover:opacity-100"><i class="fas fa-chevron-down"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap py-2">
+  <span class="ticker-content text-yellow-300 text-sm font-medium px-4" id="tickerText">
+    <span class="mr-8"><i class="fas fa-star text-yellow-500 mr-1"></i> জয় মা দুর্গা! — পুষ্পাঞ্জলি যুব সংঘে আপনাকে স্বাগতম!</span>
+  </span>
+</div>
+
+<!-- COUNTDOWN -->
+<section id="countdown" class="py-16 px-4">
+  <div class="max-w-5xl mx-auto reveal">
+    <div class="countdown-card p-8 md:p-12 text-center">
+      <div class="text-5xl mb-3">🪷</div>
+      <div class="section-badge mb-2">উৎসব গণনা</div>
+      <h3 class="text-2xl md:text-3xl text-yellow-400 mb-1" id="festTitle" style="font-family:'Cinzel Decorative',serif">দুর্গাপুজো ২০২৫</h3>
+      <div class="grid grid-cols-4 gap-4 max-w-2xl mx-auto mt-6">
+        <div class="bg-black/20 rounded-2xl p-4 md:p-6 border border-yellow-400/20"><div class="countdown-number" id="cd-days">00</div><div class="text-yellow-300/80 text-xs md:text-sm uppercase tracking-widest mt-2">দিন</div></div>
+        <div class="bg-black/20 rounded-2xl p-4 md:p-6 border border-yellow-400/20"><div class="countdown-number" id="cd-hours">00</div><div class="text-yellow-300/80 text-xs md:text-sm uppercase tracking-widest mt-2">ঘণ্টা</div></div>
+        <div class="bg-black/20 rounded-2xl p-4 md:p-6 border border-yellow-400/20"><div class="countdown-number" id="cd-mins">00</div><div class="text-yellow-300/80 text-xs md:text-sm uppercase tracking-widest mt-2">মিনিট</div></div>
+        <div class="bg-black/20 rounded-2xl p-4 md:p-6 border border-yellow-400/20"><div class="countdown-number" id="cd-secs">00</div><div class="text-yellow-300/80 text-xs md:text-sm uppercase tracking-widest mt-2">সেকেন্ড</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-20 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="section-badge">আমাদের সম্পর্কে</span>
+      <h2 class="section-title text-3xl md:text-4xl font-bold mt-2 mb-3">About Pushpanjali Yuva Sangh</h2>
+      <div class="gold-line w-40 mx-auto"></div>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal-left">
+        <div class="relative">
+          <img id="aboutImg" src="https://placehold.co/600x450/C41E3A/FFF8E7?text=Organization+Photo" alt="Organization" class="rounded-3xl w-full shadow-2xl" style="border:3px solid rgba(212,160,23,.4)"/>
+          <div class="absolute -bottom-6 -right-6 bg-gradient-to-br from-yellow-400 to-yellow-600 text-red-900 rounded-2xl p-4 shadow-xl text-center hidden md:block">
+            <div class="text-3xl font-black" style="font-family:'Cinzel Decorative',serif" id="yearsActive">15</div>
+            <div class="text-xs font-bold uppercase">বছর ধরে<br/>সেবায়</div>
+          </div>
+          <div class="absolute -top-4 -left-4 w-16 h-16 rounded-full bg-gradient-to-br from-red-700 to-red-900 flex items-center justify-center text-2xl shadow-lg">🌸</div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <p class="text-yellow-700 text-xl font-semibold mb-4" style="font-family:'Tiro Devanagari Sanskrit',serif">॥ সর্বে ভবন্তু সুখিনঃ ॥</p>
+        <p class="text-gray-700 text-base leading-relaxed mb-4"><strong>পুষ্পাঞ্জলি যুব সংঘ</strong> একটি হিন্দু ধর্মীয় ও সামাজিক সংগঠন।</p>
+        <p class="text-gray-600 text-base leading-relaxed mb-6">Pushpanjali Yuva Sangh is dedicated to nurturing religious values, cultural heritage, and social service among the youth.</p>
+        <div class="grid grid-cols-3 gap-4 mb-8">
+          <div class="text-center bg-red-50 rounded-2xl p-4 border border-red-100"><div class="text-2xl font-black text-red-700" style="font-family:'Cinzel Decorative',serif">200+</div><div class="text-xs text-gray-500 mt-1">সক্রিয় সদস্য</div></div>
+          <div class="text-center bg-yellow-50 rounded-2xl p-4 border border-yellow-200"><div class="text-2xl font-black text-yellow-600" style="font-family:'Cinzel Decorative',serif">50+</div><div class="text-xs text-gray-500 mt-1">বার্ষিক উৎসব</div></div>
+          <div class="text-center bg-red-50 rounded-2xl p-4 border border-red-100"><div class="text-2xl font-black text-red-700" style="font-family:'Cinzel Decorative',serif" id="yearsStatEl">15+</div><div class="text-xs text-gray-500 mt-1">বছরের অভিজ্ঞতা</div></div>
+        </div>
+        <ul class="space-y-2 text-gray-700 text-sm">
+          <li class="flex items-start gap-3"><span class="text-yellow-500">🪷</span>ধর্মীয় অনুষ্ঠান ও পুজো-পার্বণ আয়োজন করা</li>
+          <li class="flex items-start gap-3"><span class="text-yellow-500">🪷</span>সমাজের দুঃস্থ মানুষদের পাশে দাঁড়ানো</li>
+          <li class="flex items-start gap-3"><span class="text-yellow-500">🪷</span>তরুণ প্রজন্মে ক্রীড়া ও সংস্কৃতির বিকাশ</li>
+          <li class="flex items-start gap-3"><span class="text-yellow-500">🪷</span>পরিবেশ সংরক্ষণ ও সামাজিক সচেতনতা বৃদ্ধি</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities" class="py-20 px-4 red-gradient-bg">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="section-badge" style="background:linear-gradient(135deg,#D4A017,#F5C842);color:#7B0D1E">আমাদের কার্যক্রম</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mt-2 mb-3" style="font-family:'Cinzel Decorative',serif">Our Activities</h2>
+      <div class="gold-line w-40 mx-auto"></div>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="activitiesGrid">
+      <div class="activity-card p-8 text-center col-span-3"><p class="text-gray-400">লোড হচ্ছে...</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- NOTICE -->
+<section id="notice" class="py-20 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="section-badge">নোটিশ বোর্ড</span>
+      <h2 class="section-title text-3xl md:text-4xl font-bold mt-2 mb-3">Notice Board</h2>
+      <div class="gold-line w-40 mx-auto"></div>
+    </div>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2 reveal-left">
+        <div class="notice-board">
+          <div class="flex items-center justify-between px-6 py-4 border-b border-yellow-400/30">
+            <h4 class="text-yellow-400 font-bold text-lg flex items-center gap-2"><i class="fas fa-bullhorn"></i> সর্বশেষ বিজ্ঞপ্তি</h4>
+          </div>
+          <div class="notice-scroll-wrapper" id="noticeList"><div class="px-6 py-8 text-center text-white/50">লোড হচ্ছে...</div></div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="bg-white rounded-2xl border border-yellow-200 overflow-hidden shadow-lg">
+          <div class="bg-gradient-to-r from-red-700 to-red-800 px-5 py-4">
+            <h4 class="text-yellow-400 font-bold flex items-center gap-2"><i class="fas fa-calendar-alt"></i> আসন্ন অনুষ্ঠান</h4>
+          </div>
+          <div class="p-4 space-y-4 min-h-48" id="upcomingList"><div class="text-center text-gray-400 py-6">লোড হচ্ছে...</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMITTEE -->
+<section id="committee" class="py-20 px-4 bg-gradient-to-b from-red-900/5 to-yellow-50/50">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="section-badge">কার্যনির্বাহী কমিটি</span>
+      <h2 class="section-title text-3xl md:text-4xl font-bold mt-2 mb-3">Our Committee</h2>
+      <div class="gold-line w-40 mx-auto"></div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6" id="committeeGrid">
+      <div class="member-card p-6 text-center col-span-4"><p class="text-gray-400">লোড হচ্ছে...</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="py-20 px-4 red-gradient-bg">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="section-badge" style="background:linear-gradient(135deg,#D4A017,#F5C842);color:#7B0D1E">ফটো গ্যালারি</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mt-2 mb-3" style="font-family:'Cinzel Decorative',serif">Photo Gallery</h2>
+      <div class="gold-line w-40 mx-auto"></div>
+    </div>
+    <div class="flex flex-wrap justify-center gap-3 mb-10 reveal">
+      <button class="gallery-filter active-filter" onclick="filterGallery('all',this)">All</button>
+      <button class="gallery-filter" onclick="filterGallery('puja',this)">পুজো</button>
+      <button class="gallery-filter" onclick="filterGallery('social',this)">সমাজসেবা</button>
+      <button class="gallery-filter" onclick="filterGallery('sports',this)">ক্রীড়া</button>
+      <button class="gallery-filter" onclick="filterGallery('culture',this)">সংস্কৃতি</button>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="galleryGrid">
+      <div class="gallery-item bg-red-900/30 col-span-4 flex items-center justify-center"><p class="text-white/50 py-10">লোড হচ্ছে...</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DONATIONS -->
+<section id="donations" class="py-20 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="section-badge">দান ও সহযোগিতা</span>
+      <h2 class="section-title text-3xl md:text-4xl font-bold mt-2 mb-3">Support & Donations</h2>
+      <div class="gold-line w-40 mx-auto"></div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-10 items-start max-w-5xl mx-auto">
+      <div class="reveal-left text-center">
+        <div class="qr-box p-8 inline-block w-full max-w-sm mx-auto">
+          <h4 class="font-bold text-red-800 text-xl mb-2">স্ক্যান করে দান করুন</h4>
+          <p class="text-gray-500 text-sm mb-6">UPI / PhonePe / GPay / Paytm</p>
+          <img id="qrCodeImg" src="https://placehold.co/220x220/FFF8E7/C41E3A?text=QR+Code" alt="QR Code" class="w-52 h-52 mx-auto rounded-xl border-4 border-yellow-300 mb-4 shadow-inner"/>
+          <p class="text-xs text-gray-400 mb-2">UPI ID: <strong class="text-red-700" id="upiIdTxt">—</strong></p>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="bg-white rounded-2xl border border-yellow-200 shadow-lg overflow-hidden">
+          <div class="bg-gradient-to-r from-red-800 to-red-700 px-6 py-4">
+            <h4 class="text-yellow-400 font-bold text-lg flex items-center gap-2"><i class="fas fa-university"></i> ব্যাংক বিবরণ</h4>
+          </div>
+          <div class="p-6" id="bankDetails"><div class="text-center text-gray-400 py-4">লোড হচ্ছে...</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-20 px-4 red-gradient-bg">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="section-badge" style="background:linear-gradient(135deg,#D4A017,#F5C842);color:#7B0D1E">যোগাযোগ</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mt-2 mb-3" style="font-family:'Cinzel Decorative',serif">Contact Us</h2>
+      <div class="gold-line w-40 mx-auto"></div>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-10">
+      <div class="reveal-left">
+        <div class="bg-white/95 rounded-3xl p-8 shadow-2xl">
+          <h4 class="font-bold text-red-800 text-xl mb-6">বার্তা পাঠান</h4>
+          <form onsubmit="submitForm(event)" class="space-y-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div><label class="block text-gray-600 text-sm mb-1">নাম *</label><input type="text" placeholder="আপনার নাম" required class="form-input"/></div>
+              <div><label class="block text-gray-600 text-sm mb-1">ফোন</label><input type="tel" placeholder="+91 XXXXXXXXXX" class="form-input"/></div>
+            </div>
+            <div><label class="block text-gray-600 text-sm mb-1">ইমেইল *</label><input type="email" placeholder="your@email.com" required class="form-input"/></div>
+            <div><label class="block text-gray-600 text-sm mb-1">বার্তা *</label><textarea rows="4" placeholder="আপনার বার্তা..." required class="form-input resize-none"></textarea></div>
+            <button type="submit" class="submit-btn"><i class="fas fa-paper-plane mr-2"></i>বার্তা পাঠান</button>
+          </form>
+          <div id="formOk" class="hidden mt-4 bg-green-50 border border-green-200 rounded-xl p-4 text-green-700 text-sm text-center">✅ বার্তা পাঠানো হয়েছে! ধন্যবাদ।</div>
+        </div>
+      </div>
+      <div class="reveal-right space-y-6">
+        <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-yellow-400/30">
+          <iframe id="mapFrame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14736.98!2d88.3639!3d22.5726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM0JzIxLjQiTiA4OMKwMjEnNTAuMCJF!5e0!3m2!1sen!2sin!4v1234567890" width="100%" height="240" style="border:0" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="bg-white/90 rounded-3xl p-6 shadow-xl space-y-4">
+          <h4 class="font-bold text-red-800 text-xl">যোগাযোগের তথ্য</h4>
+          <div class="flex items-start gap-3"><div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-700 flex-shrink-0 text-sm"><i class="fas fa-map-marker-alt"></i></div><p class="text-gray-600 text-sm" id="cAddr">—</p></div>
+          <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-700 flex-shrink-0 text-sm"><i class="fas fa-phone-alt"></i></div><a id="cPhone" href="#" class="text-red-700 hover:underline text-sm">—</a></div>
+          <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-700 flex-shrink-0 text-sm"><i class="fas fa-envelope"></i></div><a id="cEmail" href="#" class="text-red-700 hover:underline text-sm">—</a></div>
+          <div class="pt-2 border-t border-gray-100">
+            <p class="text-gray-500 text-xs font-medium mb-3 uppercase tracking-wider">সোশ্যাল মিডিয়া</p>
+            <div class="footer-social flex gap-3" id="socialLinks">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+              <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gradient-to-b from-red-950 to-black text-white pt-14 pb-6 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-3 gap-8 mb-10">
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl border-2 border-yellow-400 bg-gradient-to-br from-red-800 to-red-600 overflow-hidden" id="footerLogo">🪷</div>
+          <div>
+            <div class="text-yellow-400 text-lg font-bold" style="font-family:'Cinzel Decorative',serif" id="footerOrgEn">Pushpanjali</div>
+            <div class="text-white/50 text-xs" id="footerOrgBn">Yuva Sangh</div>
+          </div>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed mb-4">ধর্ম, সংস্কৃতি ও সমাজসেবায় নিবেদিত।</p>
+        <div class="footer-social flex gap-3" id="footerSocialLinks">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <h5 class="text-yellow-400 font-bold mb-4 text-sm uppercase tracking-wider">Quick Links</h5>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#home" class="text-white/50 hover:text-yellow-400 transition-colors">🏠 Home</a></li>
+          <li><a href="#about" class="text-white/50 hover:text-yellow-400 transition-colors">📖 About</a></li>
+          <li><a href="#activities" class="text-white/50 hover:text-yellow-400 transition-colors">🎉 Activities</a></li>
+          <li><a href="#gallery" class="text-white/50 hover:text-yellow-400 transition-colors">📸 Gallery</a></li>
+          <li><a href="#donations" class="text-white/50 hover:text-yellow-400 transition-colors">💛 Donate</a></li>
+          <li><a href="admin.html" class="text-yellow-600/60 hover:text-yellow-400 transition-colors">🔐 Admin</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="text-yellow-400 font-bold mb-4 text-sm uppercase tracking-wider">Contact</h5>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2 text-white/50"><i class="fas fa-map-marker-alt text-yellow-500 mt-0.5"></i><span id="footerAddr">—</span></li>
+          <li class="flex items-center gap-2 text-white/50"><i class="fas fa-phone text-yellow-500"></i><span id="footerPhone">—</span></li>
+          <li class="flex items-center gap-2 text-white/50"><i class="fas fa-envelope text-yellow-500"></i><span id="footerEmail">—</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="gold-line mb-5"></div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/30">
+      <p>© <span id="footerYear"></span> Pushpanjali Yuva Sangh. All Rights Reserved.</p>
+      <p>Made with <span class="text-red-500">❤️</span> for our community</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== FIREBASE SCRIPT ========== -->
+<script type="module">
+import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc, query, orderBy }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const FB = {
+  apiKey:"AIzaSyC0izv3_60aDF_qqIcwzn27MFGCIoCYYp4",
+  authDomain:"pushpanjali-yuva-sangh.firebaseapp.com",
+  projectId:"pushpanjali-yuva-sangh",
+  storageBucket:"pushpanjali-yuva-sangh.firebasestorage.app",
+  messagingSenderId:"137246397056",
+  appId:"1:137246397056:web:3ebaacdcf522cf4b920c65"
+};
+const app = initializeApp(FB);
+const db  = getFirestore(app);
+
+const g = id => document.getElementById(id);
+
+/* ── SETTINGS ── */
+async function loadSettings(){
+  try {
+    const snap = await getDoc(doc(db,'settings','main'));
+    const s = snap.exists() ? snap.data() : {};
+
+    // Org name
+    if(s.org_bn){ g('heroOrgBn').textContent=s.org_bn; g('navOrgBn').textContent=s.org_bn.split(' ')[0]||s.org_bn; g('footerOrgBn').textContent=s.org_bn; }
+    if(s.org_en){ const parts=s.org_en.split(' '); g('heroOrgEn').textContent=parts[0]||s.org_en; g('heroOrgEn2').textContent=parts.slice(1).join(' ')||''; g('navOrgEn').textContent=s.org_en.toUpperCase(); g('footerOrgEn').textContent=s.org_en; }
+    if(s.slogan_bn) g('heroSloganBn').textContent=s.slogan_bn;
+    if(s.slogan_en) g('heroSloganEn').textContent='"'+s.slogan_en+'"';
+
+    // Logo
+    if(s.logo_url){
+      ['navLogo','footerLogo'].forEach(id=>{g(id).innerHTML=`<img src="${s.logo_url}" class="w-full h-full object-cover"/>`; });
+      g('heroLogoWrap').classList.remove('hidden');
+      g('heroLogo').src = s.logo_url;
+    }
+    // Hero bg
+    if(s.hero_url) g('heroBg').style.backgroundImage=`url('${s.hero_url}')`;
+    // About img
+    if(s.about_img) g('aboutImg').src = s.about_img;
+    // QR
+    if(s.qr_url) g('qrCodeImg').src = s.qr_url;
+    if(s.upi_id)  g('upiIdTxt').textContent = s.upi_id;
+
+    // Contact
+    if(s.address){g('cAddr').textContent=s.address; g('footerAddr').textContent=s.address;}
+    const ph=(s.phone1||'');
+    if(ph){g('cPhone').textContent=ph; g('cPhone').href='tel:'+ph; g('footerPhone').textContent=ph;}
+    if(s.email){g('cEmail').textContent=s.email; g('cEmail').href='mailto:'+s.email; g('footerEmail').textContent=s.email;}
+    // Map
+    if(s.map_url) g('mapFrame').src=s.map_url;
+    // Years
+    if(s.founding_year){const age=new Date().getFullYear()-parseInt(s.founding_year||2009);g('yearsActive').textContent=age;g('yearsStatEl').textContent=age+'+';}
+    // Festival
+    if(s.festival_name) g('festTitle').textContent=s.festival_name;
+    if(s.festival_date) startCountdown(s.festival_date);
+
+    // Bank
+    const bf=[
+      {label:'Account Name', value:s.bank_acc_name||'Pushpanjali Yuva Sangh'},
+      {label:'Account No.', value:s.bank_acc||'—', copy:true},
+      {label:'IFSC Code', value:s.ifsc||'—', copy:true},
+      {label:'Bank', value:s.bank_name||'—'},
+      {label:'Branch', value:s.bank_branch||'—'},
+    ];
+    g('bankDetails').innerHTML=bf.map(f=>`
+      <div class="bank-detail-row">
+        <span class="text-gray-500 text-sm">${f.label}</span>
+        <span class="flex items-center gap-2 font-semibold text-gray-800 text-sm">${f.value}
+          ${f.copy&&f.value&&f.value!=='—'?`<button class="copy-btn" onclick="window.copyText('${f.value}',this)"><i class="fas fa-copy mr-1"></i>Copy</button>`:''}
+        </span>
+      </div>`).join('');
+
+    // Social links
+    const socialMap=[
+      {key:'fb',  icon:'fab fa-facebook-f',  title:'Facebook'},
+      {key:'ig',  icon:'fab fa-instagram',   title:'Instagram'},
+      {key:'yt',  icon:'fab fa-youtube',     title:'YouTube'},
+      {key:'wa',  icon:'fab fa-whatsapp',    title:'WhatsApp'},
+      {key:'tw',  icon:'fab fa-twitter',     title:'Twitter'},
+      {key:'tg',  icon:'fab fa-telegram',    title:'Telegram'},
+    ];
+    const socialHtml = socialMap.filter(sm=>s[sm.key]).map(sm=>`<a href="${s[sm.key]}" target="_blank" rel="noopener" title="${sm.title}"><i class="${sm.icon}"></i></a>`).join('');
+    if(socialHtml){
+      g('socialLinks').innerHTML=socialHtml;
+      g('footerSocialLinks').innerHTML=socialHtml;
+    }
+  } catch(e){ console.warn('Settings:', e); }
+}
+
+/* ── COUNTDOWN ── */
+function startCountdown(ds){
+  const run=()=>{
+    const diff=new Date(ds).getTime()-Date.now();
+    if(diff<=0){['cd-days','cd-hours','cd-mins','cd-secs'].forEach(i=>{const el=g(i);if(el)el.textContent='00';});return;}
+    g('cd-days').textContent=String(Math.floor(diff/86400000)).padStart(2,'0');
+    g('cd-hours').textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,'0');
+    g('cd-mins').textContent=String(Math.floor(diff%3600000/60000)).padStart(2,'0');
+    g('cd-secs').textContent=String(Math.floor(diff%60000/1000)).padStart(2,'0');
+  };
+  run(); setInterval(run,1000);
+}
+
+/* ── NOTICES ── */
+async function loadNotices(){
+  try{
+    const snap=await getDocs(query(collection(db,'notices'),orderBy('created_at','desc')));
+    const items=snap.docs.map(d=>({id:d.id,...d.data()}));
+    if(!items.length){g('noticeList').innerHTML='<div class="px-6 py-8 text-center text-white/50">কোনো নোটিশ নেই</div>';return;}
+    g('noticeList').innerHTML=items.map(n=>`
+      <div class="notice-item px-6 py-4 flex items-start gap-3">
+        <div class="flex-shrink-0 mt-1">${n.is_new?'<span class="notice-badge-new">NEW</span>':'<span class="text-yellow-300/50 text-xs">📌</span>'}</div>
+        <div><p class="text-white text-sm leading-relaxed">${n.title||''}</p><p class="text-yellow-300/60 text-xs mt-1"><i class="fas fa-calendar-alt mr-1"></i>${n.date_bn||''}</p></div>
+      </div>`).join('');
+    // Ticker
+    const t=items.slice(0,5).map(n=>`<span class="mr-10"><i class="fas fa-star text-yellow-500 mr-1"></i> ${n.title}</span>`).join('');
+    if(t) g('tickerText').innerHTML=t;
+  }catch(e){console.warn(e);}
+}
+
+/* ── ACTIVITIES ── */
+async function loadActivities(){
+  try{
+    const snap=await getDocs(query(collection(db,'activities'),orderBy('display_order','asc')));
+    const items=snap.docs.map(d=>({id:d.id,...d.data()}));
+    if(!items.length){g('activitiesGrid').innerHTML='<div class="col-span-3 text-white/60 text-center py-10">Admin Panel থেকে কার্যক্রম যোগ করুন।</div>';return;}
+    g('activitiesGrid').innerHTML=items.map(a=>`
+      <div class="activity-card reveal">
+        <div class="relative h-44 overflow-hidden">
+          <img src="${a.image_url||'https://placehold.co/600x400/C41E3A/FFF8E7?text=Activity'}" alt="${a.title_bn||''}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/600x400/C41E3A/FFF8E7?text=Photo'"/>
+          ${a.tag?`<span class="absolute top-3 left-3 bg-red-700 text-white text-xs px-3 py-1 rounded-full font-semibold z-10">${a.tag}</span>`:''}
+        </div>
+        <div class="p-5"><div class="text-3xl mb-3">${a.emoji||'🪷'}</div><h3 class="font-bold text-gray-900 text-lg mb-1">${a.title_bn||''}</h3><p class="text-gray-500 text-xs mb-2 italic">${a.title_en||''}</p><p class="text-gray-600 text-sm leading-relaxed">${a.description||''}</p></div>
+      </div>`).join('');
+    activateReveal();
+  }catch(e){g('activitiesGrid').innerHTML=`<div class="col-span-3 text-white/40 text-center py-6">${e.message}</div>`;}
+}
+
+/* ── COMMITTEE ── */
+async function loadCommittee(){
+  try{
+    const snap=await getDocs(query(collection(db,'committee'),orderBy('display_order','asc')));
+    const items=snap.docs.map(d=>({id:d.id,...d.data()}));
+    if(!items.length){g('committeeGrid').innerHTML='<div class="col-span-4 text-gray-400 text-center py-10">Admin Panel থেকে সদস্য যোগ করুন।</div>';return;}
+    g('committeeGrid').innerHTML=items.map(m=>`
+      <div class="member-card reveal">
+        <div class="member-avatar-wrap">
+          <img src="${m.image_url||'https://placehold.co/300x300/C41E3A/FFF8E7?text='+encodeURIComponent(m.name||'')}" alt="${m.name||''}" loading="lazy" onerror="this.src='https://placehold.co/300x300/C41E3A/FFF8E7?text=Photo'"/>
+          <div class="absolute bottom-3 left-3 z-10"><span class="bg-yellow-400 text-red-900 text-xs font-bold px-2 py-1 rounded-full">${m.role||''}</span></div>
+        </div>
+        <div class="p-4 text-center"><h4 class="font-bold text-gray-800 text-base">${m.name||''}</h4><p class="text-red-700 text-xs font-medium mt-0.5">${m.role||''}</p>${m.phone?`<a href="tel:${m.phone}" class="text-gray-400 hover:text-red-700 text-xs mt-1 block"><i class="fas fa-phone mr-1"></i>${m.phone}</a>`:''}</div>
+      </div>`).join('');
+    activateReveal();
+  }catch(e){console.warn(e);}
+}
+
+/* ── GALLERY ── */
+let allGal=[];
+async function loadGallery(){
+  try{
+    const snap=await getDocs(collection(db,'gallery'));
+    allGal=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderGallery('all');
+  }catch(e){console.warn(e);}
+}
+function renderGallery(filter){
+  const data=filter==='all'?allGal:allGal.filter(g=>g.category===filter);
+  if(!data.length){g('galleryGrid').innerHTML='<div class="col-span-4 text-white/50 text-center py-10">কোনো ছবি নেই।</div>';return;}
+  g('galleryGrid').innerHTML=data.map(gal=>`
+    <div class="gallery-item reveal" onclick="window.openLightbox('${gal.image_url||''}','${(gal.caption||'').replace(/'/g,"\\'")}')">
+      <img src="${gal.image_url||'https://placehold.co/600x400/C41E3A/FFF8E7?text=Photo'}" alt="${gal.caption||''}" loading="lazy" onerror="this.src='https://placehold.co/600x400/C41E3A/FFF8E7?text=Photo'"/>
+      <div class="gallery-overlay"><p class="text-white text-sm font-medium">${gal.caption||''}</p></div>
+    </div>`).join('');
+  activateReveal();
+}
+window.filterGallery=(cat,btn)=>{document.querySelectorAll('.gallery-filter').forEach(b=>b.classList.remove('active-filter'));btn.classList.add('active-filter');renderGallery(cat);};
+
+/* ── UPCOMING ── */
+async function loadUpcoming(){
+  try{
+    const snap=await getDocs(collection(db,'upcoming_events'));
+    const items=snap.docs.map(d=>({id:d.id,...d.data()}));
+    if(!items.length){g('upcomingList').innerHTML='<div class="text-center text-gray-400 py-4 text-sm">কোনো অনুষ্ঠান নেই।</div>';return;}
+    g('upcomingList').innerHTML=items.map(e=>`
+      <div class="flex items-start gap-3 border-l-4 border-red-400 bg-red-50 pl-3 py-2 rounded-r-xl">
+        <div class="flex-shrink-0"><div class="font-black text-red-700 text-sm">${e.date||''}</div><div class="text-gray-400 text-xs">${e.month||''}</div></div>
+        <div><div class="font-semibold text-gray-800 text-sm">${e.icon||'📅'} ${e.title||''}</div><div class="text-gray-400 text-xs">${e.location||''}</div></div>
+      </div>`).join('');
+  }catch(e){console.warn(e);}
+}
+
+/* ── INIT ── */
+g('footerYear').textContent=new Date().getFullYear();
+loadSettings(); loadNotices(); loadActivities(); loadCommittee(); loadGallery(); loadUpcoming();
+setTimeout(activateReveal, 600);
+
+/* ── GLOBALS ── */
+function activateReveal(){
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.08});
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>{if(!el.classList.contains('visible'))obs.observe(el);});
+}
+
+window.openLightbox=(src)=>{g('lightboxImg').src=src;g('lightbox').classList.add('active');document.body.style.overflow='hidden';};
+window.closeLightbox=()=>{g('lightbox').classList.remove('active');document.body.style.overflow='';};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')window.closeLightbox();});
+
+window.copyText=(text,btn)=>{
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.innerHTML='<i class="fas fa-check mr-1"></i>Copied!';
+    btn.style.cssText='background:#22c55e;color:white';
+    setTimeout(()=>{btn.innerHTML='<i class="fas fa-copy mr-1"></i>Copy';btn.style.cssText='';},2000);
+  });
+};
+
+window.submitForm=(e)=>{e.preventDefault();const btn=e.target.querySelector('button[type="submit"]');btn.innerHTML='<i class="fas fa-spinner fa-spin mr-2"></i>পাঠানো হচ্ছে...';btn.disabled=true;setTimeout(()=>{e.target.reset();btn.innerHTML='<i class="fas fa-paper-plane mr-2"></i>বার্তা পাঠান';btn.disabled=false;const s=g('formOk');s.classList.remove('hidden');setTimeout(()=>s.classList.add('hidden'),5000);},1800);};
+
+window.toggleMobile=()=>{const m=g('mobileMenu');const i=g('hamburgerIcon');m.classList.toggle('open');i.className=m.classList.contains('open')?'fas fa-times':'fas fa-bars';};
+
+window.addEventListener('scroll',()=>{
+  const n=g('navbar');const s=g('scrollTop');
+  if(window.scrollY>60){n.classList.add('scrolled');s.classList.add('visible');}
+  else{n.classList.remove('scrolled');s.classList.remove('visible');}
+  const secs=['home','about','activities','notice','committee','gallery','donations','contact'];
+  let cur='';
+  secs.forEach(id=>{const el=g(id);if(el&&window.scrollY>=el.offsetTop-100)cur=id;});
+  document.querySelectorAll('.nav-link').forEach(l=>{l.classList.remove('active');if(l.getAttribute('href')==='#'+cur)l.classList.add('active');});
+});
+</script>
+</body>
+</html>
