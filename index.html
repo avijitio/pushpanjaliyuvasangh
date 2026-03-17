@@ -31,45 +31,143 @@
     /* LOGO NAME — always visible */
     .nav-org-name { display: block; }
 
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
+    /* ── HERO SLIDER ── */
+    #heroSlider {
       position: relative;
+      min-height: 100vh;
+      width: 100%;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      overflow: hidden;
+      background-color: var(--dark-red);
     }
-    /* Background layer — covers full area including mobile */
-    #heroBg {
+
+    /* Slides container */
+    .slide-track {
       position: absolute;
       inset: 0;
-      background-color: var(--dark-red); /* fallback colour */
-      background-image: url('https://placehold.co/1920x1080/7B0D1E/FFF8E7?text=+');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      z-index: 0;
       width: 100%;
       height: 100%;
     }
-    #heroOverlay {
+
+    /* Each slide */
+    .hero-slide {
       position: absolute;
       inset: 0;
-      background: linear-gradient(160deg, rgba(123,13,30,.93) 0%, rgba(196,30,58,.87) 45%, rgba(155,60,0,.9) 100%);
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+    }
+    .hero-slide.active { opacity: 1; }
+
+    /* ★ KEY FIX: use actual <img> not CSS background — works on all mobile browsers */
+    .slide-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      /* Ken Burns zoom effect */
+      animation: kenBurns 8s ease-in-out infinite alternate;
+    }
+    @keyframes kenBurns {
+      0%   { transform: scale(1)    translateX(0)    translateY(0); }
+      100% { transform: scale(1.08) translateX(-1%)  translateY(-1%); }
+    }
+    /* Pause animation on inactive slides */
+    .hero-slide:not(.active) .slide-img { animation-play-state: paused; }
+
+    /* Gradient overlay on each slide */
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg,
+        rgba(100,5,20,.88) 0%,
+        rgba(160,20,45,.80) 50%,
+        rgba(120,40,0,.85) 100%);
       z-index: 1;
     }
+
+    /* Hero content — always on top */
     #heroContent {
       position: relative;
-      z-index: 2;
+      z-index: 10;
       padding: 5.5rem 1rem 2.5rem;
       width: 100%;
       max-width: 56rem;
       margin: 0 auto;
+      /* Entrance animation */
+      animation: heroEnter 1s ease-out both;
     }
+    @keyframes heroEnter {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Prev / Next arrows */
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      width: 42px; height: 42px;
+      background: rgba(0,0,0,.35);
+      border: 1.5px solid rgba(212,160,23,.4);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(212,160,23,.9);
+      cursor: pointer;
+      transition: all .3s;
+      font-size: 1rem;
+      backdrop-filter: blur(4px);
+    }
+    .slider-arrow:hover { background: rgba(212,160,23,.25); color: #F5C842; transform: translateY(-50%) scale(1.1); }
+    .slider-arrow.prev { left: 1rem; }
+    .slider-arrow.next { right: 1rem; }
+    @media (max-width:480px) {
+      .slider-arrow { width:34px; height:34px; font-size:.8rem; }
+      .slider-arrow.prev { left:.5rem; }
+      .slider-arrow.next { right:.5rem; }
+    }
+
+    /* Dot indicators */
+    #sliderDots {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      gap: .5rem;
+    }
+    .sdot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.4);
+      border: 1.5px solid rgba(212,160,23,.4);
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .sdot.active { background: #F5C842; width: 22px; border-radius: 4px; }
+
+    /* Progress bar */
+    #sliderProgress {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #D4A017, #F5C842);
+      z-index: 20;
+      width: 0%;
+      transition: width linear;
+    }
+
     .hero-title { font-family: 'Cinzel Decorative', serif; text-shadow: 0 0 40px rgba(212,160,23,.6), 0 4px 20px rgba(0,0,0,.5); }
-    .om-float { font-family: 'Tiro Devanagari Sanskrit', serif; color: rgba(212,160,23,.12); position: absolute; pointer-events: none; animation: floatUD 6s ease-in-out infinite; user-select: none; z-index: 2; }
+    .om-float { font-family: 'Tiro Devanagari Sanskrit', serif; color: rgba(212,160,23,.12); position: absolute; pointer-events: none; animation: floatUD 6s ease-in-out infinite; user-select: none; z-index: 5; }
     @keyframes floatUD { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
 
     /* ── GOLD LINE ── */
@@ -246,29 +344,62 @@
 </nav>
 
 <!-- ===================================================
-     HERO
+     HERO SLIDER
 =================================================== -->
 <section id="home">
-  <div id="hero">
-    <!-- Background image -->
-    <div id="heroBg"></div>
-    <div id="heroOverlay"></div>
+  <div id="heroSlider">
+
+    <!-- ★ SLIDE TRACK — images injected by JS ★ -->
+    <div class="slide-track" id="slideTrack">
+      <!-- Default slide 1 (shown while Firebase loads) -->
+      <div class="hero-slide active" id="slide-0">
+        <img class="slide-img" src="https://images.unsplash.com/photo-1601158935942-52255782d322?w=1920&q=80" alt="Slide 1"
+             onerror="this.style.display='none'"/>
+        <div class="slide-overlay"></div>
+      </div>
+      <!-- Default slide 2 -->
+      <div class="hero-slide" id="slide-1">
+        <img class="slide-img" src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1920&q=80" alt="Slide 2"
+             onerror="this.style.display='none'"/>
+        <div class="slide-overlay"></div>
+      </div>
+      <!-- Default slide 3 -->
+      <div class="hero-slide" id="slide-2">
+        <img class="slide-img" src="https://images.unsplash.com/photo-1563991655280-cb95c90ca2fb?w=1920&q=80" alt="Slide 3"
+             onerror="this.style.display='none'"/>
+        <div class="slide-overlay"></div>
+      </div>
+    </div>
 
     <!-- Floating OM symbols -->
-    <span class="om-float text-7xl sm:text-8xl" style="top:10%;left:4%;font-size:5rem;">ॐ</span>
-    <span class="om-float text-6xl sm:text-7xl" style="bottom:15%;right:5%;animation-delay:2s;font-size:4rem;">ॐ</span>
+    <span class="om-float" style="top:12%;left:3%;font-size:5rem;">ॐ</span>
+    <span class="om-float" style="bottom:14%;right:4%;animation-delay:2s;font-size:4rem;">ॐ</span>
 
-    <!-- Hero Content -->
+    <!-- Prev / Next arrows -->
+    <button class="slider-arrow prev" onclick="sliderMove(-1)" aria-label="Previous">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="slider-arrow next" onclick="sliderMove(1)" aria-label="Next">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <!-- Dot indicators -->
+    <div id="sliderDots"></div>
+
+    <!-- Auto-play progress bar -->
+    <div id="sliderProgress"></div>
+
+    <!-- ★★ HERO CONTENT ★★ -->
     <div id="heroContent">
       <p class="text-yellow-300 text-base sm:text-lg mb-2 tracking-widest"
          style="font-family:'Tiro Devanagari Sanskrit',serif">॥ জয় মা দুর্গা ॥</p>
 
       <div class="gl w-40 sm:w-48 mx-auto mb-5"></div>
 
-      <!-- Logo in hero (if uploaded) -->
-      <div id="heroLogoWrap" class="hidden mb-4 justify-center" style="display:none!important;">
+      <!-- Logo in hero (shown when uploaded) -->
+      <div id="heroLogoWrap" class="mb-4 justify-center" style="display:none;">
         <img id="heroLogo" src="" alt="Logo"
-             class="h-16 w-16 sm:h-20 sm:w-20 rounded-full border-2 border-yellow-400 mx-auto object-cover"/>
+             class="h-16 w-16 sm:h-20 sm:w-20 rounded-full border-2 border-yellow-400 mx-auto object-cover shadow-lg"/>
       </div>
 
       <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-2 leading-tight" id="hOEn">
@@ -621,7 +752,7 @@
           </div>
           <div class="flex items-center gap-3">
             <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-700 flex-shrink-0 text-sm"><i class="fas fa-envelope"></i></div>
-            <a id="cEmail" href="mailto:" class="text-red-700 hover:underline text-sm break-all">pushpanjaliyuvasangh@gmail.com</a>
+            <a id="cEmail" href="/cdn-cgi/l/email-protection#89" class="text-red-700 hover:underline text-sm break-all"><span class="__cf_email__" data-cfemail="b8c8cdcbd0c8d9d6d2d9d4d1c1cdced9cbd9d6dfd0f8dfd5d9d1d496dbd7d5">[email&#160;protected]</span></a>
           </div>
           <div class="pt-2 border-t border-gray-100">
             <p class="text-gray-500 text-xs font-medium mb-2 uppercase tracking-wider">সোশ্যাল মিডিয়া</p>
@@ -671,7 +802,7 @@
         <ul class="space-y-2 text-sm">
           <li class="flex items-start gap-2 text-white/50"><i class="fas fa-map-marker-alt text-yellow-500 mt-0.5 flex-shrink-0"></i><span id="footAddr">বহরিয়া মির্জাপুর, টাঙ্গাইল</span></li>
           <li class="flex items-center gap-2 text-white/50"><i class="fas fa-phone text-yellow-500 flex-shrink-0"></i><span id="footPhone">01728018956</span></li>
-          <li class="flex items-start gap-2 text-white/50"><i class="fas fa-envelope text-yellow-500 mt-0.5 flex-shrink-0"></i><span id="footEmail" class="break-all">pushpanjaliyuvasangh@gmail.com</span></li>
+          <li class="flex items-start gap-2 text-white/50"><i class="fas fa-envelope text-yellow-500 mt-0.5 flex-shrink-0"></i><span id="footEmail" class="break-all"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="48383d3b2038292622292421313d3e293b29262f20082f25292124662b2725">[email&#160;protected]</a></span></li>
         </ul>
       </div>
     </div>
@@ -686,7 +817,7 @@
 <!-- ===================================================
      FIREBASE + APP SCRIPT
 =================================================== -->
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, getDocs, doc, getDoc, query, orderBy }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -734,15 +865,17 @@ async function loadSettings() {
       const logoHtml = `<img src="${s.logo_url}" style="width:100%;height:100%;object-fit:cover;" alt="Logo"/>`;
       g('navLogo').innerHTML  = logoHtml;
       g('footLogo').innerHTML = logoHtml;
-      /* Show logo in hero */
-      const hw = g('heroLogoWrap');
       g('heroLogo').src = s.logo_url;
-      hw.style.display = 'flex';
+      g('heroLogoWrap').style.display = 'flex';
     }
 
-    /* Hero background — set via JS so it definitely applies on mobile */
+    /* Hero slides — if hero_url is set, use it as first custom slide */
     if (s.hero_url) {
-      g('heroBg').style.backgroundImage = `url('${s.hero_url}')`;
+      window._customHeroSlides = [s.hero_url];
+      /* also check hero_url2, hero_url3 */
+      if (s.hero_url2) window._customHeroSlides.push(s.hero_url2);
+      if (s.hero_url3) window._customHeroSlides.push(s.hero_url3);
+      initSlider(window._customHeroSlides);
     }
 
     /* About image */
@@ -1057,6 +1190,111 @@ window.addEventListener('scroll', () => {
     if (l.getAttribute('href') === '#' + cur) l.classList.add('active');
   });
 });
+
+/* ══════════════════════════════════════════
+   HERO SLIDER ENGINE
+   ★ Uses real <img> tags — works on all mobile browsers ★
+══════════════════════════════════════════ */
+(function() {
+  const INTERVAL_MS = 5500;
+  let currentIndex = 0;
+  let timerID = null;
+
+  const DEFAULT_SLIDES = [
+    'https://images.unsplash.com/photo-1601158935942-52255782d322?w=1920&q=80',
+    'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1920&q=80',
+    'https://images.unsplash.com/photo-1563991655280-cb95c90ca2fb?w=1920&q=80',
+  ];
+
+  function buildSlides(urls) {
+    const track = document.getElementById('slideTrack');
+    const dots  = document.getElementById('sliderDots');
+    if (!track || !dots) return;
+    track.innerHTML = '';
+    dots.innerHTML  = '';
+    urls.forEach((url, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
+      slide.id = 'slide-' + i;
+      const img = document.createElement('img');
+      img.className = 'slide-img';
+      img.alt = 'Slide ' + (i + 1);
+      img.src = url;
+      img.onerror = () => { img.style.display = 'none'; slide.style.background = 'linear-gradient(135deg,#7B0D1E,#C41E3A)'; };
+      const ov = document.createElement('div');
+      ov.className = 'slide-overlay';
+      slide.appendChild(img);
+      slide.appendChild(ov);
+      track.appendChild(slide);
+      const dot = document.createElement('div');
+      dot.className = 'sdot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goTo(i);
+      dots.appendChild(dot);
+    });
+    currentIndex = 0;
+  }
+
+  function goTo(idx) {
+    const allSlides = document.querySelectorAll('.hero-slide');
+    const allDots   = document.querySelectorAll('.sdot');
+    if (!allSlides.length) return;
+    idx = ((idx % allSlides.length) + allSlides.length) % allSlides.length;
+    allSlides[currentIndex].classList.remove('active');
+    if (allDots[currentIndex]) allDots[currentIndex].classList.remove('active');
+    currentIndex = idx;
+    allSlides[currentIndex].classList.add('active');
+    if (allDots[currentIndex]) allDots[currentIndex].classList.add('active');
+    resetProgress();
+  }
+
+  function startAuto() {
+    clearInterval(timerID);
+    timerID = setInterval(() => goTo(currentIndex + 1), INTERVAL_MS);
+  }
+
+  function resetProgress() {
+    const bar = document.getElementById('sliderProgress');
+    if (!bar) return;
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    bar.offsetWidth; /* reflow */
+    bar.style.transition = 'width ' + INTERVAL_MS + 'ms linear';
+    bar.style.width = '100%';
+  }
+
+  window.sliderMove = function(delta) {
+    clearInterval(timerID);
+    goTo(currentIndex + delta);
+    startAuto();
+  };
+
+  window.initSlider = function(urls) {
+    if (!urls || !urls.length) return;
+    clearInterval(timerID);
+    buildSlides(urls);
+    startAuto();
+    resetProgress();
+  };
+
+  /* Touch swipe */
+  let tx = 0;
+  const slider = document.getElementById('heroSlider');
+  if (slider) {
+    slider.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+    slider.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 40) window.sliderMove(dx < 0 ? 1 : -1);
+    }, { passive: true });
+    slider.addEventListener('mouseenter', () => clearInterval(timerID));
+    slider.addEventListener('mouseleave', () => startAuto());
+  }
+
+  /* Start immediately with defaults */
+  buildSlides(DEFAULT_SLIDES);
+  startAuto();
+  resetProgress();
+
+})();
 </script>
 </body>
 </html>
