@@ -22,10 +22,34 @@
     body { font-family: 'Hind Siliguri', sans-serif; background: var(--cream); color: #1A0A00; overflow-x: hidden; margin: 0; }
 
     /* ── NAVBAR ── */
-    #navbar { transition: all .4s; position: fixed; top: 0; left: 0; right: 0; z-index: 50; }
-    #navbar.scrolled { background: rgba(123,13,30,.97) !important; backdrop-filter: blur(12px); box-shadow: 0 4px 30px rgba(0,0,0,.5); }
-    .nav-link { position: relative; font-weight: 500; transition: color .3s; text-decoration: none; }
-    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width .3s; }
+    #navbar {
+      transition: all .4s;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      /* Always dark so white links are visible */
+      background: linear-gradient(to bottom, rgba(80,5,15,.95), rgba(100,8,20,.85));
+    }
+    #navbar.scrolled {
+      background: rgba(100,5,18,.97) !important;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 4px 30px rgba(0,0,0,.5);
+    }
+    .nav-link {
+      position: relative;
+      font-weight: 500;
+      transition: color .3s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width .3s;
+    }
     .nav-link:hover::after, .nav-link.active::after { width: 100%; }
     .nav-link:hover { color: var(--gold-light); }
     /* LOGO NAME — always visible */
@@ -285,53 +309,58 @@
 
 <!-- ===================================================
      NAVBAR
-===================================================> 
-<nav id="navbar" class="bg-transparent">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between py-3">
+=================================================== -->
+<nav id="navbar">
+  <div class="w-full px-3 sm:px-5 lg:px-8">
+    <div class="flex items-center justify-between py-3 gap-2">
 
-      <!-- LOGO + NAME — always visible -->
-      <a href="#home" class="flex items-center gap-2.5 flex-shrink-0 min-w-0">
+      <!-- LOGO + NAME -->
+      <a href="#home" class="flex items-center gap-2 flex-shrink-0 min-w-0">
         <div id="navLogo"
-             class="w-11 h-11 rounded-full flex items-center justify-center text-xl border-2 border-yellow-400 bg-gradient-to-br from-red-800 to-red-600 shadow-lg overflow-hidden flex-shrink-0 transition-transform hover:scale-105">
+             class="w-10 h-10 rounded-full flex items-center justify-center text-xl border-2 border-yellow-400 bg-gradient-to-br from-red-800 to-red-600 shadow-lg overflow-hidden flex-shrink-0 transition-transform hover:scale-105">
           🪷
         </div>
-        <!-- org name next to logo — always visible, truncated on tiny screens -->
-        <div class="nav-org-name min-w-0">
-          <div class="text-white leading-none opacity-85 font-semibold truncate"
-               style="font-family:'Cinzel Decorative',serif;font-size:.72rem;letter-spacing:.1em;"
+        <div class="nav-org-name min-w-0 hidden xs:block sm:block">
+          <div class="text-white leading-none font-semibold truncate max-w-[120px]"
+               style="font-family:'Cinzel Decorative',serif;font-size:.65rem;letter-spacing:.08em;"
                id="navOBn">পুষ্পাঞ্জলি</div>
-          <div class="text-yellow-400 font-bold truncate"
-               style="font-family:'Cinzel Decorative',serif;font-size:.8rem;"
+          <div class="text-yellow-400 font-bold truncate max-w-[120px]"
+               style="font-family:'Cinzel Decorative',serif;font-size:.72rem;"
                id="navOEn">YUVA SANGH</div>
         </div>
       </a>
 
-      <!-- Desktop links -->
-      <div class="hidden lg:flex items-center gap-5 xl:gap-6">
-        <a href="#home"       class="nav-link text-white text-sm">Home</a>
-        <a href="#about"      class="nav-link text-white text-sm">About</a>
-        <a href="#activities" class="nav-link text-white text-sm">Activities</a>
-        <a href="#committee"  class="nav-link text-white text-sm">Committee</a>
-        <a href="#gallery"    class="nav-link text-white text-sm">Gallery</a>
-        <a href="#notice"     class="nav-link text-white text-sm">Notice</a>
-        <a href="#donations"  class="nav-link text-white text-sm">Donations</a>
-        <a href="#contact"    class="nav-link text-white text-sm">Contact</a>
+      <!-- Desktop links — visible from md (768px) -->
+      <div class="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-5 flex-shrink-0 flex-wrap justify-end">
+        <a href="#home"       class="nav-link text-white text-xs lg:text-sm">Home</a>
+        <a href="#about"      class="nav-link text-white text-xs lg:text-sm">About</a>
+        <a href="#activities" class="nav-link text-white text-xs lg:text-sm">Activities</a>
+        <a href="#committee"  class="nav-link text-white text-xs lg:text-sm">Committee</a>
+        <a href="#gallery"    class="nav-link text-white text-xs lg:text-sm">Gallery</a>
+        <a href="#notice"     class="nav-link text-white text-xs lg:text-sm">Notice</a>
+        <a href="#donations"  class="nav-link text-white text-xs lg:text-sm">Donations</a>
+        <a href="#contact"    class="nav-link text-white text-xs lg:text-sm">Contact</a>
         <a href="#donations"
-           class="ml-1 bg-gradient-to-r from-yellow-500 to-yellow-400 text-red-900 text-sm font-bold px-4 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all whitespace-nowrap">
+           class="ml-1 bg-gradient-to-r from-yellow-500 to-yellow-400 text-red-900 text-xs lg:text-sm font-bold px-3 lg:px-4 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all whitespace-nowrap flex-shrink-0">
           <i class="fas fa-hand-holding-heart mr-1"></i>দান করুন
         </a>
       </div>
 
-      <!-- Hamburger -->
-      <button class="lg:hidden text-white text-xl p-1 ml-2" onclick="toggleM()">
-        <i class="fas fa-bars" id="hIcon"></i>
-      </button>
+      <!-- Mobile only: show donate button + hamburger -->
+      <div class="flex md:hidden items-center gap-2 flex-shrink-0">
+        <a href="#donations"
+           class="bg-gradient-to-r from-yellow-500 to-yellow-400 text-red-900 text-xs font-bold px-3 py-1.5 rounded-full whitespace-nowrap">
+          <i class="fas fa-hand-holding-heart mr-0.5"></i>দান করুন
+        </a>
+        <button class="text-white text-xl p-1" onclick="toggleM()">
+          <i class="fas fa-bars" id="hIcon"></i>
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- Mobile menu -->
-  <div id="mMenu" class="lg:hidden bg-gradient-to-b from-red-900 to-red-800 border-t border-yellow-400/20">
+  <div id="mMenu" class="md:hidden bg-gradient-to-b from-red-900 to-red-800 border-t border-yellow-400/20">
     <div class="px-4 py-2 flex flex-col">
       <a href="#home"       onclick="toggleM()" class="text-white hover:text-yellow-400 py-2.5 border-b border-white/10 text-sm font-medium">Home</a>
       <a href="#about"      onclick="toggleM()" class="text-white hover:text-yellow-400 py-2.5 border-b border-white/10 text-sm font-medium">About</a>
@@ -819,6 +848,15 @@
     <div class="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/30">
       <p>© <span id="footYr"></span> পুষ্পাঞ্জলি যুব সংঘ। সর্বস্বত্ব সংরক্ষিত।</p>
       <p>Made with <span class="text-red-500">❤️</span> for our community</p>
+    </div>
+    <div class="text-center mt-3 pt-3 border-t border-white/10">
+      <p class="text-xs text-white/25">
+        Designed &amp; Developed by
+        <a href="https://avijitio.github.io/my-portfolio/" target="_blank" rel="noopener"
+           class="text-yellow-500/60 hover:text-yellow-400 transition-colors font-semibold ml-1">
+          <i class="fas fa-code mr-1"></i>Avijit Paul
+        </a>
+      </p>
     </div>
   </div>
 </footer>
