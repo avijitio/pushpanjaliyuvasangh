@@ -1250,7 +1250,32 @@ async function loadMessages() {
   if (!box) return;
   box.innerHTML = '<div class="text-center text-white/30 py-10 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>লোড হচ্ছে...</div>';
   try {
-    _allMsgs = await fbAll('messages', orderBy('created_at','desc'));
+    /* Try Firestore SDK first, fallback to REST API */
+    try {
+      _allMsgs = await fbAll('messages', orderBy('created_at','desc'));
+    } catch(sdkErr) {
+      /* SDK failed — try REST API (no auth required for read) */
+      const PROJECT = 'pushpanjali-yuva-sangh';
+      const url = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents/messages?orderBy=created_iso%20desc&pageSize=100`;
+      const res = await fetch(url);
+      if(!res.ok) throw sdkErr; /* re-throw original error */
+      const data = await res.json();
+      _allMsgs = (data.documents||[]).map(doc => {
+        const f = doc.fields||{};
+        const id = doc.name.split('/').pop();
+        return {
+          id,
+          name:    f.name?.stringValue||'',
+          phone:   f.phone?.stringValue||'',
+          email:   f.email?.stringValue||'',
+          message: f.message?.stringValue||'',
+          subject: f.subject?.stringValue||'',
+          status:  f.status?.stringValue||'unread',
+          created_at: null,
+          created_iso: f.created_iso?.stringValue||''
+        };
+      });
+    }
     renderMessages(_allMsgs);
     /* Badge */
     const ub = g('msgBadge');
@@ -1258,10 +1283,22 @@ async function loadMessages() {
     if (ub) { ub.textContent = unread || ''; ub.classList.toggle('hidden', !unread); }
   } catch(e) {
     box.innerHTML = `<div class="ebox m-4">
-      <strong>বার্তা লোড ব্যর্থ।</strong><br/>
-      Firebase Console → Firestore → Rules:<br/>
-      <code style="font-size:.7rem">allow read, write: if request.auth != null;</code>
-    </div>`;
+      <strong>বার্তা লোড ব্যর্থ: ${e.message}</strong><br/><br/>
+      <strong>সমাধান:</strong> Firebase Console → Firestore → <strong>Rules</strong> ট্যাবে এই কোড দিন:<br/>
+      <pre style="font-size:.7rem;background:rgba(0,0,0,.3);padding:.5rem;border-radius:6px;margin-top:.4rem;overflow-x:auto">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /messages/{doc} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+    match /{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}</pre>
+    </div>`; 
   }
 }
 
@@ -1278,7 +1315,7 @@ function renderMessages(list) {
       const d = m.created_at?.toDate ? m.created_at.toDate() : new Date();
       dateStr = d.toLocaleDateString('bn-BD') + ' ' + d.toLocaleTimeString('bn-BD',{hour:'2-digit',minute:'2-digit'});
     } catch{}
-    const waNum = m.phone ? '88' + m.phone.replace(/^0/,'') : '';
+    const waNum = m.phone ? '880' + m.phone.replace(/^0/,'') : '';
     return `<div class="msg-item ${isNew ? 'unread' : ''}">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;flex-wrap:wrap">
         <div style="flex:1;min-width:0">
