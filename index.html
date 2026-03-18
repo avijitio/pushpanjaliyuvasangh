@@ -292,8 +292,58 @@
     /* ── GRADIENT BG ── */
     .rgb { background: linear-gradient(135deg, #7B0D1E, #C41E3A, #9B1C2E); }
 
-    /* ── UTILITY ── */
-    .text-shadow-gold { text-shadow: 0 0 30px rgba(212,160,23,.5); }
+
+    /* ── DONATION TABS ── */
+    .don-tab {
+      background: transparent; border: none;
+      padding: .5rem 1rem; border-radius: 14px; cursor: pointer;
+      font-family: 'Hind Siliguri', sans-serif; font-size: .82rem; font-weight: 600;
+      color: #7B0D1E; transition: all .25s; white-space: nowrap;
+    }
+    .don-tab.active {
+      background: linear-gradient(135deg, #C41E3A, #8B0000);
+      color: white; box-shadow: 0 4px 14px rgba(196,30,58,.35);
+    }
+    .don-tab:hover:not(.active) { background: rgba(196,30,58,.08); }
+    .don-amt {
+      background: white; border: 2px solid rgba(212,160,23,.3);
+      border-radius: 12px; padding: .5rem 1rem; cursor: pointer;
+      font-family: 'Hind Siliguri', sans-serif; font-size: .875rem; font-weight: 700;
+      color: #7B0D1E; transition: all .25s; line-height: 1.3; min-width: 68px;
+      position: relative;
+    }
+    .don-amt span { font-size: .7rem; font-weight: 500; display: block; }
+    .don-amt.active, .don-amt:hover {
+      background: linear-gradient(135deg, #C41E3A, #8B0000);
+      color: #F5C842; border-color: #C41E3A;
+      transform: translateY(-2px); box-shadow: 0 6px 18px rgba(196,30,58,.3);
+    }
+    .don-amt.popular::before {
+      content: 'Popular'; position: absolute; top: -10px; left: 50%;
+      transform: translateX(-50%); background: #D4A017; color: #7B0D1E;
+      font-size: .6rem; font-weight: 800; padding: 1px 7px; border-radius: 999px;
+    }
+    .don-tabcontent { animation: fadeIn .3s ease; }
+    .pay-method-card {
+      background: white; border-radius: 20px; overflow: hidden;
+      border: 1px solid rgba(212,160,23,.2); box-shadow: 0 4px 20px rgba(0,0,0,.07);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .pay-method-card:hover { transform: translateY(-5px); box-shadow: 0 12px 35px rgba(196,30,58,.15); }
+    .pay-method-header {
+      padding: .75rem 1rem; display: flex; align-items: center; gap: .75rem;
+    }
+    .pay-method-logo {
+      width: 32px; height: 32px; background: white; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 900; color: #555; flex-shrink: 0;
+    }
+    .bank-card-pub {
+      background: white; border: 1.5px solid rgba(212,160,23,.25);
+      border-radius: 18px; overflow: hidden; box-shadow: 0 3px 15px rgba(0,0,0,.06);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .bank-card-pub:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(196,30,58,.12); }
 
     /* ── WHATSAPP FLOAT ── */
     #waFloat {
@@ -304,13 +354,15 @@
       font-size: 1.5rem; text-decoration: none;
       box-shadow: 0 4px 20px rgba(37,211,102,.5);
       z-index: 970; transition: all .3s;
-      animation: waPulse 2.5s ease-in-out infinite;
+      animation: waPulse 3s ease-in-out infinite;
     }
-    #waFloat:hover { transform: scale(1.12); box-shadow: 0 6px 28px rgba(37,211,102,.65); }
+    #waFloat:hover { transform: scale(1.12); }
     @keyframes waPulse {
       0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,.5); }
-      50%      { box-shadow: 0 4px 30px rgba(37,211,102,.8), 0 0 0 8px rgba(37,211,102,.12); }
+      50%      { box-shadow: 0 4px 30px rgba(37,211,102,.75), 0 0 0 8px rgba(37,211,102,.1); }
     }
+    /* ── UTILITY ── */
+    .text-shadow-gold { text-shadow: 0 0 30px rgba(212,160,23,.5); }
   </style>
 </head>
 <body>
@@ -321,13 +373,13 @@
   <img id="lbImg" src="" alt=""/>
 </div>
 
-<!-- Scroll Top -->
-<div id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></div>
-
-<!-- WhatsApp Float -->
-<a id="waFloat" href="https://wa.me/8801728018956" target="_blank" rel="noopener" title="WhatsApp এ বার্তা পাঠান" id="waFloat">
+<!-- WhatsApp Float Button -->
+<a id="waFloat" href="https://wa.me/8801728018956" target="_blank" rel="noopener" aria-label="WhatsApp">
   <i class="fab fa-whatsapp"></i>
 </a>
+
+<!-- Scroll Top -->
+<div id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></div>
 
 <!-- ===================================================
      NAVBAR
@@ -406,17 +458,17 @@
     <div class="slide-track" id="slideTrack">
       <!-- Default slide 1 (shown while Firebase loads) -->
       <div class="hero-slide active" id="slide-0">
-        <!-- No default image — admin uploads via Admin Panel -->
+        <!-- No default slide — admin uploads via Admin Panel -->
         <div class="slide-overlay"></div>
       </div>
       <!-- Default slide 2 -->
       <div class="hero-slide" id="slide-1">
-        <!-- No default image -->
+        <!-- No default slide — admin uploads via Admin Panel -->
         <div class="slide-overlay"></div>
       </div>
       <!-- Default slide 3 -->
       <div class="hero-slide" id="slide-2">
-        <!-- No default image -->
+        <!-- No default slide — admin uploads via Admin Panel -->
         <div class="slide-overlay"></div>
       </div>
     </div>
@@ -696,55 +748,153 @@
      DONATIONS
 =================================================== -->
 <section id="donations" class="py-16 sm:py-20 px-4">
-  <div class="max-w-7xl mx-auto">
+  <div class="max-w-6xl mx-auto">
     <div class="text-center mb-10 rv">
       <span class="s-badge">দান ও সহযোগিতা</span>
-      <h2 class="s-title text-2xl sm:text-3xl font-bold mt-2 mb-3">Support & Donations</h2>
+      <h2 class="s-title text-2xl sm:text-3xl font-bold mt-2 mb-3">Support &amp; Donations</h2>
       <div class="gl w-36 mx-auto"></div>
-      <p class="text-gray-500 mt-3 text-sm max-w-md mx-auto">আপনার উদার দানে আমাদের ধর্মীয় ও সামাজিক কার্যক্রম পরিচালিত হয়।</p>
+      <p class="text-gray-500 mt-3 text-sm max-w-lg mx-auto">আপনার উদার দানে আমাদের ধর্মীয় ও সামাজিক কার্যক্রম পরিচালিত হয়।</p>
     </div>
-    <div class="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto">
-      <div class="rvl text-center">
-        <div class="qr-box p-6 sm:p-8 inline-block w-full max-w-xs sm:max-w-sm mx-auto">
-          <h4 class="font-bold text-red-800 text-lg mb-1.5">স্ক্যান করে দান করুন</h4>
-          <p class="text-gray-500 text-sm mb-5">bKash / Nagad / Rocket</p>
-          <img id="qrImg"
-               src="https://placehold.co/200x200/FFF8E7/C41E3A?text=QR+Code"
-               alt="QR Code"
-               class="w-40 h-40 sm:w-48 sm:h-48 mx-auto rounded-xl border-4 border-yellow-300 mb-4 shadow-inner object-contain"/>
-          <p class="text-xs text-gray-400 mb-1">bKash / Nagad নম্বর:</p>
-          <p class="font-bold text-red-700 text-lg" id="bkashNum">—</p>
-        </div>
-      </div>
-      <div class="rvr">
-        <div class="bg-white rounded-2xl border border-yellow-200 shadow-lg overflow-hidden">
-          <div class="bg-gradient-to-r from-red-800 to-red-700 px-5 py-3.5">
-            <h4 class="text-yellow-400 font-bold flex items-center gap-2 text-sm">
-              <i class="fas fa-university"></i> ব্যাংক বিবরণ
-            </h4>
-          </div>
-          <div class="p-5" id="bankBox">
-            <div class="text-center text-gray-400 py-3 text-sm">লোড হচ্ছে...</div>
-          </div>
-        </div>
-        <div class="mt-4 grid grid-cols-3 gap-2">
-          <div class="bg-red-50 rounded-xl p-2.5 text-center border border-red-100 hover:shadow cursor-pointer transition-all">
-            <div class="text-red-700 font-black text-lg">৳১০০</div>
-            <div class="text-gray-500 text-xs mt-0.5">সুলভ দান</div>
-          </div>
-          <div class="bg-yellow-50 rounded-xl p-2.5 text-center border-2 border-yellow-400 relative hover:shadow cursor-pointer transition-all">
-            <div class="absolute -top-2 left-1/2 -translate-x-1/2 bg-yellow-400 text-red-900 text-xs font-bold px-2 py-0.5 rounded-full">Popular</div>
-            <div class="text-yellow-700 font-black text-lg">৳৫০০</div>
-            <div class="text-gray-500 text-xs mt-0.5">সাধারণ</div>
-          </div>
-          <div class="bg-red-50 rounded-xl p-2.5 text-center border border-red-100 hover:shadow cursor-pointer transition-all">
-            <div class="text-red-700 font-black text-lg">৳১০০০</div>
-            <div class="text-gray-500 text-xs mt-0.5">বিশেষ</div>
-          </div>
-        </div>
+
+    <!-- Donation amount quick select -->
+    <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 rv" id="donAmtRow">
+      <button class="don-amt active" onclick="selAmt(this)">৳১০১<br/><span>সুলভ</span></button>
+      <button class="don-amt" onclick="selAmt(this)">৳৫০১<br/><span>সাধারণ</span></button>
+      <button class="don-amt popular" onclick="selAmt(this)">৳১০০১<br/><span>বিশেষ</span></button>
+      <button class="don-amt" onclick="selAmt(this)">৳৫০০১<br/><span>প্রিমিয়াম</span></button>
+      <button class="don-amt" onclick="selAmt(this)">যেকোনো<br/><span>পরিমাণ</span></button>
+    </div>
+
+    <!-- Tab switcher -->
+    <div class="flex justify-center mb-6 rv">
+      <div class="flex gap-1 p-1.5 rounded-2xl border border-red-200 bg-red-50 flex-wrap justify-center">
+        <button class="don-tab active" onclick="switchTab('mobile',this)"><i class="fas fa-mobile-alt mr-1.5"></i>মোবাইল ব্যাংকিং</button>
+        <button class="don-tab" onclick="switchTab('bank',this)"><i class="fas fa-university mr-1.5"></i>ব্যাংক ট্রান্সফার</button>
+        <button class="don-tab" onclick="switchTab('direct',this)"><i class="fas fa-handshake mr-1.5"></i>সরাসরি দান</button>
       </div>
     </div>
+
+    <!-- MOBILE BANKING TAB -->
+    <div id="dtab-mobile" class="don-tabcontent">
+      <div class="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+
+        <!-- bKash -->
+        <div class="pay-method-card">
+          <div class="pay-method-header" style="background:linear-gradient(135deg,#db2777,#be185d)">
+            <div class="pay-method-logo">bK</div>
+            <span class="text-white font-bold">bKash</span>
+          </div>
+          <div class="p-4 text-center">
+            <img id="bkashQrImg" src="https://placehold.co/160x160/fce7f3/be185d?text=bKash+QR"
+                 class="w-32 h-32 mx-auto rounded-xl mb-3 object-contain border-2 border-pink-200" alt="bKash QR"/>
+            <p class="text-xs text-gray-400 mb-0.5">নম্বর</p>
+            <p class="font-black text-lg" style="color:#be185d" id="bkashNumShow">—</p>
+            <a id="bkashWaBtn" href="#" target="_blank"
+               class="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full"
+               style="background:#dcfce7;color:#15803d">
+              <i class="fab fa-whatsapp"></i> নম্বরে WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <!-- Nagad -->
+        <div class="pay-method-card">
+          <div class="pay-method-header" style="background:linear-gradient(135deg,#ea580c,#c2410c)">
+            <div class="pay-method-logo">Ng</div>
+            <span class="text-white font-bold">Nagad</span>
+          </div>
+          <div class="p-4 text-center">
+            <img id="nagadQrImg" src="https://placehold.co/160x160/fff7ed/c2410c?text=Nagad+QR"
+                 class="w-32 h-32 mx-auto rounded-xl mb-3 object-contain border-2 border-orange-200" alt="Nagad QR"/>
+            <p class="text-xs text-gray-400 mb-0.5">নম্বর</p>
+            <p class="font-black text-lg text-orange-600" id="nagadNumShow">—</p>
+            <a id="nagadWaBtn" href="#" target="_blank"
+               class="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full"
+               style="background:#dcfce7;color:#15803d">
+              <i class="fab fa-whatsapp"></i> নম্বরে WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <!-- Rocket -->
+        <div class="pay-method-card">
+          <div class="pay-method-header" style="background:linear-gradient(135deg,#7c3aed,#5b21b6)">
+            <div class="pay-method-logo">Rk</div>
+            <span class="text-white font-bold">Rocket</span>
+          </div>
+          <div class="p-4 text-center">
+            <img id="rocketQrImg" src="https://placehold.co/160x160/f3e8ff/6d28d9?text=Rocket+QR"
+                 class="w-32 h-32 mx-auto rounded-xl mb-3 object-contain border-2 border-purple-200" alt="Rocket QR"/>
+            <p class="text-xs text-gray-400 mb-0.5">নম্বর</p>
+            <p class="font-black text-lg text-purple-700" id="rocketNumShow">—</p>
+            <a id="rocketWaBtn" href="#" target="_blank"
+               class="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full"
+               style="background:#dcfce7;color:#15803d">
+              <i class="fab fa-whatsapp"></i> নম্বরে WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </div>
+      <p class="text-center text-gray-400 text-xs mt-5">
+        <i class="fas fa-info-circle mr-1"></i>দান পাঠানোর পর Screenshot সহ WhatsApp করুন — Official রসিদ পাঠানো হবে।
+      </p>
+    </div>
+
+    <!-- BANK TRANSFER TAB -->
+    <div id="dtab-bank" class="don-tabcontent hidden">
+      <div class="max-w-3xl mx-auto space-y-4" id="bankCardsArea">
+        <div class="text-center text-gray-400 py-6 text-sm">লোড হচ্ছে...</div>
+      </div>
+      <p class="text-center text-gray-400 text-xs mt-5">
+        <i class="fas fa-info-circle mr-1"></i>Transfer করার পর Transaction ID সহ আমাদের সাথে যোগাযোগ করুন।
+      </p>
+    </div>
+
+    <!-- DIRECT TAB -->
+    <div id="dtab-direct" class="don-tabcontent hidden">
+      <div class="max-w-lg mx-auto bg-white rounded-2xl border border-yellow-200 shadow-md p-6 text-center">
+        <div class="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl border-2 border-yellow-200">🤝</div>
+        <h4 class="font-bold text-red-800 text-lg mb-2">সরাসরি দান করুন</h4>
+        <p class="text-gray-600 text-sm leading-relaxed mb-4">আমাদের অফিসে এসে বা কমিটির যেকোনো সদস্যের কাছে সরাসরি দান করতে পারেন।</p>
+        <div class="bg-red-50 rounded-xl p-4 border border-red-100 text-left space-y-2 mb-5">
+          <div class="flex items-start gap-2 text-sm text-gray-700">
+            <i class="fas fa-map-marker-alt text-red-500 mt-0.5 flex-shrink-0"></i>
+            <span id="directAddr">—</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm text-gray-700">
+            <i class="fas fa-clock text-red-500 flex-shrink-0"></i>
+            <span>প্রতিদিন বিকেল ৪টা — রাত ৯টা</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <i class="fas fa-phone text-red-500 flex-shrink-0"></i>
+            <a id="directPhone" href="#" class="text-red-700 hover:underline">01728018956</a>
+          </div>
+        </div>
+        <a href="#contact"
+           class="inline-flex items-center gap-2 text-white text-sm font-bold px-6 py-2.5 rounded-full"
+           style="background:linear-gradient(135deg,#C41E3A,#8B0000)">
+          <i class="fas fa-phone-alt"></i> যোগাযোগ করুন
+        </a>
+      </div>
+    </div>
+
+    <!-- Receipt note -->
+    <div class="mt-8 max-w-2xl mx-auto bg-yellow-50 rounded-2xl border border-yellow-200 p-5 rv">
+      <h5 class="font-bold text-yellow-800 text-sm mb-2 flex items-center gap-2">
+        <i class="fas fa-receipt text-yellow-600"></i> রসিদ পাওয়ার নিয়ম
+      </h5>
+      <ul class="space-y-1.5 text-sm text-yellow-700">
+        <li class="flex items-start gap-2"><i class="fas fa-check-circle text-yellow-500 mt-0.5 flex-shrink-0"></i>দান করার পর Transaction Screenshot নিন</li>
+        <li class="flex items-start gap-2"><i class="fas fa-check-circle text-yellow-500 mt-0.5 flex-shrink-0"></i>Screenshot + নাম + পরিমাণ WhatsApp করুন: <strong>01728018956</strong></li>
+        <li class="flex items-start gap-2"><i class="fas fa-check-circle text-yellow-500 mt-0.5 flex-shrink-0"></i>আমরা Official রসিদ পাঠিয়ে দেবো</li>
+        <li class="flex items-start gap-2"><i class="fas fa-check-circle text-yellow-500 mt-0.5 flex-shrink-0"></i>সকল দান সংগঠনের কাজে ব্যবহৃত হয় — কোনো ব্যক্তিগত ব্যবহার হয় না</li>
+      </ul>
+    </div>
+
   </div>
+</section>
+
 </section>
 
 <!-- ===================================================
@@ -768,22 +918,11 @@
               <div><label class="block text-gray-600 text-sm mb-1">মোবাইল</label><input id="cf-phone" type="tel" placeholder="01XXXXXXXXX" class="f-inp"/></div>
             </div>
             <div><label class="block text-gray-600 text-sm mb-1">ইমেইল</label><input id="cf-email" type="email" placeholder="your@email.com" class="f-inp"/></div>
-            <div><label class="block text-gray-600 text-sm mb-1">বিষয়</label>
-              <select id="cf-subject" class="f-inp">
-                <option value="">বিষয় বেছে নিন</option>
-                <option value="সদস্যপদ">সদস্যপদ গ্রহণ</option>
-                <option value="পুজো">পুজো সম্পর্কিত</option>
-                <option value="দান">দান সংক্রান্ত</option>
-                <option value="স্পন্সর">স্পন্সর / সহযোগিতা</option>
-                <option value="অভিযোগ">অভিযোগ / পরামর্শ</option>
-                <option value="অন্যান্য">অন্যান্য</option>
-              </select>
-            </div>
             <div><label class="block text-gray-600 text-sm mb-1">বার্তা *</label><textarea id="cf-msg" rows="4" placeholder="আপনার বার্তা লিখুন..." required class="f-inp resize-none"></textarea></div>
             <button type="submit" id="cf-btn" class="sub-btn"><i class="fas fa-paper-plane mr-2"></i>বার্তা পাঠান</button>
           </form>
           <div id="formOk" class="hidden mt-3 bg-green-50 border border-green-200 rounded-xl p-3 text-green-700 text-sm text-center">
-            ✅ আপনার বার্তা পাঠানো হয়েছে! শীঘ্রই যোগাযোগ করব। ধন্যবাদ।
+            ✅ বার্তা পাঠানো হয়েছে! ধন্যবাদ।
           </div>
         </div>
       </div>
@@ -958,9 +1097,54 @@ async function loadSettings() {
     /* About image */
     if (s.about_img) g('aboutImg').src = s.about_img;
 
-    /* QR / bKash */
-    if (s.qr_url) g('qrImg').src = s.qr_url;
-    if (s.bkash)  st('bkashNum', s.bkash);
+    /* ── Mobile Banking ── */
+    const setNum = (elId, waId, num) => {
+      const el = g(elId); if(el && num) el.textContent = num;
+      const wa = g(waId);
+      if(wa && num) wa.href = 'https://wa.me/88'+num.replace(/^0/,'');
+    };
+    setNum('bkashNumShow',  'bkashWaBtn',  s.bkash);
+    setNum('nagadNumShow',  'nagadWaBtn',  s.nagad);
+    setNum('rocketNumShow', 'rocketWaBtn', s.rocket);
+    if(s.bkash_qr)  { const e=g('bkashQrImg');  if(e) e.src=s.bkash_qr; }
+    if(s.nagad_qr)  { const e=g('nagadQrImg');  if(e) e.src=s.nagad_qr; }
+    if(s.rocket_qr) { const e=g('rocketQrImg'); if(e) e.src=s.rocket_qr; }
+
+    /* ── WhatsApp float button ── */
+    const waNum = s.wa_direct ? '88'+s.wa_direct.replace(/^0/,'') : '8801728018956';
+    const waEl = g('waFloat'); if(waEl) waEl.href = 'https://wa.me/' + waNum;
+
+    /* ── Direct tab contact ── */
+    if(s.address){ const e=g('directAddr'); if(e) e.textContent=s.address; }
+    if(s.phone1){  const e=g('directPhone'); if(e){ e.textContent=s.phone1; e.href='tel:'+s.phone1.replace(/\s/g,''); }}
+
+    /* ── Bank cards ── */
+    const banks = [];
+    if(s.bank_acc){ banks.push({n:s.bank_name||'ব্যাংক ১', b:s.bank_branch||'', an:s.bank_acc_name||'', ac:s.bank_acc, r:s.bank_routing||'', t:s.acc_type||''}); }
+    if(s.bank2_acc){ banks.push({n:s.bank2_name||'ব্যাংক ২', b:s.bank2_branch||'', an:s.bank2_acc_name||'', ac:s.bank2_acc, r:s.bank2_routing||'', t:s.bank2_type||''}); }
+    if(s.bank3_acc){ banks.push({n:s.bank3_name||'ব্যাংক ৩', b:s.bank3_branch||'', an:s.bank3_acc_name||'', ac:s.bank3_acc, r:s.bank3_routing||'', t:s.bank3_type||''}); }
+    const bc = g('bankCardsArea');
+    if(bc && banks.length){
+      bc.innerHTML = banks.map(b=>`
+        <div class="bank-card-pub">
+          <div style="background:linear-gradient(135deg,#7B0D1E,#C41E3A);padding:.75rem 1.25rem;display:flex;align-items:center;gap:.6rem">
+            <i class="fas fa-university text-yellow-400"></i>
+            <span style="color:#F5C842;font-weight:700;font-size:.875rem">${b.n}${b.b?' — '+b.b:''}</span>
+          </div>
+          <div style="padding:1.1rem;display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.5rem">
+            ${b.an?`<div class="bank-row"><span class="text-gray-500 text-sm">Account Name</span><span class="font-semibold text-gray-800 text-sm">${b.an}</span></div>`:''}
+            <div class="bank-row"><span class="text-gray-500 text-sm">Account No.</span>
+              <span style="display:flex;align-items:center;gap:.4rem;font-weight:600;font-size:.85rem;color:#1A0A00">${b.ac}
+                <button class="cp-btn" onclick="window.cpTxt('${b.ac}',this)"><i class="fas fa-copy"></i></button>
+              </span>
+            </div>
+            ${b.r?`<div class="bank-row"><span class="text-gray-500 text-sm">Routing No.</span><span style="display:flex;align-items:center;gap:.4rem;font-weight:600;font-size:.85rem;color:#1A0A00">${b.r}<button class="cp-btn" onclick="window.cpTxt('${b.r}',this)"><i class="fas fa-copy"></i></button></span></div>`:''}
+            ${b.t?`<div class="bank-row"><span class="text-gray-500 text-sm">Type</span><span class="font-semibold text-gray-800 text-sm">${b.t}</span></div>`:''}
+          </div>
+        </div>`).join('');
+    } else if(bc) {
+      bc.innerHTML = '<p class="text-center text-gray-400 text-sm py-6">Admin Panel থেকে ব্যাংক তথ্য যোগ করুন।</p>';
+    }
 
     /* About text */
     if (s.about_p1) st('aboutP1', s.about_p1);
@@ -1027,28 +1211,20 @@ async function loadSettings() {
         </span>
       </div>`).join('');
 
-    /* Update WhatsApp float button */
-    const _waNum = s.wa_direct ? '88'+s.wa_direct.replace(/^0/,'') : '8801728018956';
-    const _waEl = g('waFloat');
-    if (_waEl) _waEl.href = `https://wa.me/${_waNum}`;
-
-    /* Social links — build from Firebase settings */
-    const WA_NUMBER = s.wa_direct ? '88'+s.wa_direct.replace(/^0/,'') : '8801728018956';
-    const waLink = s.wa || `https://wa.me/${WA_NUMBER}`;
-    const sm = [
-      { k: 'fb', ic: 'fab fa-facebook-f',  t: 'Facebook',  url: s.fb  },
-      { k: 'ig', ic: 'fab fa-instagram',   t: 'Instagram', url: s.ig  },
-      { k: 'yt', ic: 'fab fa-youtube',     t: 'YouTube',   url: s.yt  },
-      { k: 'wa', ic: 'fab fa-whatsapp',    t: 'WhatsApp',  url: waLink },
-      { k: 'tg', ic: 'fab fa-telegram',    t: 'Telegram',  url: s.tg  },
+    /* Social links — always include WhatsApp */
+    const waNumSoc = s.wa_direct ? '88'+s.wa_direct.replace(/^0/,'') : '8801728018956';
+    const smLinks = [
+      { url:s.fb,  ic:'fab fa-facebook-f', t:'Facebook'  },
+      { url:s.ig,  ic:'fab fa-instagram',  t:'Instagram' },
+      { url:s.yt,  ic:'fab fa-youtube',    t:'YouTube'   },
+      { url:s.wa||'https://wa.me/'+waNumSoc, ic:'fab fa-whatsapp', t:'WhatsApp' },
+      { url:s.tg,  ic:'fab fa-telegram',   t:'Telegram'  },
     ];
-    const sh = sm.filter(x => x.url)
-      .map(x => `<a href="${x.url}" target="_blank" rel="noopener" title="${x.t}" class="soc-a"><i class="${x.ic}"></i></a>`)
+    const sh = smLinks.filter(x=>x.url)
+      .map(x=>`<a href="${x.url}" target="_blank" rel="noopener" title="${x.t}" class="soc-a"><i class="${x.ic}"></i></a>`)
       .join('');
-    /* Always at least show WhatsApp */
-    const socialHtml = sh || `<a href="${waLink}" target="_blank" rel="noopener" title="WhatsApp" class="soc-a"><i class="fab fa-whatsapp"></i></a>`;
-    g('socLinks').innerHTML = socialHtml;
-    g('footSocLinks').innerHTML = socialHtml;
+    const socialHtml = sh || `<a href="https://wa.me/${waNumSoc}" target="_blank" class="soc-a" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>`;
+    ['socLinks','footSocLinks'].forEach(id=>{ const el=g(id); if(el) el.innerHTML=socialHtml; });
 
   } catch(e) { console.warn('Settings:', e); }
 }
@@ -1245,31 +1421,22 @@ window.cpTxt = (text, btn) => {
 
 window.subForm = async e => {
   e.preventDefault();
-  const btn = g('cf-btn');
-  if (!btn) return;
+  const btn  = g('cf-btn');
   const name = (g('cf-name')?.value||'').trim();
-  const phone= (g('cf-phone')?.value||'').trim();
-  const email= (g('cf-email')?.value||'').trim();
-  const subj = (g('cf-subject')?.value||'');
+  const ph   = (g('cf-phone')?.value||'').trim();
+  const em   = (g('cf-email')?.value||'').trim();
   const msg  = (g('cf-msg')?.value||'').trim();
-  if (!name || !msg) { alert('নাম ও বার্তা আবশ্যক।'); return; }
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>পাঠানো হচ্ছে...';
-  btn.disabled = true;
-  try {
-    const { addDoc, collection:col, serverTimestamp:sts } = await import(
+  if(!name||!msg){alert('নাম ও বার্তা আবশ্যক।');return;}
+  if(btn){btn.innerHTML='<i class="fas fa-spinner fa-spin mr-1"></i>পাঠানো হচ্ছে...';btn.disabled=true;}
+  try{
+    const {addDoc:AD,collection:CL,serverTimestamp:STS}=await import(
       'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
-    await addDoc(col(db,'messages'),{
-      name, phone, email, subject:subj, message:msg,
-      status:'unread', created_at:sts()
-    });
-  } catch(err){ console.warn('Message save:',err); }
-  g('contactForm').reset();
-  btn.innerHTML = '<i class="fas fa-paper-plane mr-1"></i>বার্তা পাঠান';
-  btn.disabled = false;
-  const ok = g('formOk');
-  ok.textContent = '✅ আপনার বার্তা পাঠানো হয়েছে! শীঘ্রই যোগাযোগ করব।';
-  ok.classList.remove('hidden');
-  setTimeout(()=>ok.classList.add('hidden'), 7000);
+    await AD(CL(db,'messages'),{name,phone:ph,email:em,message:msg,status:'unread',created_at:STS()});
+  }catch(err){console.warn('msg save:',err);}
+  const form=g('contactForm');if(form)form.reset();
+  if(btn){btn.innerHTML='<i class="fas fa-paper-plane mr-1"></i>বার্তা পাঠান';btn.disabled=false;}
+  const ok=g('formOk');
+  if(ok){ok.textContent='✅ বার্তা পাঠানো হয়েছে! শীঘ্রই যোগাযোগ করব। ধন্যবাদ।';ok.classList.remove('hidden');setTimeout(()=>ok.classList.add('hidden'),7000);}
 };
 
 window.toggleM = () => {
@@ -1292,6 +1459,20 @@ window.addEventListener('scroll', () => {
   });
 });
 
+
+/* ── DONATION TAB LOGIC ── */
+window.switchTab = (tab, btn) => {
+  document.querySelectorAll('.don-tabcontent').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.don-tab').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('dtab-' + tab);
+  if (el) el.classList.remove('hidden');
+  btn.classList.add('active');
+};
+window.selAmt = btn => {
+  document.querySelectorAll('.don-amt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+};
+
 /* ══════════════════════════════════════════
    HERO SLIDER ENGINE
    ★ Uses real <img> tags — works on all mobile browsers ★
@@ -1301,7 +1482,7 @@ window.addEventListener('scroll', () => {
   let currentIndex = 0;
   let timerID = null;
 
-  const DEFAULT_SLIDES = []; /* Admin uploads hero images via Admin Panel */
+  const DEFAULT_SLIDES = []; /* Upload hero images via Admin Panel → লোগো ও ছবি */
 
   function buildSlides(urls) {
     const track = document.getElementById('slideTrack');
@@ -1386,8 +1567,7 @@ window.addEventListener('scroll', () => {
     slider.addEventListener('mouseleave', () => startAuto());
   }
 
-  /* Start auto-play; if admin uploaded images they load via initSlider() from Firebase */
-  if (DEFAULT_SLIDES.length > 0) buildSlides(DEFAULT_SLIDES);
+  if (DEFAULT_SLIDES.length) buildSlides(DEFAULT_SLIDES);
   startAuto();
   resetProgress();
 
