@@ -149,14 +149,11 @@ input:checked+.tsl::before{transform:translateX(19px)}
 
 /* Gallery card on mobile — always show delete button */
 .gcard{position:relative;border-radius:12px;overflow:hidden}
-.msg-filter-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
-  color:rgba(255,255,255,.6);border-radius:8px;padding:.35rem .9rem;font-family:'Hind Siliguri',sans-serif;
-  font-size:.78rem;cursor:pointer;transition:all .2s}
-.msg-filter-btn.active,.msg-filter-btn:hover{background:rgba(212,160,23,.15);color:#F5C842;border-color:rgba(212,160,23,.3)}
-.msg-card{border-bottom:1px solid rgba(255,255,255,.06);padding:1rem;transition:background .2s}
-.msg-card:hover{background:rgba(255,255,255,.04)}
-.msg-card.unread{border-left:3px solid #C41E3A}
-.msg-card.read{border-left:3px solid rgba(255,255,255,.1)}
+.msg-filter{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);border-radius:8px;padding:.3rem .85rem;font-family:'Hind Siliguri',sans-serif;font-size:.78rem;cursor:pointer;transition:all .2s}
+.msg-filter.active,.msg-filter:hover{background:rgba(212,160,23,.15);color:#F5C842;border-color:rgba(212,160,23,.3)}
+.msg-item{padding:.9rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);transition:background .2s}
+.msg-item:hover{background:rgba(255,255,255,.04)}
+.msg-item.unread{border-left:3px solid #C41E3A}
 .gcard img{width:100%;height:120px;object-fit:cover;display:block}
 .gcard .gc-info{background:rgba(0,0,0,.75);padding:.5rem .6rem;
   display:flex;align-items:center;justify-content:space-between;gap:.4rem}
@@ -222,8 +219,8 @@ input:checked+.tsl::before{transform:translateX(19px)}
       <a class="ni" onclick="goP('social',this)"><i class="fas fa-share-alt w-4 text-center text-xs"></i> সোশ্যাল মিডিয়া</a>
       <a class="ni" onclick="goP('payment',this)"><i class="fas fa-money-bill w-4 text-center text-xs"></i> পেমেন্ট তথ্য</a>
       <a class="ni" onclick="goP('appearance',this)"><i class="fas fa-paint-brush w-4 text-center text-xs"></i> লোগো ও ছবি</a>
-      <p class="nl mt-2">বার্তা সমূহ</p>
-      <a class="ni" onclick="goP('messages',this)"><i class="fas fa-envelope w-4 text-center text-xs"></i> যোগাযোগ বার্তা <span id="msgBadge" class="ml-auto bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span></a>
+      <p class="nl mt-2">বার্তা</p>
+      <a class="ni" onclick="goP('messages',this)"><i class="fas fa-envelope w-4 text-center text-xs"></i> যোগাযোগ বার্তা <span id="msgBadge" class="ml-auto bg-red-600 text-white text-xs rounded-full px-1.5 hidden">!</span></a>
       <p class="nl mt-2">অন্যান্য</p>
       <a class="ni" href="index.html" target="_blank"><i class="fas fa-eye w-4 text-center text-xs"></i> ওয়েবসাইট</a>
       <a class="ni text-red-400/70 hover:text-red-300" onclick="doLogout()"><i class="fas fa-sign-out-alt w-4 text-center text-xs"></i> লগআউট</a>
@@ -457,8 +454,7 @@ input:checked+.tsl::before{transform:translateX(19px)}
           <div><label class="lbl"><i class="fab fa-facebook text-blue-400 mr-1"></i> Facebook</label><input type="url" id="soFb" placeholder="https://facebook.com/yourpage" class="inp"/></div>
           <div><label class="lbl"><i class="fab fa-instagram text-pink-400 mr-1"></i> Instagram</label><input type="url" id="soIg" placeholder="https://instagram.com/..." class="inp"/></div>
           <div><label class="lbl"><i class="fab fa-youtube text-red-400 mr-1"></i> YouTube</label><input type="url" id="soYt" placeholder="https://youtube.com/..." class="inp"/></div>
-          <div><label class="lbl"><i class="fab fa-whatsapp text-green-400 mr-1"></i> WhatsApp Group Link</label><input type="url" id="soWa" placeholder="https://chat.whatsapp.com/..." class="inp"/></div>
-          <div><label class="lbl"><i class="fab fa-whatsapp text-green-400 mr-1"></i> WhatsApp Direct নম্বর</label><input type="tel" id="soWaDirect" placeholder="01728018956" class="inp"/><p class="text-white/30 text-xs mt-1">এটি দিলে WhatsApp chat direct open হবে</p></div>
+          <div><label class="lbl"><i class="fab fa-whatsapp text-green-400 mr-1"></i> WhatsApp Group</label><input type="url" id="soWa" placeholder="https://chat.whatsapp.com/..." class="inp"/></div>
           <div><label class="lbl"><i class="fab fa-telegram text-blue-400 mr-1"></i> Telegram</label><input type="url" id="soTg" placeholder="https://t.me/..." class="inp"/></div>
         </div>
         <div id="socialErr" class="ebox hidden"></div>
@@ -469,31 +465,114 @@ input:checked+.tsl::before{transform:translateX(19px)}
     <!-- ===== PAYMENT ===== -->
     <div id="p-payment" class="panel">
       <div class="sh"><i class="fas fa-money-bill text-yellow-500"></i> পেমেন্ট তথ্য</div>
-      <div class="box p-4 space-y-4">
-        <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider">মোবাইল ব্যাংকিং</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div><label class="lbl">bKash / Nagad নম্বর</label><input type="text" id="pBkash" placeholder="01XXXXXXXXX" class="inp"/></div>
-          <div><label class="lbl">QR Code ছবি</label>
-            <input type="file" id="qrFile" accept="image/*" class="inp" onchange="pImg('qrFile','qrPv','qrPvW')"/>
-            <div id="qrPvW" class="mt-2 hidden"><img id="qrPv" class="thumb"/></div>
+      <div class="box p-4 space-y-5">
+
+        <!-- bKash -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider mb-3" style="color:#f472b6">
+            <span style="background:#db2777;color:white;padding:2px 8px;border-radius:6px;font-size:.65rem;">bK</span>
+            &nbsp;bKash
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="lbl">bKash নম্বর</label>
+              <input type="text" id="pBkash" placeholder="01XXXXXXXXX" class="inp"/></div>
+            <div><label class="lbl">bKash QR Code</label>
+              <input type="file" id="bkashQrFile" accept="image/*" class="inp" onchange="pImg('bkashQrFile','bkashQrPv','bkashQrPvW')"/>
+              <div id="bkashQrPvW" class="mt-2 hidden"><img id="bkashQrPv" class="thumb"/></div>
+            </div>
           </div>
         </div>
-        <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider pt-2 border-t border-white/5">ব্যাংক বিবরণ</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div><label class="lbl">Account Name</label><input type="text" id="pAN" placeholder="Pushpanjali Yuva Sangh" class="inp"/></div>
-          <div><label class="lbl">Account Number</label><input type="text" id="pNum" placeholder="১২৩৪৫৬৭৮৯০" class="inp"/></div>
-          <div><label class="lbl">Routing Number</label><input type="text" id="pRoute" placeholder="২৬০২৭০৫৩৫" class="inp"/></div>
-          <div><label class="lbl">Bank Name</label><input type="text" id="pBank" placeholder="ইসলামী ব্যাংক বাংলাদেশ" class="inp"/></div>
-          <div><label class="lbl">Branch</label><input type="text" id="pBranch" placeholder="টাঙ্গাইল শাখা" class="inp"/></div>
-          <div><label class="lbl">Account Type</label>
-            <select id="pType" class="inp">
-              <option value="সঞ্চয়">সঞ্চয় (Savings)</option>
-              <option value="চলতি">চলতি (Current)</option>
-            </select>
+
+        <!-- Nagad -->
+        <div class="border-t border-white/5 pt-4">
+          <h3 class="text-xs font-bold uppercase tracking-wider mb-3" style="color:#fb923c">
+            <span style="background:#ea580c;color:white;padding:2px 8px;border-radius:6px;font-size:.65rem;">Ng</span>
+            &nbsp;Nagad
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="lbl">Nagad নম্বর</label>
+              <input type="text" id="pNagad" placeholder="01XXXXXXXXX" class="inp"/></div>
+            <div><label class="lbl">Nagad QR Code</label>
+              <input type="file" id="nagadQrFile" accept="image/*" class="inp" onchange="pImg('nagadQrFile','nagadQrPv','nagadQrPvW')"/>
+              <div id="nagadQrPvW" class="mt-2 hidden"><img id="nagadQrPv" class="thumb"/></div>
+            </div>
           </div>
         </div>
+
+        <!-- Rocket -->
+        <div class="border-t border-white/5 pt-4">
+          <h3 class="text-xs font-bold uppercase tracking-wider mb-3" style="color:#c084fc">
+            <span style="background:#7e22ce;color:white;padding:2px 8px;border-radius:6px;font-size:.65rem;">Rk</span>
+            &nbsp;Rocket (DBBL)
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="lbl">Rocket নম্বর</label>
+              <input type="text" id="pRocket" placeholder="01XXXXXXXXX-5" class="inp"/></div>
+            <div><label class="lbl">Rocket QR Code</label>
+              <input type="file" id="rocketQrFile" accept="image/*" class="inp" onchange="pImg('rocketQrFile','rocketQrPv','rocketQrPvW')"/>
+              <div id="rocketQrPvW" class="mt-2 hidden"><img id="rocketQrPv" class="thumb"/></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bank 1 -->
+        <div class="border-t border-white/5 pt-4">
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">
+            <i class="fas fa-university mr-1"></i> ব্যাংক ১ (প্রধান)
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="lbl">Account Name</label><input type="text" id="pAN" placeholder="Pushpanjali Yuva Sangh" class="inp"/></div>
+            <div><label class="lbl">Account Number</label><input type="text" id="pNum" placeholder="১২৩৪৫৬৭৮৯০" class="inp"/></div>
+            <div><label class="lbl">Routing Number</label><input type="text" id="pRoute" placeholder="২৬০২৭০৫৩৫" class="inp"/></div>
+            <div><label class="lbl">Bank Name</label><input type="text" id="pBank" placeholder="ইসলামী ব্যাংক" class="inp"/></div>
+            <div><label class="lbl">Branch</label><input type="text" id="pBranch" placeholder="টাঙ্গাইল শাখা" class="inp"/></div>
+            <div><label class="lbl">Account Type</label>
+              <select id="pType" class="inp">
+                <option value="সঞ্চয়">সঞ্চয় (Savings)</option>
+                <option value="চলতি">চলতি (Current)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bank 2 -->
+        <div class="border-t border-white/5 pt-4">
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">
+            <i class="fas fa-university mr-1"></i> ব্যাংক ২ (ঐচ্ছিক)
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="lbl">Account Name</label><input type="text" id="p2AN" placeholder="Pushpanjali Yuva Sangh" class="inp"/></div>
+            <div><label class="lbl">Account Number</label><input type="text" id="p2Num" placeholder="১২৩৪৫৬৭৮৯০" class="inp"/></div>
+            <div><label class="lbl">Routing Number</label><input type="text" id="p2Route" placeholder="২৬০২৭০৫৩৫" class="inp"/></div>
+            <div><label class="lbl">Bank Name</label><input type="text" id="p2Bank" placeholder="ডাচ বাংলা ব্যাংক" class="inp"/></div>
+            <div><label class="lbl">Branch</label><input type="text" id="p2Branch" placeholder="টাঙ্গাইল শাখা" class="inp"/></div>
+            <div><label class="lbl">Account Type</label>
+              <select id="p2Type" class="inp">
+                <option value="সঞ্চয়">সঞ্চয় (Savings)</option>
+                <option value="চলতি">চলতি (Current)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bank 3 -->
+        <div class="border-t border-white/5 pt-4">
+          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">
+            <i class="fas fa-university mr-1"></i> ব্যাংক ৩ (ঐচ্ছিক)
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="lbl">Account Name</label><input type="text" id="p3AN" placeholder="Pushpanjali Yuva Sangh" class="inp"/></div>
+            <div><label class="lbl">Account Number</label><input type="text" id="p3Num" placeholder="১২৩৪৫৬৭৮৯০" class="inp"/></div>
+            <div><label class="lbl">Routing Number</label><input type="text" id="p3Route" placeholder="২৬০২৭০৫৩৫" class="inp"/></div>
+            <div><label class="lbl">Bank Name</label><input type="text" id="p3Bank" placeholder="সোনালী ব্যাংক" class="inp"/></div>
+            <div><label class="lbl">Branch</label><input type="text" id="p3Branch" placeholder="টাঙ্গাইল শাখা" class="inp"/></div>
+          </div>
+        </div>
+
         <div id="payErr" class="ebox hidden"></div>
-        <button onclick="saveSet('payment')" id="btnSPay" class="br text-sm"><i class="fas fa-save"></i> সেভ করুন</button>
+        <button onclick="saveSet('payment')" id="btnSPay" class="br text-sm">
+          <i class="fas fa-save"></i> সব পেমেন্ট তথ্য সেভ করুন
+        </button>
       </div>
     </div>
 
@@ -503,17 +582,16 @@ input:checked+.tsl::before{transform:translateX(19px)}
       <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
         <p class="text-white/50 text-sm">ওয়েবসাইটের Contact Form থেকে আসা সকল বার্তা</p>
         <div class="flex gap-2">
-          <button onclick="markAllRead()" class="bg-btn text-xs"><i class="fas fa-check-double mr-1"></i>সব পড়া হয়েছে</button>
+          <button onclick="markAllRead()" class="bg-btn text-xs"><i class="fas fa-check-double mr-1"></i>সব পঠিত করুন</button>
           <button onclick="loadMessages()" class="bg-btn text-xs"><i class="fas fa-sync-alt mr-1"></i>রিফ্রেশ</button>
         </div>
       </div>
-      <!-- Filter tabs -->
       <div class="flex gap-2 mb-4">
-        <button class="msg-filter-btn active" onclick="filterMsgs('all',this)">সব</button>
-        <button class="msg-filter-btn" onclick="filterMsgs('unread',this)">অপঠিত</button>
-        <button class="msg-filter-btn" onclick="filterMsgs('read',this)">পড়া হয়েছে</button>
+        <button class="msg-filter active" onclick="filterMsg('all',this)">সব</button>
+        <button class="msg-filter" onclick="filterMsg('unread',this)">অপঠিত</button>
+        <button class="msg-filter" onclick="filterMsg('read',this)">পঠিত</button>
       </div>
-      <div id="msgContainer" class="box">
+      <div id="msgBox" class="box overflow-hidden">
         <div class="text-center text-white/30 py-10 text-sm">লোড হচ্ছে...</div>
       </div>
     </div>
@@ -1042,11 +1120,20 @@ async function loadAllSettings() {
     sv('abM',s.stat_members); sv('abF',s.stat_events);
     sv('abG1',s.goal1); sv('abG2',s.goal2); sv('abG3',s.goal3); sv('abG4',s.goal4); sv('abG5',s.goal5);
     // Social
-    sv('soFb',s.fb); sv('soIg',s.ig); sv('soYt',s.yt); sv('soWa',s.wa); sv('soWaDirect',s.wa_direct||'01728018956'); sv('soTg',s.tg);
+    sv('soFb',s.fb); sv('soIg',s.ig); sv('soYt',s.yt); sv('soWa',s.wa); sv('soTg',s.tg);
     // Payment
-    sv('pBkash',s.bkash); sv('pAN',s.bank_acc_name); sv('pNum',s.bank_acc);
-    sv('pRoute',s.bank_routing); sv('pBank',s.bank_name); sv('pBranch',s.bank_branch);
-    if (s.acc_type) g('pType').value = s.acc_type;
+    sv('pBkash',s.bkash); sv('pNagad',s.nagad); sv('pRocket',s.rocket);
+    sv('pAN',s.bank_acc_name); sv('pNum',s.bank_acc); sv('pRoute',s.bank_routing);
+    sv('pBank',s.bank_name);   sv('pBranch',s.bank_branch);
+    try{ if(s.acc_type) g('pType').value=s.acc_type; }catch{}
+    sv('p2AN',s.bank2_acc_name); sv('p2Num',s.bank2_acc); sv('p2Route',s.bank2_routing);
+    sv('p2Bank',s.bank2_name);   sv('p2Branch',s.bank2_branch);
+    try{ if(s.bank2_type) g('p2Type').value=s.bank2_type; }catch{}
+    sv('p3AN',s.bank3_acc_name); sv('p3Num',s.bank3_acc); sv('p3Route',s.bank3_routing);
+    sv('p3Bank',s.bank3_name);   sv('p3Branch',s.bank3_branch);
+    if(s.bkash_qr)  { const e=g('bkashQrPv');  if(e){e.src=s.bkash_qr;  g('bkashQrPvW').classList.remove('hidden');} }
+    if(s.nagad_qr)  { const e=g('nagadQrPv');  if(e){e.src=s.nagad_qr;  g('nagadQrPvW').classList.remove('hidden');} }
+    if(s.rocket_qr) { const e=g('rocketQrPv'); if(e){e.src=s.rocket_qr; g('rocketQrPvW').classList.remove('hidden');} }
     // Appearance previews
     if (s.logo_url) { g('logoPv').innerHTML = `<img src="${s.logo_url}" style="width:100%;height:100%;object-fit:cover;" alt="Logo"/>`; g('sbLogo').innerHTML = g('logoPv').innerHTML; }
     if (s.qr_url)   { g('qrPv').src = s.qr_url;   g('qrPvW').classList.remove('hidden'); }
@@ -1081,15 +1168,23 @@ window.saveSet = async sec => {
       data = { about_p1:v('ab1'), about_en:v('abEn'), stat_members:v('abM'), stat_events:v('abF'),
                goal1:v('abG1'), goal2:v('abG2'), goal3:v('abG3'), goal4:v('abG4'), goal5:v('abG5') };
     } else if (sec === 'social') {
-      data = { fb:v('soFb'), ig:v('soIg'), yt:v('soYt'), wa:v('soWa'), wa_direct:v('soWaDirect'), tg:v('soTg') };
+      data = { fb:v('soFb'), ig:v('soIg'), yt:v('soYt'), wa:v('soWa'), tg:v('soTg') };
     } else if (sec === 'payment') {
-      let qrUrl = '';
-      const qrF = g('qrFile').files[0];
-      if (qrF) qrUrl = await cloudUp(qrF);
-      data = { bkash:v('pBkash'), bank_acc_name:v('pAN'), bank_acc:v('pNum'),
-               bank_routing:v('pRoute'), bank_name:v('pBank'), bank_branch:v('pBranch'),
-               acc_type:g('pType').value };
-      if (qrUrl) data.qr_url = qrUrl;
+      data = {
+        bkash:  v('pBkash'),  nagad: v('pNagad'), rocket: v('pRocket'),
+        bank_acc_name:v('pAN'), bank_acc:v('pNum'), bank_routing:v('pRoute'),
+        bank_name:v('pBank'),   bank_branch:v('pBranch'), acc_type:g('pType').value,
+        bank2_acc_name:v('p2AN'), bank2_acc:v('p2Num'), bank2_routing:v('p2Route'),
+        bank2_name:v('p2Bank'),   bank2_branch:v('p2Branch'),
+        bank3_acc_name:v('p3AN'), bank3_acc:v('p3Num'), bank3_routing:v('p3Route'),
+        bank3_name:v('p3Bank'),   bank3_branch:v('p3Branch'),
+      };
+      const bkashF  = g('bkashQrFile')?.files[0];
+      const nagadF  = g('nagadQrFile')?.files[0];
+      const rocketF = g('rocketQrFile')?.files[0];
+      if (bkashF)  data.bkash_qr  = await cloudUp(bkashF);
+      if (nagadF)  data.nagad_qr  = await cloudUp(nagadF);
+      if (rocketF) data.rocket_qr = await cloudUp(rocketF);
     }
     await fbSet('settings', 'main', data);
     toast('✅ সেটিংস সেভ হয়েছে!');
@@ -1144,82 +1239,87 @@ window.upAboutImg = async () => {
   sLoad(g('btnAbout'), false, '<i class="fas fa-upload"></i> ছবি আপলোড');
 };
 
-/* ── NAV ── */
 
-/* ── MESSAGES ── */
+/* ════════════════════════════════════════
+   MESSAGES
+════════════════════════════════════════ */
 let _allMsgs = [];
 
 async function loadMessages() {
-  const box = g('msgContainer');
-  const badge = g('msgBadge');
+  const box = g('msgBox');
   if (!box) return;
-  box.innerHTML = '<div class="text-center text-white/30 py-10 text-sm">লোড হচ্ছে...</div>';
+  box.innerHTML = '<div class="text-center text-white/30 py-10 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>লোড হচ্ছে...</div>';
   try {
     _allMsgs = await fbAll('messages', orderBy('created_at','desc'));
-    renderMsgs(_allMsgs);
-    /* Update badge with unread count */
+    renderMessages(_allMsgs);
+    /* Badge */
+    const ub = g('msgBadge');
     const unread = _allMsgs.filter(m => m.status === 'unread').length;
-    if (badge) {
-      badge.textContent = unread;
-      badge.classList.toggle('hidden', unread === 0);
-    }
+    if (ub) { ub.textContent = unread || ''; ub.classList.toggle('hidden', !unread); }
   } catch(e) {
-    box.innerHTML = `<div class="ebox m-4">বার্তা লোড ব্যর্থ: ${e.message}<br/><br/>Firebase Console → Firestore → Rules:<br/><code>allow read, write: if request.auth != null;</code></div>`;
+    box.innerHTML = `<div class="ebox m-4">
+      <strong>বার্তা লোড ব্যর্থ।</strong><br/>
+      Firebase Console → Firestore → Rules:<br/>
+      <code style="font-size:.7rem">allow read, write: if request.auth != null;</code>
+    </div>`;
   }
 }
 
-function renderMsgs(items) {
-  const box = g('msgContainer');
-  if (!items.length) { box.innerHTML = '<div class="text-center text-white/30 py-10 text-sm">কোনো বার্তা নেই।</div>'; return; }
-  box.innerHTML = items.map(m => {
-    const d = m.created_at?.toDate ? m.created_at.toDate() : new Date();
-    const dateStr = d.toLocaleDateString('bn-BD') + ' ' + d.toLocaleTimeString('bn-BD',{hour:'2-digit',minute:'2-digit'});
-    const isUnread = m.status === 'unread';
-    return `<div class="msg-card ${isUnread?'unread':'read'}">
-      <div class="flex items-start justify-between gap-3 flex-wrap">
-        <div class="flex-1 min-w-0">
-          <div class="flex flex-wrap items-center gap-2 mb-1">
-            <span class="font-bold text-white text-sm">${m.name||'—'}</span>
-            ${isUnread ? '<span class="bg-red-600 text-white text-xs px-2 py-0.5 rounded-full font-bold">নতুন</span>' : '<span class="text-white/25 text-xs">পড়া হয়েছে</span>'}
-            ${m.subject ? `<span class="bg-yellow-900/40 text-yellow-300 text-xs px-2 py-0.5 rounded-full">${m.subject}</span>` : ''}
+function renderMessages(list) {
+  const box = g('msgBox');
+  if (!list.length) {
+    box.innerHTML = '<div class="text-center text-white/30 py-10 text-sm">কোনো বার্তা নেই।</div>';
+    return;
+  }
+  box.innerHTML = list.map(m => {
+    const isNew = m.status === 'unread';
+    let dateStr = '—';
+    try {
+      const d = m.created_at?.toDate ? m.created_at.toDate() : new Date();
+      dateStr = d.toLocaleDateString('bn-BD') + ' ' + d.toLocaleTimeString('bn-BD',{hour:'2-digit',minute:'2-digit'});
+    } catch{}
+    const waNum = m.phone ? '88' + m.phone.replace(/^0/,'') : '';
+    return `<div class="msg-item ${isNew ? 'unread' : ''}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;flex-wrap:wrap">
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.35rem">
+            <span style="font-weight:700;color:white;font-size:.875rem">${m.name||'—'}</span>
+            ${isNew ? '<span style="background:#dc2626;color:white;font-size:.65rem;padding:1px 7px;border-radius:999px;font-weight:700">নতুন</span>' : '<span style="color:rgba(255,255,255,.25);font-size:.72rem">পঠিত</span>'}
+            ${m.subject ? `<span style="background:rgba(212,160,23,.15);color:#F5C842;font-size:.7rem;padding:1px 8px;border-radius:999px;border:1px solid rgba(212,160,23,.3)">${m.subject}</span>` : ''}
           </div>
-          <p class="text-white/80 text-sm leading-relaxed mb-2 whitespace-pre-wrap">${m.message||''}</p>
-          <div class="flex flex-wrap gap-3 text-xs text-white/40">
-            ${m.phone ? `<span class="flex items-center gap-1"><i class="fas fa-phone"></i>${m.phone}</span>` : ''}
-            ${m.email ? `<span class="flex items-center gap-1"><i class="fas fa-envelope"></i>${m.email}</span>` : ''}
-            <span class="flex items-center gap-1"><i class="fas fa-clock"></i>${dateStr}</span>
+          <p style="color:rgba(255,255,255,.8);font-size:.85rem;line-height:1.5;margin-bottom:.4rem;white-space:pre-wrap">${m.message||''}</p>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;font-size:.72rem;color:rgba(255,255,255,.35)">
+            ${m.phone ? `<span><i class="fas fa-phone" style="margin-right:.25rem"></i>${m.phone}</span>` : ''}
+            ${m.email ? `<span><i class="fas fa-envelope" style="margin-right:.25rem"></i>${m.email}</span>` : ''}
+            <span><i class="fas fa-clock" style="margin-right:.25rem"></i>${dateStr}</span>
           </div>
         </div>
-        <div class="flex gap-2 flex-shrink-0 flex-wrap">
-          ${m.phone ? `<a href="tel:${m.phone}" class="be text-xs" title="কল করুন"><i class="fas fa-phone"></i> কল</a>` : ''}
-          ${m.phone ? `<a href="https://wa.me/88${m.phone.replace(/^0/,'')}" target="_blank" class="be text-xs" style="color:#25D366;border-color:#25D366;background:rgba(37,211,102,.1)" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>` : ''}
-          ${isUnread ? `<button class="bg-btn text-xs" onclick="markRead('${m.id}')"><i class="fas fa-check"></i></button>` : ''}
-          <button class="bd text-xs" onclick="window.delItem('messages','${m.id}',loadMessages)"><i class="fas fa-trash"></i></button>
+        <div style="display:flex;gap:.4rem;flex-shrink:0;flex-wrap:wrap;align-items:center">
+          ${m.phone ? `<a href="tel:${m.phone}" class="be" style="font-size:.72rem;padding:.3rem .65rem" title="Call"><i class="fas fa-phone"></i></a>` : ''}
+          ${waNum ? `<a href="https://wa.me/${waNum}" target="_blank" class="be" style="font-size:.72rem;padding:.3rem .65rem;color:#4ade80;border-color:#4ade80" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>` : ''}
+          ${isNew ? `<button class="bg-btn" style="font-size:.72rem;padding:.3rem .65rem" onclick="markRead('${m.id}')"><i class="fas fa-check"></i></button>` : ''}
+          <button class="bd" style="font-size:.72rem;padding:.3rem .65rem" onclick="window.delItem('messages','${m.id}',loadMessages)"><i class="fas fa-trash"></i></button>
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-window.filterMsgs = (filter, btn) => {
-  document.querySelectorAll('.msg-filter-btn').forEach(b => b.classList.remove('active'));
+window.filterMsg = (filter, btn) => {
+  document.querySelectorAll('.msg-filter').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  if (filter === 'all') renderMsgs(_allMsgs);
-  else renderMsgs(_allMsgs.filter(m => m.status === filter));
+  renderMessages(filter === 'all' ? _allMsgs : _allMsgs.filter(m => m.status === filter));
 };
-
-window.markRead = async (id) => {
-  try { await fbUpd('messages', id, { status:'read' }); loadMessages(); } catch(e){}
+window.markRead = async id => {
+  try { await fbUpd('messages', id, {status:'read'}); loadMessages(); } catch(e){}
 };
-
 window.markAllRead = async () => {
-  const unread = _allMsgs.filter(m => m.status==='unread');
-  await Promise.all(unread.map(m => fbUpd('messages', m.id, {status:'read'}).catch(()=>{})));
+  await Promise.all(_allMsgs.filter(m=>m.status==='unread').map(m=>fbUpd('messages',m.id,{status:'read'}).catch(()=>{})));
   loadMessages();
 };
-
 window.loadMessages = loadMessages;
 
+/* ── NAV ── */
 const PTITLES = {
   dashboard:'Dashboard', notices:'নোটিশ বোর্ড', activities:'কার্যক্রম',
   committee:'কমিটি সদস্য', gallery:'গ্যালারি', upcoming:'আসন্ন অনুষ্ঠান',
@@ -1255,6 +1355,7 @@ window.loadActivities = loadActivities;
 window.loadCommittee  = loadCommittee;
 window.loadGallery    = loadGallery;
 window.loadUpcoming   = loadUpcoming;
+window.loadMessages   = loadMessages;
 </script>
 </body>
 </html>
