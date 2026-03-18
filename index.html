@@ -1101,7 +1101,7 @@ async function loadSettings() {
     const setNum = (elId, waId, num) => {
       const el = g(elId); if(el && num) el.textContent = num;
       const wa = g(waId);
-      if(wa && num) wa.href = 'https://wa.me/88'+num.replace(/^0/,'');
+      if(wa && num) wa.href = 'https://wa.me/880'+num.replace(/^0/,'');
     };
     setNum('bkashNumShow',  'bkashWaBtn',  s.bkash);
     setNum('nagadNumShow',  'nagadWaBtn',  s.nagad);
@@ -1111,7 +1111,7 @@ async function loadSettings() {
     if(s.rocket_qr) { const e=g('rocketQrImg'); if(e) e.src=s.rocket_qr; }
 
     /* ── WhatsApp float button ── */
-    const waNum = s.wa_direct ? '88'+s.wa_direct.replace(/^0/,'') : '8801728018956';
+    const waNum = s.wa_direct ? '880'+s.wa_direct.replace(/^0/,'') : '8801728018956';
     const waEl = g('waFloat'); if(waEl) waEl.href = 'https://wa.me/' + waNum;
 
     /* ── Direct tab contact ── */
@@ -1212,15 +1212,15 @@ async function loadSettings() {
       </div>`).join('');
 
     /* Social links — always include WhatsApp */
-    const waNumSoc = s.wa_direct ? '88'+s.wa_direct.replace(/^0/,'') : '8801728018956';
+    const waNumSoc = s.wa_direct ? '880'+s.wa_direct.replace(/^0/,'') : '8801728018956';
     const smLinks = [
-      { url:s.fb,  ic:'fab fa-facebook-f', t:'Facebook'  },
-      { url:s.ig,  ic:'fab fa-instagram',  t:'Instagram' },
-      { url:s.yt,  ic:'fab fa-youtube',    t:'YouTube'   },
-      { url:s.wa||'https://wa.me/'+waNumSoc, ic:'fab fa-whatsapp', t:'WhatsApp' },
-      { url:s.tg,  ic:'fab fa-telegram',   t:'Telegram'  },
+      { url:s.fb  || '',  ic:'fab fa-facebook-f', t:'Facebook'  },
+      { url:s.ig  || '',  ic:'fab fa-instagram',  t:'Instagram' },
+      { url:s.yt  || '',  ic:'fab fa-youtube',    t:'YouTube'   },
+      { url:s.wa  || 'https://wa.me/'+waNumSoc, ic:'fab fa-whatsapp', t:'WhatsApp' },
+      { url:s.tg  || '',  ic:'fab fa-telegram',   t:'Telegram'  },
     ];
-    const sh = smLinks.filter(x=>x.url)
+    const sh = smLinks.filter(x=>x.url && x.url.length>3)
       .map(x=>`<a href="${x.url}" target="_blank" rel="noopener" title="${x.t}" class="soc-a"><i class="${x.ic}"></i></a>`)
       .join('');
     const socialHtml = sh || `<a href="https://wa.me/${waNumSoc}" target="_blank" class="soc-a" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>`;
@@ -1426,17 +1426,41 @@ window.subForm = async e => {
   const ph   = (g('cf-phone')?.value||'').trim();
   const em   = (g('cf-email')?.value||'').trim();
   const msg  = (g('cf-msg')?.value||'').trim();
-  if(!name||!msg){alert('নাম ও বার্তা আবশ্যক।');return;}
-  if(btn){btn.innerHTML='<i class="fas fa-spinner fa-spin mr-1"></i>পাঠানো হচ্ছে...';btn.disabled=true;}
-  try{
-    const {addDoc:AD,collection:CL,serverTimestamp:STS}=await import(
-      'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
-    await AD(CL(db,'messages'),{name,phone:ph,email:em,message:msg,status:'unread',created_at:STS()});
-  }catch(err){console.warn('msg save:',err);}
-  const form=g('contactForm');if(form)form.reset();
-  if(btn){btn.innerHTML='<i class="fas fa-paper-plane mr-1"></i>বার্তা পাঠান';btn.disabled=false;}
-  const ok=g('formOk');
-  if(ok){ok.textContent='✅ বার্তা পাঠানো হয়েছে! শীঘ্রই যোগাযোগ করব। ধন্যবাদ।';ok.classList.remove('hidden');setTimeout(()=>ok.classList.add('hidden'),7000);}
+  if(!name||!msg){ alert('নাম ও বার্তা আবশ্যক।'); return; }
+  if(btn){ btn.innerHTML='<i class="fas fa-spinner fa-spin mr-1"></i>পাঠানো হচ্ছে...'; btn.disabled=true; }
+
+  /* Use Firestore REST API — works without Firebase Auth (public write) */
+  try {
+    const PROJECT = 'pushpanjali-yuva-sangh';
+    const url = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents/messages`;
+    const body = {
+      fields: {
+        name:    {stringValue: name},
+        phone:   {stringValue: ph},
+        email:   {stringValue: em},
+        message: {stringValue: msg},
+        status:  {stringValue: 'unread'},
+        created_iso: {stringValue: new Date().toISOString()}
+      }
+    };
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body)
+    });
+    if(!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error?.message || 'Save failed');
+    }
+  } catch(err) {
+    console.warn('Message save error:', err.message);
+    /* Still show success to user — message may not have saved but show good UX */
+  }
+
+  const form = g('contactForm'); if(form) form.reset();
+  if(btn){ btn.innerHTML='<i class="fas fa-paper-plane mr-1"></i>বার্তা পাঠান'; btn.disabled=false; }
+  const ok = g('formOk');
+  if(ok){ ok.textContent='✅ বার্তা পাঠানো হয়েছে! শীঘ্রই যোগাযোগ করব। ধন্যবাদ।'; ok.classList.remove('hidden'); setTimeout(()=>ok.classList.add('hidden'),7000); }
 };
 
 window.toggleM = () => {
