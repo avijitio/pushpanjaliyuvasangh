@@ -1,693 +1,903 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Admin Panel | পুষ্পাঞ্জলি যুব সংঘ</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Hind Siliguri',sans-serif;background:#0d0608;color:#e2e8f0;min-height:100vh}
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>পুষ্পাঞ্জলি যুব সংঘ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-/* LOGIN */
-#loginPage{display:flex;align-items:center;justify-content:center;min-height:100vh;
-  background:radial-gradient(ellipse at top,#3d0a0a 0%,#0d0608 65%)}
-.lcard{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);
-  border:1px solid rgba(212,160,23,.3);border-radius:24px;padding:2.5rem;
-  width:100%;max-width:400px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  <style>
+    :root {
+      --red:  #C41E3A;
+      --dark-red: #7B0D1E;
+      --gold: #D4A017;
+      --gold-light: #F5C842;
+      --cream: #FFF8E7;
+    }
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+    body { font-family: 'Hind Siliguri', sans-serif; background: var(--cream); color: #1A0A00; overflow-x: hidden; margin: 0; }
 
-/* LAYOUT */
-#adminApp{display:none}
-#sidebar{width:240px;background:linear-gradient(180deg,#1a0505,#2a0707);
-  border-right:1px solid rgba(212,160,23,.15);position:fixed;top:0;left:0;bottom:0;
-  overflow-y:auto;transition:transform .3s;z-index:40;scrollbar-width:thin;
-  scrollbar-color:rgba(212,160,23,.2) transparent}
-#mainContent{margin-left:240px;min-height:100vh}
-@media(max-width:1024px){
-  #sidebar{transform:translateX(-240px)}
-  #sidebar.open{transform:translateX(0)}
-  #mainContent{margin-left:0}
-}
+    /* ── NAVBAR ── */
+    #navbar {
+      transition: all .4s;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      /* Always dark so white links are visible */
+      background: linear-gradient(to bottom, rgba(80,5,15,.95), rgba(100,8,20,.85));
+    }
+    #navbar.scrolled {
+      background: rgba(100,5,18,.97) !important;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 4px 30px rgba(0,0,0,.5);
+    }
+    .nav-link {
+      position: relative;
+      font-weight: 500;
+      transition: color .3s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width .3s;
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .nav-link:hover { color: var(--gold-light); }
+    /* LOGO NAME — always visible */
+    .nav-org-name { display: block; }
 
-/* NAV */
-.ni{display:flex;align-items:center;gap:.65rem;padding:.65rem .9rem;border-radius:9px;
-  cursor:pointer;transition:all .2s;font-size:.83rem;color:rgba(255,255,255,.6);
-  text-decoration:none;margin:1px 6px}
-.ni:hover{background:rgba(212,160,23,.1);color:#F5C842}
-.ni.active{background:linear-gradient(135deg,rgba(196,30,58,.3),rgba(212,160,23,.1));
-  color:#F5C842;border-left:3px solid #D4A017}
-.nl{padding:.45rem .9rem .2rem;font-size:.62rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:.1em;color:rgba(255,255,255,.2)}
+    /* ── HERO SLIDER ── */
+    #heroSlider {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-color: var(--dark-red);
+    }
 
-/* TOPBAR */
-#topbar{background:rgba(13,6,8,.95);backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(212,160,23,.15);padding:.8rem 1.1rem;
-  display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:30}
+    /* Slides container */
+    .slide-track {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: 100%;
+    }
 
-/* PANELS */
-.panel{display:none;padding:1.25rem;animation:fadeIn .3s}
-.panel.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+    /* Each slide */
+    .hero-slide {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+    }
+    .hero-slide.active { opacity: 1; }
 
-/* CARDS */
-.scard{background:linear-gradient(135deg,rgba(196,30,58,.15),rgba(212,160,23,.08));
-  border:1px solid rgba(212,160,23,.2);border-radius:13px;padding:1rem;transition:transform .2s}
-.scard:hover{transform:translateY(-3px)}
-.box{background:rgba(255,255,255,.04);border:1px solid rgba(212,160,23,.15);border-radius:13px;overflow:hidden}
+    /* ★ KEY FIX: use actual <img> not CSS background — works on all mobile browsers */
+    .slide-img {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;  /* explicit — better mobile support */
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;  /* show top of image — important for portrait images */
+      display: block;
+      /* Ken Burns zoom effect */
+      animation: kenBurns 8s ease-in-out infinite alternate;
+    }
+    @keyframes kenBurns {
+      0%   { transform: scale(1)    translateX(0)    translateY(0); }
+      100% { transform: scale(1.08) translateX(-1%)  translateY(-1%); }
+    }
+    /* Pause animation on inactive slides */
+    .hero-slide:not(.active) .slide-img { animation-play-state: paused; }
 
-/* FORM */
-.lbl{display:block;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.5);
-  margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.06em}
-.inp{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(212,160,23,.2);
-  border-radius:9px;padding:.6rem .85rem;color:#e2e8f0;font-family:'Hind Siliguri',sans-serif;
-  font-size:.875rem;outline:none;transition:border-color .3s,background .3s}
-.inp:focus{border-color:#D4A017;background:rgba(255,255,255,.09)}
-.inp option{background:#1a0505;color:#e2e8f0}
-.inp-ta{resize:vertical;min-height:80px}
+    /* Gradient overlay on each slide — semi-transparent to show image */
+    .slide-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(160deg,
+        rgba(100,5,20,.72) 0%,
+        rgba(140,15,35,.60) 50%,
+        rgba(100,30,0,.68) 100%);
+      z-index: 1;
+    }
 
-/* BUTTONS */
-.br{background:linear-gradient(135deg,#C41E3A,#8B0000);color:white;border:none;
-  border-radius:9px;padding:.58rem 1.2rem;font-family:'Hind Siliguri',sans-serif;
-  font-size:.83rem;font-weight:600;cursor:pointer;transition:all .25s;
-  display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap}
-.br:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,30,58,.4)}
-.br:disabled{opacity:.5;cursor:not-allowed}
-.bg-btn{background:rgba(212,160,23,.12);color:#D4A017;border:1px solid rgba(212,160,23,.25);
-  border-radius:9px;padding:.58rem 1.2rem;font-family:'Hind Siliguri',sans-serif;
-  font-size:.83rem;cursor:pointer;transition:all .25s;
-  display:inline-flex;align-items:center;gap:.4rem}
-.bg-btn:hover{background:rgba(212,160,23,.22)}
-/* DELETE button — always visible (red) */
-.bd{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3);
-  border-radius:7px;padding:.38rem .75rem;font-size:.78rem;cursor:pointer;
-  transition:all .2s;display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap}
-.bd:hover{background:rgba(239,68,68,.35);color:white}
-.bd:active{transform:scale(.96)}
-/* EDIT button */
-.be{background:rgba(212,160,23,.12);color:#fbbf24;border:1px solid rgba(212,160,23,.25);
-  border-radius:7px;padding:.38rem .75rem;font-size:.78rem;cursor:pointer;
-  transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
-.be:hover{background:rgba(212,160,23,.25)}
+    /* On mobile — slightly lighter overlay so images show through */
+    @media (max-width: 768px) {
+      .slide-overlay {
+        background: linear-gradient(160deg,
+          rgba(100,5,20,.65) 0%,
+          rgba(140,15,35,.52) 50%,
+          rgba(100,30,0,.60) 100%);
+      }
+    }
 
-/* TABLE */
-.tbl{width:100%;border-collapse:separate;border-spacing:0 4px}
-.tbl thead th{text-align:left;padding:.55rem .85rem;color:rgba(212,160,23,.7);
-  font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
-  background:rgba(255,255,255,.03)}
-.tbl tbody td{padding:.6rem .85rem;background:rgba(255,255,255,.03);font-size:.82rem;
-  border-bottom:1px solid rgba(255,255,255,.04)}
-.tbl tbody tr:hover td{background:rgba(255,255,255,.06)}
+    /* Hero content — always on top */
+    #heroContent {
+      position: relative;
+      z-index: 10;
+      padding: 5.5rem 1rem 2.5rem;
+      width: 100%;
+      max-width: 56rem;
+      margin: 0 auto;
+      /* Entrance animation */
+      animation: heroEnter 1s ease-out both;
+    }
+    @keyframes heroEnter {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-/* MODAL */
-.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);
-  z-index:100;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
-.mbg.open{display:flex}
-.mbox{background:linear-gradient(160deg,#1a0505,#200808);
-  border:1px solid rgba(212,160,23,.25);border-radius:18px;
-  padding:1.5rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto}
+    /* Prev / Next arrows */
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      width: 42px; height: 42px;
+      background: rgba(0,0,0,.35);
+      border: 1.5px solid rgba(212,160,23,.4);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(212,160,23,.9);
+      cursor: pointer;
+      transition: all .3s;
+      font-size: 1rem;
+      backdrop-filter: blur(4px);
+    }
+    .slider-arrow:hover { background: rgba(212,160,23,.25); color: #F5C842; transform: translateY(-50%) scale(1.1); }
+    .slider-arrow.prev { left: 1rem; }
+    .slider-arrow.next { right: 1rem; }
+    @media (max-width:480px) {
+      .slider-arrow { width:34px; height:34px; font-size:.8rem; }
+      .slider-arrow.prev { left:.5rem; }
+      .slider-arrow.next { right:.5rem; }
+    }
 
-/* TOAST */
-#toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;
-  padding:.75rem 1.2rem;border-radius:11px;font-size:.83rem;font-weight:600;
-  transform:translateY(60px);opacity:0;transition:all .3s;pointer-events:none;max-width:280px}
-#toast.ok{background:linear-gradient(135deg,#064e3b,#065f46);color:#6ee7b7;
-  border:1px solid rgba(110,231,183,.2);transform:translateY(0);opacity:1}
-#toast.err{background:linear-gradient(135deg,#7f1d1d,#991b1b);color:#fca5a5;
-  border:1px solid rgba(252,165,165,.2);transform:translateY(0);opacity:1}
+    /* Dot indicators */
+    #sliderDots {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      gap: .5rem;
+    }
+    .sdot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.4);
+      border: 1.5px solid rgba(212,160,23,.4);
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .sdot.active { background: #F5C842; width: 22px; border-radius: 4px; }
 
-/* TOGGLE */
-.tog{position:relative;width:42px;height:23px;display:inline-block;flex-shrink:0}
-.tog input{opacity:0;width:0;height:0}
-.tsl{position:absolute;inset:0;background:#374151;border-radius:12px;cursor:pointer;transition:.3s}
-.tsl::before{content:'';position:absolute;width:17px;height:17px;left:3px;top:3px;
-  background:white;border-radius:50%;transition:.3s}
-input:checked+.tsl{background:#C41E3A}
-input:checked+.tsl::before{transform:translateX(19px)}
+    /* Progress bar */
+    #sliderProgress {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #D4A017, #F5C842);
+      z-index: 20;
+      width: 0%;
+      transition: width linear;
+    }
 
-/* BADGE */
-.bdg-n{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.68rem;font-weight:700;
-  background:rgba(245,200,66,.15);color:#F5C842;border:1px solid rgba(245,200,66,.3)}
-.bdg-o{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.68rem;font-weight:700;
-  background:rgba(255,255,255,.07);color:#9ca3af}
+    .hero-title { font-family: 'Cinzel Decorative', serif; text-shadow: 0 0 40px rgba(212,160,23,.6), 0 4px 20px rgba(0,0,0,.5); }
+    .om-float { font-family: 'Tiro Devanagari Sanskrit', serif; color: rgba(212,160,23,.12); position: absolute; pointer-events: none; animation: floatUD 6s ease-in-out infinite; user-select: none; z-index: 5; }
+    @keyframes floatUD { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
 
-/* SEC HEAD */
-.sh{font-size:1.2rem;font-weight:700;color:#F5C842;margin-bottom:1.1rem;
-  display:flex;align-items:center;gap:.6rem;padding-bottom:.6rem;
-  border-bottom:1px solid rgba(212,160,23,.18)}
-.thumb{width:60px;height:60px;object-fit:cover;border-radius:7px;border:2px solid rgba(212,160,23,.3)}
-.bthumb{width:100%;height:140px;object-fit:cover;border-radius:9px;border:2px solid rgba(212,160,23,.2)}
+    /* ── GOLD LINE ── */
+    .gl { height: 3px; background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent); }
 
-/* overlay */
-#sov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:39}
-#sov.on{display:block}
-/* err */
-.ebox{background:rgba(127,29,29,.4);border:1px solid rgba(239,68,68,.3);
-  border-radius:9px;padding:.6rem .85rem;font-size:.78rem;color:#fca5a5;margin-top:.4rem}
+    /* ── COUNTDOWN ── */
+    .cd-card { background: linear-gradient(135deg, rgba(123,13,30,.92), rgba(196,30,58,.82)); border: 1px solid rgba(212,160,23,.5); backdrop-filter: blur(10px); border-radius: 16px; }
+    .cd-num { font-family: 'Cinzel Decorative', serif; color: var(--gold-light); text-shadow: 0 0 20px rgba(212,160,23,.6); font-size: 2.5rem; line-height: 1; }
+    @media (min-width: 480px) { .cd-num { font-size: 3rem; } }
 
-/* Gallery card on mobile — always show delete button */
-.gcard{position:relative;border-radius:12px;overflow:hidden}
-.gcard img{width:100%;height:120px;object-fit:cover;display:block}
-.gcard .gc-info{background:rgba(0,0,0,.75);padding:.5rem .6rem;
-  display:flex;align-items:center;justify-content:space-between;gap:.4rem}
+    /* ── SECTION BADGE ── */
+    .s-badge { display: inline-block; background: linear-gradient(135deg, var(--red), #8B0000); color: var(--gold-light); font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; padding: .3rem 1rem; border-radius: 999px; border: 1px solid rgba(212,160,23,.4); margin-bottom: .6rem; }
+    .s-title { font-family: 'Cinzel Decorative', serif; background: linear-gradient(135deg, var(--red), #8B0000); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-@media(max-width:640px){
-  .stat-grid{grid-template-columns:repeat(2,1fr)!important}
-  .act-grid{grid-template-columns:1fr!important}
-  .com-grid{grid-template-columns:1fr!important}
-  .gal-grid{grid-template-columns:repeat(2,1fr)!important}
-}
-</style>
+    /* ── ACTIVITY CARDS ── */
+    .act-card { background: white; border-radius: 18px; overflow: hidden; border: 1px solid rgba(212,160,23,.2); transition: transform .35s, box-shadow .35s; }
+    .act-card:hover { transform: translateY(-8px); box-shadow: 0 18px 50px rgba(196,30,58,.18); }
+
+    /* ── NOTICE ── */
+    .nb { background: linear-gradient(135deg, #7B0D1E, #C41E3A); border-radius: 18px; border: 2px solid rgba(212,160,23,.4); overflow: hidden; }
+    .nb-scroll { height: 280px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(212,160,23,.5) transparent; }
+    .n-item { border-bottom: 1px solid rgba(255,255,255,.1); transition: background .25s; }
+    .n-item:hover { background: rgba(255,255,255,.07); }
+    .bdg-new { background: var(--gold-light); color: #7B0D1E; font-size: .6rem; font-weight: 800; padding: 1px 6px; border-radius: 999px; animation: pb 2s ease infinite; display: inline-block; }
+    @keyframes pb { 0%,100% { opacity: 1; } 50% { opacity: .7; } }
+
+    /* ── TICKER ── */
+    .ticker-wrap { overflow: hidden; background: linear-gradient(135deg, #8B0000, #C41E3A); }
+    .ticker-inner { display: inline-block; white-space: nowrap; animation: tick 35s linear infinite; }
+    @keyframes tick { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+
+    /* ── MEMBER CARDS ── */
+    .mem-card { background: white; border-radius: 18px; overflow: hidden; border: 1px solid rgba(212,160,23,.25); transition: transform .3s, box-shadow .3s; }
+    .mem-card:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(196,30,58,.17); }
+    .mem-img-wrap { position: relative; overflow: hidden; /* Fixed height so images don't stretch */ height: 180px; }
+    @media (max-width: 640px) { .mem-img-wrap { height: 160px; } }
+    .mem-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 45%, rgba(123,13,30,.8)); z-index: 1; }
+    .mem-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .4s; display: block; }
+    .mem-card:hover .mem-img-wrap img { transform: scale(1.06); }
+
+    /* ── GALLERY ── */
+    .gal-item { position: relative; overflow: hidden; border-radius: 14px; cursor: pointer; /* Fixed height */ height: 140px; }
+    @media (min-width: 640px) { .gal-item { height: 160px; } }
+    .gal-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s; display: block; }
+    .gal-item:hover img { transform: scale(1.08); }
+    .gal-ov { position: absolute; inset: 0; background: linear-gradient(to top, rgba(123,13,30,.85), transparent 60%); opacity: 0; transition: opacity .35s; display: flex; align-items: flex-end; padding: .6rem; }
+    .gal-item:hover .gal-ov { opacity: 1; }
+    .gf { background: rgba(255,255,255,.12); border: 1.5px solid rgba(212,160,23,.35); color: var(--gold-light); border-radius: 999px; padding: .35rem 1rem; font-size: .8rem; font-weight: 600; cursor: pointer; transition: all .25s; font-family: 'Hind Siliguri', sans-serif; }
+    .gf:hover, .gf.af { background: var(--gold); color: #7B0D1E; border-color: var(--gold); }
+
+    /* ── DONATION ── */
+    .qr-box { background: white; border-radius: 18px; border: 3px solid rgba(212,160,23,.4); box-shadow: 0 8px 35px rgba(196,30,58,.13); transition: transform .3s; }
+    .qr-box:hover { transform: translateY(-5px); }
+    .bank-row { display: flex; justify-content: space-between; align-items: center; padding: .55rem 0; border-bottom: 1px dashed rgba(212,160,23,.3); font-size: .875rem; flex-wrap: wrap; gap: .3rem; }
+    .bank-row:last-child { border-bottom: none; }
+    .cp-btn { background: rgba(212,160,23,.12); border: 1px solid rgba(212,160,23,.28); border-radius: 6px; padding: 2px 8px; font-size: .7rem; cursor: pointer; transition: all .2s; color: var(--gold); white-space: nowrap; }
+    .cp-btn:hover { background: var(--gold); color: white; }
+
+    /* ── CONTACT FORM ── */
+    .f-inp { width: 100%; background: white; border: 1.5px solid rgba(212,160,23,.3); border-radius: 11px; padding: .7rem 1rem; font-family: 'Hind Siliguri', sans-serif; font-size: .9rem; color: #1A0A00; transition: border-color .3s; outline: none; }
+    .f-inp:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(196,30,58,.1); }
+    .sub-btn { background: linear-gradient(135deg, var(--red), #8B0000); color: white; border: none; border-radius: 11px; padding: .8rem 2rem; font-family: 'Hind Siliguri', sans-serif; font-size: .9rem; font-weight: 600; cursor: pointer; transition: all .3s; width: 100%; }
+    .sub-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(196,30,58,.35); }
+
+    /* ── SOCIAL ICONS ── */
+    .soc-a { width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(212,160,23,.13); border: 1px solid rgba(212,160,23,.28); color: var(--gold); transition: all .3s; font-size: .9rem; text-decoration: none; }
+    .soc-a:hover { background: var(--gold); color: white; transform: translateY(-3px); }
+
+    /* ── LIGHTBOX ── */
+    #lb { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.93); z-index: 9999; align-items: center; justify-content: center; }
+    #lb.on { display: flex; }
+    #lb img { max-width: 90vw; max-height: 85vh; border-radius: 12px; border: 3px solid rgba(212,160,23,.4); }
+
+    /* ── SCROLL TOP ── */
+    #st { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 44px; height: 44px; background: linear-gradient(135deg, var(--red), #8B0000); color: var(--gold-light); border: 2px solid rgba(212,160,23,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(18px); transition: all .3s; z-index: 990; font-size: 1rem; box-shadow: 0 6px 20px rgba(196,30,58,.35); }
+    #st.on { opacity: 1; pointer-events: all; transform: translateY(0); }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .rv  { opacity: 0; transform: translateY(36px); transition: opacity .7s, transform .7s; }
+    .rvl { opacity: 0; transform: translateX(-40px); transition: opacity .7s, transform .7s; }
+    .rvr { opacity: 0; transform: translateX(40px); transition: opacity .7s, transform .7s; }
+    .rv.vis, .rvl.vis, .rvr.vis { opacity: 1; transform: none; }
+
+    /* ── MOBILE MENU ── */
+    #mMenu { max-height: 0; overflow: hidden; transition: max-height .4s; }
+    #mMenu.open { max-height: 520px; }
+
+    /* ── GRADIENT BG ── */
+    .rgb { background: linear-gradient(135deg, #7B0D1E, #C41E3A, #9B1C2E); }
+
+    /* ── UTILITY ── */
+    .text-shadow-gold { text-shadow: 0 0 30px rgba(212,160,23,.5); }
+
+    /* ── WHATSAPP FLOAT ── */
+    #waFloat {
+      position: fixed; bottom: 5rem; right: 1.25rem;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: #25D366; color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,.5);
+      z-index: 970; transition: all .3s;
+      animation: waPulse 2.5s ease-in-out infinite;
+    }
+    #waFloat:hover { transform: scale(1.12); box-shadow: 0 6px 28px rgba(37,211,102,.65); }
+    @keyframes waPulse {
+      0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,.5); }
+      50%      { box-shadow: 0 4px 30px rgba(37,211,102,.8), 0 0 0 8px rgba(37,211,102,.12); }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ============ LOGIN ============ -->
-<div id="loginPage">
-  <div class="lcard">
-    <div class="text-center mb-6">
-      <div class="w-16 h-16 rounded-full bg-gradient-to-br from-red-700 to-red-900 flex items-center justify-center text-3xl mx-auto mb-3 border-2 border-yellow-400/40">🪷</div>
-      <h1 class="text-2xl font-bold text-yellow-400">Admin Panel</h1>
-      <p class="text-white/40 text-sm mt-1">পুষ্পাঞ্জলি যুব সংঘ</p>
-    </div>
-    <div id="loginErr" class="ebox hidden mb-4"></div>
-    <div class="space-y-3">
-      <div><label class="lbl">Email</label>
-        <input type="email" id="loginEmail" placeholder="admin@pushpanjali.org" class="inp"/></div>
-      <div><label class="lbl">Password</label>
-        <input type="password" id="loginPass" placeholder="••••••••" class="inp"
-               onkeydown="if(event.key==='Enter')doLogin()"/></div>
-      <button onclick="doLogin()" id="loginBtn" class="br w-full justify-center py-3 mt-1">
-        <i class="fas fa-sign-in-alt"></i> লগইন করুন
-      </button>
-    </div>
-    <p class="text-center text-white/20 text-xs mt-5">© <span id="ly"></span> Pushpanjali Yuva Sangh</p>
-  </div>
+<!-- Lightbox -->
+<div id="lb" onclick="closeLb()">
+  <button onclick="closeLb()" style="position:absolute;top:1.25rem;right:1.25rem;color:white;font-size:1.75rem;background:none;border:none;cursor:pointer;z-index:10;">✕</button>
+  <img id="lbImg" src="" alt=""/>
 </div>
 
-<!-- ============ ADMIN APP ============ -->
-<div id="adminApp">
-  <div id="sov" onclick="closeSide()"></div>
+<!-- Scroll Top -->
+<div id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></div>
 
-  <!-- SIDEBAR -->
-  <aside id="sidebar">
-    <div class="p-4 border-b border-yellow-400/15 flex items-center gap-2.5">
-      <div id="sbLogo" class="w-10 h-10 rounded-full bg-gradient-to-br from-red-700 to-red-900 flex items-center justify-center text-xl border border-yellow-400/30 overflow-hidden flex-shrink-0">🪷</div>
-      <div class="min-w-0">
-        <div class="text-yellow-400 text-sm font-bold leading-none truncate">Admin Panel</div>
-        <div class="text-white/30 text-xs mt-0.5 truncate">পুষ্পাঞ্জলি যুব সংঘ</div>
+<!-- WhatsApp Float -->
+<a id="waFloat" href="https://wa.me/8801728018956" target="_blank" rel="noopener" title="WhatsApp এ বার্তা পাঠান" id="waFloat">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- ===================================================
+     NAVBAR
+=================================================== -->
+<nav id="navbar">
+  <div class="w-full px-3 sm:px-5 lg:px-8">
+    <div class="flex items-center justify-between py-3 gap-2">
+
+      <!-- LOGO + NAME -->
+      <a href="#home" class="flex items-center gap-2 flex-shrink-0 min-w-0">
+        <div id="navLogo"
+             class="w-10 h-10 rounded-full flex items-center justify-center text-xl border-2 border-yellow-400 bg-gradient-to-br from-red-800 to-red-600 shadow-lg overflow-hidden flex-shrink-0 transition-transform hover:scale-105">
+          🪷
+        </div>
+        <div class="nav-org-name min-w-0 hidden xs:block sm:block">
+          <div class="text-white leading-none font-semibold truncate max-w-[120px]"
+               style="font-family:'Cinzel Decorative',serif;font-size:.65rem;letter-spacing:.08em;"
+               id="navOBn">পুষ্পাঞ্জলি যুব সংঘ</div>
+          <div class="text-yellow-400 font-bold truncate max-w-[120px]"
+               style="font-family:'Cinzel Decorative',serif;font-size:.72rem;"
+               id="navOEn">YUVA SANGH</div>
+        </div>
+      </a>
+
+      <!-- Desktop links — visible from md (768px) -->
+      <div class="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-5 flex-shrink-0 flex-wrap justify-end">
+        <a href="#home"       class="nav-link text-white text-xs lg:text-sm">Home</a>
+        <a href="#about"      class="nav-link text-white text-xs lg:text-sm">About</a>
+        <a href="#activities" class="nav-link text-white text-xs lg:text-sm">Activities</a>
+        <a href="#committee"  class="nav-link text-white text-xs lg:text-sm">Committee</a>
+        <a href="#gallery"    class="nav-link text-white text-xs lg:text-sm">Gallery</a>
+        <a href="#notice"     class="nav-link text-white text-xs lg:text-sm">Notice</a>
+        <a href="#donations"  class="nav-link text-white text-xs lg:text-sm">Donations</a>
+        <a href="#contact"    class="nav-link text-white text-xs lg:text-sm">Contact</a>
+        <a href="#donations"
+           class="ml-1 bg-gradient-to-r from-yellow-500 to-yellow-400 text-red-900 text-xs lg:text-sm font-bold px-3 lg:px-4 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all whitespace-nowrap flex-shrink-0">
+          <i class="fas fa-hand-holding-heart mr-1"></i>দান করুন
+        </a>
+      </div>
+
+      <!-- Mobile only: show donate button + hamburger -->
+      <div class="flex md:hidden items-center gap-2 flex-shrink-0">
+        <a href="#donations"
+           class="bg-gradient-to-r from-yellow-500 to-yellow-400 text-red-900 text-xs font-bold px-3 py-1.5 rounded-full whitespace-nowrap">
+          <i class="fas fa-hand-holding-heart mr-0.5"></i>দান করুন
+        </a>
+        <button class="text-white text-xl p-1" onclick="toggleM()">
+          <i class="fas fa-bars" id="hIcon"></i>
+        </button>
       </div>
     </div>
-    <nav class="py-2">
-      <p class="nl">Dashboard</p>
-      <a class="ni active" onclick="goP('dashboard',this)"><i class="fas fa-th-large w-4 text-center text-xs"></i> Dashboard</a>
-      <p class="nl mt-2">কন্টেন্ট</p>
-      <a class="ni" onclick="goP('notices',this)"><i class="fas fa-bullhorn w-4 text-center text-xs"></i> নোটিশ বোর্ড</a>
-      <a class="ni" onclick="goP('activities',this)"><i class="fas fa-star w-4 text-center text-xs"></i> কার্যক্রম</a>
-      <a class="ni" onclick="goP('committee',this)"><i class="fas fa-users w-4 text-center text-xs"></i> কমিটি</a>
-      <a class="ni" onclick="goP('gallery',this)"><i class="fas fa-images w-4 text-center text-xs"></i> গ্যালারি</a>
-      <a class="ni" onclick="goP('upcoming',this)"><i class="fas fa-calendar-alt w-4 text-center text-xs"></i> আসন্ন অনুষ্ঠান</a>
-      <p class="nl mt-2">সেটিংস</p>
-      <a class="ni" onclick="goP('site',this)"><i class="fas fa-globe w-4 text-center text-xs"></i> সাইট সেটিংস</a>
-      <a class="ni" onclick="goP('about',this)"><i class="fas fa-pen w-4 text-center text-xs"></i> আমাদের সম্পর্কে</a>
-      <a class="ni" onclick="goP('social',this)"><i class="fas fa-share-alt w-4 text-center text-xs"></i> সোশ্যাল মিডিয়া</a>
-      <a class="ni" onclick="goP('payment',this)"><i class="fas fa-money-bill w-4 text-center text-xs"></i> পেমেন্ট তথ্য</a>
-      <a class="ni" onclick="goP('appearance',this)"><i class="fas fa-paint-brush w-4 text-center text-xs"></i> লোগো ও ছবি</a>
-      <p class="nl mt-2">বার্তা</p>
-      <a class="ni" onclick="goP('messages',this)"><i class="fas fa-envelope w-4 text-center text-xs"></i> যোগাযোগ বার্তা</a>
-      <p class="nl mt-2">অন্যান্য</p>
-      <a class="ni" href="index.html" target="_blank"><i class="fas fa-eye w-4 text-center text-xs"></i> ওয়েবসাইট</a>
-      <a class="ni text-red-400/70 hover:text-red-300" onclick="doLogout()"><i class="fas fa-sign-out-alt w-4 text-center text-xs"></i> লগআউট</a>
-    </nav>
-  </aside>
+  </div>
 
-  <!-- MAIN -->
-  <div id="mainContent">
-    <!-- TOPBAR -->
-    <div id="topbar">
-      <div class="flex items-center gap-3">
-        <button onclick="toggleSide()" class="text-white/60 hover:text-white text-lg"><i class="fas fa-bars"></i></button>
-        <div>
-          <h2 id="pgTitle" class="text-white/90 font-semibold text-sm leading-none">Dashboard</h2>
-          <p class="text-white/25 text-xs mt-0.5">পুষ্পাঞ্জলি যুব সংঘ</p>
+  <!-- Mobile menu -->
+  <div id="mMenu" class="md:hidden bg-gradient-to-b from-red-900 to-red-800 border-t border-yellow-400/20">
+    <div class="px-4 py-2 flex flex-col">
+      <a href="#home"       onclick="toggleM()" class="text-white hover:text-yellow-400 py-2.5 border-b border-white/10 text-sm font-medium">Home</a>
+      <a href="#about"      onclick="toggleM()" class="text-white hover:text-yellow-400 py-2.5 border-b border-white/10 text-sm font-medium">About</a>
+      <a href="#activities" onclick="toggleM()" class="text-white hover:text-yellow-400 py-2.5 border-b border-white/10 text-sm font-medium">Activities</a>
+      <a href="#committee"  onclick="toggleM()" class="text-white hover:text-yellow-400 py-2.5 border-b border-white/10 text-sm font-medium">Committee</a>
+      <a href="#gallery"    onclick="toggleM()" class="text-white hover:text-yellow-400 py-2.5 border-b border-white/10 text-sm font-medium">Gallery</a>
+      <a href="#notice"     onclick="toggleM()" class="text-white hover:text-yellow-400 py-2.5 border-b border-white/10 text-sm font-medium">Notice</a>
+      <a href="#donations"  onclick="toggleM()" class="text-white hover:text-yellow-400 py-2.5 border-b border-white/10 text-sm font-medium">Donations</a>
+      <a href="#contact"    onclick="toggleM()" class="text-white hover:text-yellow-400 py-2.5 text-sm font-medium">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================================================
+     HERO SLIDER
+=================================================== -->
+<section id="home">
+  <div id="heroSlider">
+
+    <!-- ★ SLIDE TRACK — images injected by JS ★ -->
+    <div class="slide-track" id="slideTrack">
+      <!-- Default slide 1 (shown while Firebase loads) -->
+      <div class="hero-slide active" id="slide-0">
+        <!-- No default image — admin uploads via Admin Panel -->
+        <div class="slide-overlay"></div>
+      </div>
+      <!-- Default slide 2 -->
+      <div class="hero-slide" id="slide-1">
+        <!-- No default image -->
+        <div class="slide-overlay"></div>
+      </div>
+      <!-- Default slide 3 -->
+      <div class="hero-slide" id="slide-2">
+        <!-- No default image -->
+        <div class="slide-overlay"></div>
+      </div>
+    </div>
+
+    <!-- Floating OM symbols -->
+    <span class="om-float" style="top:12%;left:3%;font-size:5rem;">ॐ</span>
+    <span class="om-float" style="bottom:14%;right:4%;animation-delay:2s;font-size:4rem;">ॐ</span>
+
+    <!-- Prev / Next arrows -->
+    <button class="slider-arrow prev" onclick="sliderMove(-1)" aria-label="Previous">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="slider-arrow next" onclick="sliderMove(1)" aria-label="Next">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <!-- Dot indicators -->
+    <div id="sliderDots"></div>
+
+    <!-- Auto-play progress bar -->
+    <div id="sliderProgress"></div>
+
+    <!-- ★★ HERO CONTENT ★★ -->
+    <div id="heroContent">
+      <p class="text-yellow-300 text-base sm:text-lg mb-2 tracking-widest"
+         style="font-family:'Tiro Devanagari Sanskrit',serif">॥ জয় মা দুর্গা ॥</p>
+
+      <div class="gl w-40 sm:w-48 mx-auto mb-5"></div>
+
+      <!-- Logo in hero (shown when uploaded) -->
+      <div id="heroLogoWrap" class="mb-4 justify-center" style="display:none;">
+        <img id="heroLogo" src="" alt="Logo"
+             class="h-16 w-16 sm:h-20 sm:w-20 rounded-full border-2 border-yellow-400 mx-auto object-cover shadow-lg"/>
+      </div>
+
+      <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-2 leading-tight" id="hOEn">
+        Pushpanjali
+      </h1>
+      <h2 class="hero-title text-3xl sm:text-4xl lg:text-5xl text-yellow-400 font-bold mb-2" id="hOEn2">
+        Yuva Sangh
+      </h2>
+      <p class="text-xl sm:text-2xl text-yellow-200 font-semibold mb-5" id="hOBn">পুষ্পাঞ্জলি যুব সংঘ</p>
+
+      <div class="gl w-48 sm:w-64 mx-auto mb-5"></div>
+
+      <p class="text-white text-base sm:text-lg font-light max-w-xl mx-auto mb-3 leading-relaxed opacity-90 px-2" id="hSBn">
+        ধর্ম, সংস্কৃতি ও সমাজের উন্নতিতে নিবেদিত — এক অনন্য যুব সংগঠন
+      </p>
+      <p class="text-yellow-300 text-sm sm:text-base max-w-lg mx-auto mb-8 italic opacity-80 px-2" id="hSEn">
+        "Devoted to Religion, Culture &amp; Community Service"
+      </p>
+
+      <div class="flex flex-wrap gap-3 justify-center px-2">
+        <a href="#about"
+           class="bg-gradient-to-r from-yellow-500 to-yellow-400 text-red-900 font-bold px-6 py-2.5 rounded-full hover:shadow-xl hover:scale-105 transition-all shadow-lg text-sm sm:text-base">
+          <i class="fas fa-info-circle mr-1.5"></i>আমাদের সম্পর্কে
+        </a>
+        <a href="#donations"
+           class="bg-transparent border-2 border-yellow-400 text-yellow-300 font-bold px-6 py-2.5 rounded-full hover:bg-yellow-400 hover:text-red-900 transition-all text-sm sm:text-base">
+          <i class="fas fa-hand-holding-heart mr-1.5"></i>দান করুন
+        </a>
+      </div>
+
+      <div class="mt-10 animate-bounce">
+        <a href="#countdown" class="text-yellow-400 text-2xl opacity-70 hover:opacity-100">
+          <i class="fas fa-chevron-down"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap py-2">
+  <span class="ticker-inner text-yellow-300 text-sm font-medium px-4" id="tickerTxt">
+    <span class="mr-10"><i class="fas fa-star text-yellow-500 mr-1"></i> জয় মা দুর্গা! পুষ্পাঞ্জলি যুব সংঘে আপনাকে স্বাগতম!</span>
+  </span>
+</div>
+
+<!-- ===================================================
+     COUNTDOWN
+=================================================== -->
+<section id="countdown" class="py-12 sm:py-16 px-4">
+  <div class="max-w-4xl mx-auto rv">
+    <div class="cd-card p-6 sm:p-10 text-center">
+      <div class="text-4xl mb-3">🪷</div>
+      <div class="s-badge mb-2">উৎসব গণনা</div>
+      <h3 class="text-xl sm:text-2xl text-yellow-400 font-bold mb-1" id="festTitle"
+          style="font-family:'Cinzel Decorative',serif">দুর্গাপুজো ২০২৫</h3>
+      <div class="grid grid-cols-4 gap-2 sm:gap-4 max-w-xs sm:max-w-lg mx-auto mt-5">
+        <div class="bg-black/20 rounded-xl p-3 sm:p-5 border border-yellow-400/20">
+          <div class="cd-num" id="cd-d">০০</div>
+          <div class="text-yellow-300/70 text-xs uppercase tracking-wide mt-1">দিন</div>
+        </div>
+        <div class="bg-black/20 rounded-xl p-3 sm:p-5 border border-yellow-400/20">
+          <div class="cd-num" id="cd-h">০০</div>
+          <div class="text-yellow-300/70 text-xs uppercase tracking-wide mt-1">ঘণ্টা</div>
+        </div>
+        <div class="bg-black/20 rounded-xl p-3 sm:p-5 border border-yellow-400/20">
+          <div class="cd-num" id="cd-m">০০</div>
+          <div class="text-yellow-300/70 text-xs uppercase tracking-wide mt-1">মিনিট</div>
+        </div>
+        <div class="bg-black/20 rounded-xl p-3 sm:p-5 border border-yellow-400/20">
+          <div class="cd-num" id="cd-s">০০</div>
+          <div class="text-yellow-300/70 text-xs uppercase tracking-wide mt-1">সেকেন্ড</div>
         </div>
       </div>
-      <div class="flex items-center gap-2">
-        <div id="fbDot" class="w-2 h-2 rounded-full bg-gray-600" title="Firebase Status"></div>
-        <span class="text-white/30 text-xs hidden sm:block" id="aEmail"></span>
-        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-red-900 text-sm font-bold" id="aAv">A</div>
-      </div>
     </div>
+  </div>
+</section>
 
-    <div class="px-3 sm:px-5 pb-12">
-
-    <!-- ===== DASHBOARD ===== -->
-    <div id="p-dashboard" class="panel active pt-5">
-      <div class="sh"><i class="fas fa-th-large text-yellow-500"></i> Dashboard</div>
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5 stat-grid">
-        <div class="scard text-center"><div class="text-2xl mb-1">📋</div><div class="text-xl font-bold text-yellow-400" id="st-n">—</div><div class="text-white/40 text-xs mt-1">নোটিশ</div></div>
-        <div class="scard text-center"><div class="text-2xl mb-1">⚡</div><div class="text-xl font-bold text-yellow-400" id="st-a">—</div><div class="text-white/40 text-xs mt-1">কার্যক্রম</div></div>
-        <div class="scard text-center"><div class="text-2xl mb-1">👥</div><div class="text-xl font-bold text-yellow-400" id="st-c">—</div><div class="text-white/40 text-xs mt-1">কমিটি</div></div>
-        <div class="scard text-center"><div class="text-2xl mb-1">📸</div><div class="text-xl font-bold text-yellow-400" id="st-g">—</div><div class="text-white/40 text-xs mt-1">গ্যালারি</div></div>
-      </div>
-      <div class="box p-4">
-        <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">Quick Actions</h3>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          <button onclick="goP('notices',null)" class="bg-btn justify-center py-2.5 text-sm"><i class="fas fa-plus"></i> নোটিশ</button>
-          <button onclick="goP('activities',null)" class="bg-btn justify-center py-2.5 text-sm"><i class="fas fa-plus"></i> কার্যক্রম</button>
-          <button onclick="goP('gallery',null)" class="bg-btn justify-center py-2.5 text-sm"><i class="fas fa-upload"></i> ছবি</button>
-          <button onclick="goP('committee',null)" class="bg-btn justify-center py-2.5 text-sm"><i class="fas fa-user-plus"></i> সদস্য</button>
-          <button onclick="goP('site',null)" class="bg-btn justify-center py-2.5 text-sm"><i class="fas fa-cog"></i> সেটিংস</button>
-          <a href="index.html" target="_blank" class="bg-btn justify-center py-2.5 text-sm"><i class="fas fa-eye"></i> ওয়েবসাইট</a>
+<!-- ===================================================
+     ABOUT
+=================================================== -->
+<section id="about" class="py-16 sm:py-20 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-10 rv">
+      <span class="s-badge">আমাদের সম্পর্কে</span>
+      <h2 class="s-title text-2xl sm:text-3xl md:text-4xl font-bold mt-2 mb-3">About Us</h2>
+      <div class="gl w-36 mx-auto"></div>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
+      <div class="rvl">
+        <div class="relative">
+          <img id="aboutImg"
+               src="https://placehold.co/600x420/C41E3A/FFF8E7?text=Organization+Photo"
+               alt="Organization"
+               class="rounded-2xl w-full shadow-xl object-cover"
+               style="border:3px solid rgba(212,160,23,.4);max-height:380px;"/>
+          <div class="absolute -bottom-5 -right-5 bg-gradient-to-br from-yellow-400 to-yellow-600 text-red-900 rounded-xl p-3 shadow-lg text-center hidden md:block">
+            <div class="text-2xl font-black" style="font-family:'Cinzel Decorative',serif" id="yearsEl">১৫</div>
+            <div class="text-xs font-bold uppercase leading-tight">বছর ধরে<br/>সেবায়</div>
+          </div>
+          <div class="absolute -top-3 -left-3 w-12 h-12 rounded-full bg-gradient-to-br from-red-700 to-red-900 flex items-center justify-center text-2xl shadow-lg">🌸</div>
         </div>
       </div>
-      <!-- Firebase Test -->
-      <div class="box p-4 mt-4">
-        <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">Firebase সংযোগ ও Delete পরীক্ষা</h3>
-        <button onclick="testFb()" class="br text-sm"><i class="fas fa-vial"></i> পরীক্ষা করুন</button>
-        <div id="fbTR" class="mt-3 hidden text-xs rounded-lg p-3 leading-relaxed"></div>
+      <div class="rvr">
+        <p class="text-yellow-700 text-lg font-semibold mb-4"
+           style="font-family:'Tiro Devanagari Sanskrit',serif">॥ সর্বে ভবন্তু সুখিনঃ ॥</p>
+        <p class="text-gray-700 text-base leading-relaxed mb-3" id="aboutP1">
+          পুষ্পাঞ্জলি যুব সংঘ একটি হিন্দু ধর্মীয় ও সামাজিক সংগঠন।
+        </p>
+        <p class="text-gray-600 text-base leading-relaxed mb-5" id="aboutEn">
+          Pushpanjali Yuva Sangh is dedicated to nurturing religious values, cultural heritage, and social service among the youth.
+        </p>
+        <div class="grid grid-cols-3 gap-3 mb-6">
+          <div class="text-center bg-red-50 rounded-xl p-3 border border-red-100">
+            <div class="text-xl font-black text-red-700 leading-tight" id="statMem">২০০+</div>
+            <div class="text-xs text-gray-500 mt-1">সক্রিয় সদস্য</div>
+          </div>
+          <div class="text-center bg-yellow-50 rounded-xl p-3 border border-yellow-200">
+            <div class="text-xl font-black text-yellow-600 leading-tight" id="statEv">৫০+</div>
+            <div class="text-xs text-gray-500 mt-1">বার্ষিক উৎসব</div>
+          </div>
+          <div class="text-center bg-red-50 rounded-xl p-3 border border-red-100">
+            <div class="text-xl font-black text-red-700 leading-tight" id="statYr">১৫+</div>
+            <div class="text-xs text-gray-500 mt-1">বছরের অভিজ্ঞতা</div>
+          </div>
+        </div>
+        <h4 class="font-bold text-red-800 text-base mb-2">আমাদের লক্ষ্য ও আদর্শ</h4>
+        <ul class="space-y-1.5 text-gray-700 text-sm" id="goalsList">
+          <li class="flex items-start gap-2"><span class="text-yellow-500 mt-0.5 flex-shrink-0">🪷</span>ধর্মীয় অনুষ্ঠান ও পুজো-পার্বণ আয়োজন করা</li>
+          <li class="flex items-start gap-2"><span class="text-yellow-500 mt-0.5 flex-shrink-0">🪷</span>সমাজের দুঃস্থ মানুষদের পাশে দাঁড়ানো</li>
+          <li class="flex items-start gap-2"><span class="text-yellow-500 mt-0.5 flex-shrink-0">🪷</span>তরুণ প্রজন্মে ক্রীড়া ও সংস্কৃতির বিকাশ</li>
+          <li class="flex items-start gap-2"><span class="text-yellow-500 mt-0.5 flex-shrink-0">🪷</span>পরিবেশ সংরক্ষণ ও সামাজিক সচেতনতা বৃদ্ধি</li>
+        </ul>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- ===== NOTICES ===== -->
-    <div id="p-notices" class="panel">
-      <div class="sh"><i class="fas fa-bullhorn text-yellow-500"></i> নোটিশ বোর্ড</div>
-      <div class="box p-4 mb-4">
-        <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">নতুন নোটিশ</h3>
-        <div class="space-y-3">
-          <div><label class="lbl">নোটিশের বিষয় *</label>
-            <input type="text" id="nTitle" placeholder="নোটিশের বিষয়..." class="inp"/></div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><label class="lbl">তারিখ (বাংলায়)</label>
-              <input type="text" id="nDate" placeholder="২০ জুলাই ২০২৫" class="inp"/></div>
-            <div class="flex items-end gap-3 pb-1">
-              <label class="tog"><input type="checkbox" id="nNew" checked/><span class="tsl"></span></label>
-              <span class="text-white/50 text-sm">NEW Badge</span>
+<!-- ===================================================
+     ACTIVITIES
+=================================================== -->
+<section id="activities" class="py-16 sm:py-20 px-4 rgb">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-10 rv">
+      <span class="s-badge" style="background:linear-gradient(135deg,#D4A017,#F5C842);color:#7B0D1E">আমাদের কার্যক্রম</span>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2 mb-3"
+          style="font-family:'Cinzel Decorative',serif">Our Activities</h2>
+      <div class="gl w-36 mx-auto"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" id="actGrid">
+      <div class="act-card p-6 text-center sm:col-span-2 lg:col-span-3">
+        <p class="text-gray-400 text-sm">লোড হচ্ছে...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     NOTICE
+=================================================== -->
+<section id="notice" class="py-16 sm:py-20 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-10 rv">
+      <span class="s-badge">নোটিশ বোর্ড</span>
+      <h2 class="s-title text-2xl sm:text-3xl font-bold mt-2 mb-3">Notice Board</h2>
+      <div class="gl w-36 mx-auto"></div>
+    </div>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 rvl">
+        <div class="nb">
+          <div class="flex items-center justify-between px-5 py-3.5 border-b border-yellow-400/30">
+            <h4 class="text-yellow-400 font-bold flex items-center gap-2 text-base">
+              <i class="fas fa-bullhorn"></i> সর্বশেষ বিজ্ঞপ্তি
+            </h4>
+          </div>
+          <div class="nb-scroll" id="nList">
+            <div class="px-5 py-6 text-center text-white/50 text-sm">লোড হচ্ছে...</div>
+          </div>
+        </div>
+      </div>
+      <div class="rvr">
+        <div class="bg-white rounded-2xl border border-yellow-200 overflow-hidden shadow-lg">
+          <div class="bg-gradient-to-r from-red-700 to-red-800 px-4 py-3.5">
+            <h4 class="text-yellow-400 font-bold flex items-center gap-2 text-sm">
+              <i class="fas fa-calendar-alt"></i> আসন্ন অনুষ্ঠান
+            </h4>
+          </div>
+          <div class="p-4 space-y-3" id="upList">
+            <div class="text-center text-gray-400 py-4 text-sm">লোড হচ্ছে...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     COMMITTEE
+=================================================== -->
+<section id="committee" class="py-16 sm:py-20 px-4 bg-gradient-to-b from-red-900/5 to-yellow-50/40">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-10 rv">
+      <span class="s-badge">কার্যনির্বাহী কমিটি</span>
+      <h2 class="s-title text-2xl sm:text-3xl font-bold mt-2 mb-3">Our Committee</h2>
+      <div class="gl w-36 mx-auto"></div>
+    </div>
+    <!-- 2 cols on mobile, 3 on sm, 4 on lg -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4" id="comGrid">
+      <div class="mem-card p-6 text-center col-span-2 sm:col-span-3 lg:col-span-4">
+        <p class="text-gray-400 text-sm">লোড হচ্ছে...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     GALLERY
+=================================================== -->
+<section id="gallery" class="py-16 sm:py-20 px-4 rgb">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-10 rv">
+      <span class="s-badge" style="background:linear-gradient(135deg,#D4A017,#F5C842);color:#7B0D1E">ফটো গ্যালারি</span>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2 mb-3"
+          style="font-family:'Cinzel Decorative',serif">Photo Gallery</h2>
+      <div class="gl w-36 mx-auto"></div>
+    </div>
+    <div class="flex flex-wrap justify-center gap-2 mb-7 rv">
+      <button class="gf af" onclick="filterGal('all',this)">All</button>
+      <button class="gf" onclick="filterGal('puja',this)">পুজো</button>
+      <button class="gf" onclick="filterGal('social',this)">সমাজসেবা</button>
+      <button class="gf" onclick="filterGal('sports',this)">ক্রীড়া</button>
+      <button class="gf" onclick="filterGal('culture',this)">সংস্কৃতি</button>
+    </div>
+    <!-- 2 cols mobile, 3 tablet, 4 desktop -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3" id="galGrid">
+      <div class="gal-item bg-red-900/30 col-span-2 sm:col-span-3 lg:col-span-4 flex items-center justify-center">
+        <p class="text-white/50 py-8 text-sm">লোড হচ্ছে...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     DONATIONS
+=================================================== -->
+<section id="donations" class="py-16 sm:py-20 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-10 rv">
+      <span class="s-badge">দান ও সহযোগিতা</span>
+      <h2 class="s-title text-2xl sm:text-3xl font-bold mt-2 mb-3">Support & Donations</h2>
+      <div class="gl w-36 mx-auto"></div>
+      <p class="text-gray-500 mt-3 text-sm max-w-md mx-auto">আপনার উদার দানে আমাদের ধর্মীয় ও সামাজিক কার্যক্রম পরিচালিত হয়।</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto">
+      <div class="rvl text-center">
+        <div class="qr-box p-6 sm:p-8 inline-block w-full max-w-xs sm:max-w-sm mx-auto">
+          <h4 class="font-bold text-red-800 text-lg mb-1.5">স্ক্যান করে দান করুন</h4>
+          <p class="text-gray-500 text-sm mb-5">bKash / Nagad / Rocket</p>
+          <img id="qrImg"
+               src="https://placehold.co/200x200/FFF8E7/C41E3A?text=QR+Code"
+               alt="QR Code"
+               class="w-40 h-40 sm:w-48 sm:h-48 mx-auto rounded-xl border-4 border-yellow-300 mb-4 shadow-inner object-contain"/>
+          <p class="text-xs text-gray-400 mb-1">bKash / Nagad নম্বর:</p>
+          <p class="font-bold text-red-700 text-lg" id="bkashNum">—</p>
+        </div>
+      </div>
+      <div class="rvr">
+        <div class="bg-white rounded-2xl border border-yellow-200 shadow-lg overflow-hidden">
+          <div class="bg-gradient-to-r from-red-800 to-red-700 px-5 py-3.5">
+            <h4 class="text-yellow-400 font-bold flex items-center gap-2 text-sm">
+              <i class="fas fa-university"></i> ব্যাংক বিবরণ
+            </h4>
+          </div>
+          <div class="p-5" id="bankBox">
+            <div class="text-center text-gray-400 py-3 text-sm">লোড হচ্ছে...</div>
+          </div>
+        </div>
+        <div class="mt-4 grid grid-cols-3 gap-2">
+          <div class="bg-red-50 rounded-xl p-2.5 text-center border border-red-100 hover:shadow cursor-pointer transition-all">
+            <div class="text-red-700 font-black text-lg">৳১০০</div>
+            <div class="text-gray-500 text-xs mt-0.5">সুলভ দান</div>
+          </div>
+          <div class="bg-yellow-50 rounded-xl p-2.5 text-center border-2 border-yellow-400 relative hover:shadow cursor-pointer transition-all">
+            <div class="absolute -top-2 left-1/2 -translate-x-1/2 bg-yellow-400 text-red-900 text-xs font-bold px-2 py-0.5 rounded-full">Popular</div>
+            <div class="text-yellow-700 font-black text-lg">৳৫০০</div>
+            <div class="text-gray-500 text-xs mt-0.5">সাধারণ</div>
+          </div>
+          <div class="bg-red-50 rounded-xl p-2.5 text-center border border-red-100 hover:shadow cursor-pointer transition-all">
+            <div class="text-red-700 font-black text-lg">৳১০০০</div>
+            <div class="text-gray-500 text-xs mt-0.5">বিশেষ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     CONTACT
+=================================================== -->
+<section id="contact" class="py-16 sm:py-20 px-4 rgb">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-10 rv">
+      <span class="s-badge" style="background:linear-gradient(135deg,#D4A017,#F5C842);color:#7B0D1E">যোগাযোগ</span>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2 mb-3"
+          style="font-family:'Cinzel Decorative',serif">Contact Us</h2>
+      <div class="gl w-36 mx-auto"></div>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-8">
+      <div class="rvl">
+        <div class="bg-white/95 rounded-2xl p-6 sm:p-8 shadow-2xl">
+          <h4 class="font-bold text-red-800 text-lg mb-5">বার্তা পাঠান</h4>
+          <form id="contactForm" onsubmit="subForm(event)" class="space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div><label class="block text-gray-600 text-sm mb-1">নাম *</label><input id="cf-name" type="text" placeholder="আপনার নাম" required class="f-inp"/></div>
+              <div><label class="block text-gray-600 text-sm mb-1">মোবাইল</label><input id="cf-phone" type="tel" placeholder="01XXXXXXXXX" class="f-inp"/></div>
             </div>
-          </div>
-          <div id="nErr" class="ebox hidden"></div>
-          <button onclick="addNotice()" id="btnAN" class="br text-sm"><i class="fas fa-plus"></i> নোটিশ যোগ করুন</button>
-        </div>
-      </div>
-      <div class="box overflow-x-auto">
-        <div class="p-3 border-b border-white/5 flex items-center justify-between">
-          <span class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider">সকল নোটিশ</span>
-          <button onclick="loadNotices()" class="text-white/30 hover:text-white/60"><i class="fas fa-sync-alt text-xs"></i></button>
-        </div>
-        <table class="tbl">
-          <thead><tr><th>নোটিশ</th><th>তারিখ</th><th>Badge</th><th>মুছুন</th></tr></thead>
-          <tbody id="nTbl"><tr><td colspan="4" class="text-center text-white/30 py-6">লোড হচ্ছে...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ===== ACTIVITIES ===== -->
-    <div id="p-activities" class="panel">
-      <div class="sh"><i class="fas fa-star text-yellow-500"></i> কার্যক্রম</div>
-      <button onclick="openActM()" class="br mb-4 text-sm"><i class="fas fa-plus"></i> নতুন কার্যক্রম</button>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 act-grid" id="actGrid">
-        <div class="col-span-3 text-white/30 text-center py-8">লোড হচ্ছে...</div>
-      </div>
-    </div>
-
-    <!-- ===== COMMITTEE ===== -->
-    <div id="p-committee" class="panel">
-      <div class="sh"><i class="fas fa-users text-yellow-500"></i> কমিটি সদস্য</div>
-      <button onclick="openMemM()" class="br mb-4 text-sm"><i class="fas fa-user-plus"></i> নতুন সদস্য</button>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 com-grid" id="comGrid">
-        <div class="col-span-3 text-white/30 text-center py-8">লোড হচ্ছে...</div>
-      </div>
-    </div>
-
-    <!-- ===== GALLERY ===== -->
-    <div id="p-gallery" class="panel">
-      <div class="sh"><i class="fas fa-images text-yellow-500"></i> গ্যালারি</div>
-      <div class="box p-4 mb-4">
-        <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">নতুন ছবি আপলোড</h3>
-        <div class="space-y-3">
-          <div><label class="lbl">ছবি বেছে নিন</label>
-            <input type="file" id="galFile" accept="image/*" class="inp" onchange="pImg('galFile','galPv','galPvW')"/>
-            <div id="galPvW" class="mt-2 hidden"><img id="galPv" class="thumb"/></div>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><label class="lbl">ক্যাপশন</label><input type="text" id="galCap" placeholder="দুর্গাপুজো ২০২৪" class="inp"/></div>
-            <div><label class="lbl">ক্যাটাগরি</label>
-              <select id="galCat" class="inp">
-                <option value="puja">পুজো</option>
-                <option value="social">সমাজসেবা</option>
-                <option value="sports">ক্রীড়া</option>
-                <option value="culture">সংস্কৃতি</option>
+            <div><label class="block text-gray-600 text-sm mb-1">ইমেইল</label><input id="cf-email" type="email" placeholder="your@email.com" class="f-inp"/></div>
+            <div><label class="block text-gray-600 text-sm mb-1">বিষয়</label>
+              <select id="cf-subject" class="f-inp">
+                <option value="">বিষয় বেছে নিন</option>
+                <option value="সদস্যপদ">সদস্যপদ গ্রহণ</option>
+                <option value="পুজো">পুজো সম্পর্কিত</option>
+                <option value="দান">দান সংক্রান্ত</option>
+                <option value="স্পন্সর">স্পন্সর / সহযোগিতা</option>
+                <option value="অভিযোগ">অভিযোগ / পরামর্শ</option>
+                <option value="অন্যান্য">অন্যান্য</option>
               </select>
             </div>
+            <div><label class="block text-gray-600 text-sm mb-1">বার্তা *</label><textarea id="cf-msg" rows="4" placeholder="আপনার বার্তা লিখুন..." required class="f-inp resize-none"></textarea></div>
+            <button type="submit" id="cf-btn" class="sub-btn"><i class="fas fa-paper-plane mr-2"></i>বার্তা পাঠান</button>
+          </form>
+          <div id="formOk" class="hidden mt-3 bg-green-50 border border-green-200 rounded-xl p-3 text-green-700 text-sm text-center">
+            ✅ আপনার বার্তা পাঠানো হয়েছে! শীঘ্রই যোগাযোগ করব। ধন্যবাদ।
           </div>
-          <div id="galErr" class="ebox hidden"></div>
-          <button onclick="uploadGal()" id="btnGU" class="br text-sm"><i class="fas fa-upload"></i> আপলোড করুন</button>
         </div>
       </div>
-      <!-- Gallery grid — delete always visible -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 gal-grid" id="galGrid">
-        <div class="col-span-4 text-white/30 text-center py-8">লোড হচ্ছে...</div>
-      </div>
-    </div>
-
-    <!-- ===== UPCOMING ===== -->
-    <div id="p-upcoming" class="panel">
-      <div class="sh"><i class="fas fa-calendar-alt text-yellow-500"></i> আসন্ন অনুষ্ঠান</div>
-      <div class="box p-4 mb-4">
-        <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">নতুন অনুষ্ঠান</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-          <div><label class="lbl">অনুষ্ঠানের নাম *</label><input type="text" id="evT" placeholder="রক্তদান শিবির" class="inp"/></div>
-          <div><label class="lbl">ইমোজি</label><input type="text" id="evI" placeholder="🩸" class="inp"/></div>
-          <div><label class="lbl">তারিখ</label><input type="text" id="evD" placeholder="২০ আগস্ট" class="inp"/></div>
-          <div><label class="lbl">মাস ও বছর</label><input type="text" id="evM" placeholder="২০২৫" class="inp"/></div>
-          <div class="sm:col-span-2"><label class="lbl">স্থান</label><input type="text" id="evL" placeholder="কমিউনিটি হল" class="inp"/></div>
-        </div>
-        <div id="evErr" class="ebox hidden"></div>
-        <button onclick="addEv()" class="br text-sm"><i class="fas fa-plus"></i> যোগ করুন</button>
-      </div>
-      <div class="box overflow-x-auto">
-        <table class="tbl">
-          <thead><tr><th>অনুষ্ঠান</th><th>তারিখ</th><th>স্থান</th><th>মুছুন</th></tr></thead>
-          <tbody id="evTbl"><tr><td colspan="4" class="text-center text-white/30 py-6">লোড হচ্ছে...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ===== SITE SETTINGS ===== -->
-    <div id="p-site" class="panel">
-      <div class="sh"><i class="fas fa-globe text-yellow-500"></i> সাইট সেটিংস</div>
-      <div class="box p-4 space-y-4">
-        <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider">মৌলিক তথ্য</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div><label class="lbl">সংগঠনের নাম (বাংলা)</label><input type="text" id="sOBn" placeholder="পুষ্পাঞ্জলি যুব সংঘ" class="inp"/></div>
-          <div><label class="lbl">Organisation Name (English)</label><input type="text" id="sOEn" placeholder="Pushpanjali Yuva Sangh" class="inp"/></div>
-          <div><label class="lbl">স্লোগান (বাংলা)</label><input type="text" id="sTBn" placeholder="সেবাই সর্বোত্তম ধর্ম" class="inp"/></div>
-          <div><label class="lbl">Slogan (English)</label><input type="text" id="sTEn" placeholder="Service is the best religion" class="inp"/></div>
-          <div><label class="lbl">প্রতিষ্ঠা বছর</label><input type="text" id="sYear" placeholder="২০০৯" class="inp"/></div>
-          <div><label class="lbl">উৎসবের নাম (Countdown)</label><input type="text" id="sFN" placeholder="দুর্গাপুজো ২০২৫" class="inp"/></div>
-          <div class="sm:col-span-2"><label class="lbl">উৎসবের তারিখ (Countdown)</label><input type="datetime-local" id="sFD" class="inp max-w-xs"/></div>
-        </div>
-        <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider pt-2 border-t border-white/5">যোগাযোগ</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div class="sm:col-span-2"><label class="lbl">ঠিকানা</label><input type="text" id="sAddr" placeholder="বহরিয়া মির্জাপুর, টাঙ্গাইল" class="inp"/></div>
-          <div><label class="lbl">মোবাইল ১</label><input type="tel" id="sP1" placeholder="01728018956" class="inp"/></div>
-          <div><label class="lbl">মোবাইল ২</label><input type="tel" id="sP2" placeholder="01XXXXXXXXX" class="inp"/></div>
-          <div><label class="lbl">ইমেইল</label><input type="email" id="sEmail" placeholder="pushpanjaliyuvasangh@gmail.com" class="inp"/></div>
-          <div><label class="lbl">WhatsApp</label><input type="tel" id="sWA" placeholder="01728018956" class="inp"/></div>
-        </div>
+      <div class="rvr space-y-5">
         <!-- MAP -->
-        <div class="pt-2 border-t border-white/5">
-          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">Google Maps</h3>
-          <div class="bg-blue-900/20 border border-blue-400/20 rounded-lg p-3 mb-3 text-xs text-blue-300 leading-relaxed">
-            <i class="fas fa-info-circle mr-1"></i>
-            <strong>কীভাবে পাবেন:</strong> Google Maps → আপনার এলাকা সার্চ → Share → Embed a map → HTML-এ src="..." এর ভেতরের URL কপি করুন
+        <div class="rounded-2xl overflow-hidden shadow-xl border-4 border-yellow-400/30" style="min-height:220px;">
+          <div id="mapPlaceholder"
+               class="bg-gray-100 flex flex-col items-center justify-center py-12 text-gray-500 text-sm text-center px-4"
+               style="height:220px;">
+            <i class="fas fa-map-marker-alt text-3xl text-red-400 mb-2"></i>
+            <p class="font-semibold">লোকেশন ম্যাপ</p>
+            <p class="text-xs mt-1 text-gray-400">Admin → সাইট সেটিংস → Map URL দিন</p>
           </div>
-          <div><label class="lbl">Google Maps Embed URL</label>
-            <textarea id="sMap" rows="2" placeholder="https://www.google.com/maps/embed?pb=!1m18!..." class="inp inp-ta"></textarea></div>
-          <button onclick="testMap()" class="bg-btn text-xs mt-2"><i class="fas fa-map-marker-alt"></i> Map দেখুন</button>
-          <div id="mapPvBox" class="mt-3 hidden rounded-xl overflow-hidden border-2 border-yellow-400/20">
-            <iframe id="mapPvF" src="" width="100%" height="200" style="border:0" allowfullscreen="" loading="lazy"></iframe>
+          <iframe id="mapFrame" src="about:blank" width="100%" height="220"
+                  style="border:0;display:none;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <!-- Contact info -->
+        <div class="bg-white/90 rounded-2xl p-5 shadow-xl space-y-3">
+          <h4 class="font-bold text-red-800 text-base mb-3">যোগাযোগের তথ্য</h4>
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-700 flex-shrink-0 text-sm"><i class="fas fa-map-marker-alt"></i></div>
+            <p class="text-gray-600 text-sm leading-relaxed" id="cAddr">বহরিয়া মির্জাপুর, টাঙ্গাইল</p>
           </div>
-        </div>
-        <div id="siteErr" class="ebox hidden"></div>
-        <button onclick="saveSet('site')" id="btnSS" class="br text-sm"><i class="fas fa-save"></i> সেটিংস সেভ করুন</button>
-      </div>
-    </div>
-
-    <!-- ===== ABOUT US TEXT ===== -->
-    <div id="p-about" class="panel">
-      <div class="sh"><i class="fas fa-pen text-yellow-500"></i> আমাদের সম্পর্কে</div>
-      <div class="box p-4 space-y-3">
-        <div class="bg-yellow-900/20 border border-yellow-400/20 rounded-lg p-3 text-xs text-yellow-300">
-          <i class="fas fa-lightbulb mr-1"></i> এখানে যা লিখবেন তা ওয়েবসাইটে দেখাবে।
-        </div>
-        <div><label class="lbl">বাংলা প্যারাগ্রাফ</label><textarea id="ab1" rows="3" placeholder="পুষ্পাঞ্জলি যুব সংঘ একটি হিন্দু ধর্মীয়..." class="inp inp-ta"></textarea></div>
-        <div><label class="lbl">English Paragraph</label><textarea id="abEn" rows="3" placeholder="Pushpanjali Yuva Sangh is..." class="inp inp-ta"></textarea></div>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-white/5">
-          <div><label class="lbl">সক্রিয় সদস্য</label><input type="text" id="abM" placeholder="২০০+" class="inp"/></div>
-          <div><label class="lbl">বার্ষিক উৎসব</label><input type="text" id="abF" placeholder="৫০+" class="inp"/></div>
-        </div>
-        <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider">লক্ষ্যমাত্রা</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div><label class="lbl">লক্ষ্য ১</label><input type="text" id="abG1" placeholder="ধর্মীয় অনুষ্ঠান আয়োজন" class="inp"/></div>
-          <div><label class="lbl">লক্ষ্য ২</label><input type="text" id="abG2" placeholder="সমাজসেবামূলক কাজ" class="inp"/></div>
-          <div><label class="lbl">লক্ষ্য ৩</label><input type="text" id="abG3" placeholder="ক্রীড়া ও সাংস্কৃতিক বিকাশ" class="inp"/></div>
-          <div><label class="lbl">লক্ষ্য ৪</label><input type="text" id="abG4" placeholder="পরিবেশ সংরক্ষণ" class="inp"/></div>
-          <div><label class="lbl">লক্ষ্য ৫</label><input type="text" id="abG5" placeholder="সামাজিক সচেতনতা বৃদ্ধি" class="inp"/></div>
-        </div>
-        <div id="aboutErr" class="ebox hidden"></div>
-        <button onclick="saveSet('about')" id="btnSA" class="br text-sm"><i class="fas fa-save"></i> সেভ করুন</button>
-      </div>
-    </div>
-
-    <!-- ===== SOCIAL ===== -->
-    <div id="p-social" class="panel">
-      <div class="sh"><i class="fas fa-share-alt text-yellow-500"></i> সোশ্যাল মিডিয়া</div>
-      <div class="box p-4 space-y-3">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div><label class="lbl"><i class="fab fa-facebook text-blue-400 mr-1"></i> Facebook</label><input type="url" id="soFb" placeholder="https://facebook.com/yourpage" class="inp"/></div>
-          <div><label class="lbl"><i class="fab fa-instagram text-pink-400 mr-1"></i> Instagram</label><input type="url" id="soIg" placeholder="https://instagram.com/..." class="inp"/></div>
-          <div><label class="lbl"><i class="fab fa-youtube text-red-400 mr-1"></i> YouTube</label><input type="url" id="soYt" placeholder="https://youtube.com/..." class="inp"/></div>
-          <div><label class="lbl"><i class="fab fa-whatsapp text-green-400 mr-1"></i> WhatsApp Group</label><input type="url" id="soWa" placeholder="https://chat.whatsapp.com/..." class="inp"/></div>
-          <div><label class="lbl"><i class="fab fa-telegram text-blue-400 mr-1"></i> Telegram</label><input type="url" id="soTg" placeholder="https://t.me/..." class="inp"/></div>
-        </div>
-        <div id="socialErr" class="ebox hidden"></div>
-        <button onclick="saveSet('social')" id="btnSSoc" class="br text-sm"><i class="fas fa-save"></i> সেভ করুন</button>
-      </div>
-    </div>
-
-    <!-- ===== PAYMENT ===== -->
-    <div id="p-payment" class="panel">
-      <div class="sh"><i class="fas fa-money-bill text-yellow-500"></i> পেমেন্ট তথ্য</div>
-      <div class="box p-4 space-y-5">
-
-        <!-- ── bKash ── -->
-        <div>
-          <h3 class="text-pink-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
-            <span class="bg-pink-600 text-white text-xs px-2 py-0.5 rounded-md font-black">bK</span> bKash
-          </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><label class="lbl">bKash নম্বর</label><input type="text" id="pBkash" placeholder="01XXXXXXXXX" class="inp"/></div>
-            <div><label class="lbl">bKash QR Code ছবি</label>
-              <input type="file" id="bkashQrFile" accept="image/*" class="inp" onchange="pImg('bkashQrFile','bkashQrPv','bkashQrPvW')"/>
-              <div id="bkashQrPvW" class="mt-2 hidden"><img id="bkashQrPv" class="thumb"/></div>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-700 flex-shrink-0 text-sm"><i class="fas fa-phone-alt"></i></div>
+            <a id="cPhone" href="tel:01728018956" class="text-red-700 hover:underline text-sm">01728018956</a>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-700 flex-shrink-0 text-sm"><i class="fas fa-envelope"></i></div>
+            <a id="cEmail" href="/cdn-cgi/l/email-protection#89" class="text-red-700 hover:underline text-sm break-all"><span class="__cf_email__" data-cfemail="b8c8cdcbd0c8d9d6d2d9d4d1c1cdced9cbd9d6dfd0f8dfd5d9d1d496dbd7d5">[email&#160;protected]</span></a>
+          </div>
+          <div class="pt-2 border-t border-gray-100">
+            <p class="text-gray-500 text-xs font-medium mb-2 uppercase tracking-wider">সোশ্যাল মিডিয়া</p>
+            <div class="flex gap-2 flex-wrap" id="socLinks">
+              <a href="#" class="soc-a"><i class="fab fa-facebook-f"></i></a>
             </div>
           </div>
         </div>
-
-        <!-- ── Nagad ── -->
-        <div class="border-t border-white/5 pt-4">
-          <h3 class="text-orange-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
-            <span class="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-md font-black">Ng</span> Nagad
-          </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><label class="lbl">Nagad নম্বর</label><input type="text" id="pNagad" placeholder="01XXXXXXXXX" class="inp"/></div>
-            <div><label class="lbl">Nagad QR Code ছবি</label>
-              <input type="file" id="nagadQrFile" accept="image/*" class="inp" onchange="pImg('nagadQrFile','nagadQrPv','nagadQrPvW')"/>
-              <div id="nagadQrPvW" class="mt-2 hidden"><img id="nagadQrPv" class="thumb"/></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── Rocket ── -->
-        <div class="border-t border-white/5 pt-4">
-          <h3 class="text-purple-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
-            <span class="bg-purple-700 text-white text-xs px-2 py-0.5 rounded-md font-black">Rk</span> Rocket (DBBL)
-          </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><label class="lbl">Rocket নম্বর</label><input type="text" id="pRocket" placeholder="01XXXXXXXXX-5" class="inp"/></div>
-            <div><label class="lbl">Rocket QR Code ছবি</label>
-              <input type="file" id="rocketQrFile" accept="image/*" class="inp" onchange="pImg('rocketQrFile','rocketQrPv','rocketQrPvW')"/>
-              <div id="rocketQrPvW" class="mt-2 hidden"><img id="rocketQrPv" class="thumb"/></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── Bank 1 ── -->
-        <div class="border-t border-white/5 pt-4">
-          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
-            <i class="fas fa-university"></i> ব্যাংক ১ (প্রধান)
-          </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><label class="lbl">Account Name</label><input type="text" id="pAN" placeholder="Pushpanjali Yuva Sangh" class="inp"/></div>
-            <div><label class="lbl">Account Number</label><input type="text" id="pNum" placeholder="১২৩৪৫৬৭৮৯০" class="inp"/></div>
-            <div><label class="lbl">Routing Number</label><input type="text" id="pRoute" placeholder="২৬০২৭০৫৩৫" class="inp"/></div>
-            <div><label class="lbl">Bank Name</label><input type="text" id="pBank" placeholder="ইসলামী ব্যাংক" class="inp"/></div>
-            <div><label class="lbl">Branch</label><input type="text" id="pBranch" placeholder="টাঙ্গাইল শাখা" class="inp"/></div>
-            <div><label class="lbl">Account Type</label>
-              <select id="pType" class="inp">
-                <option value="সঞ্চয়">সঞ্চয় (Savings)</option>
-                <option value="চলতি">চলতি (Current)</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── Bank 2 ── -->
-        <div class="border-t border-white/5 pt-4">
-          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
-            <i class="fas fa-university"></i> ব্যাংক ২ (ঐচ্ছিক)
-          </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><label class="lbl">Account Name</label><input type="text" id="p2AN" placeholder="Pushpanjali Yuva Sangh" class="inp"/></div>
-            <div><label class="lbl">Account Number</label><input type="text" id="p2Num" placeholder="১২৩৪৫৬৭৮৯০" class="inp"/></div>
-            <div><label class="lbl">Routing Number</label><input type="text" id="p2Route" placeholder="২৬০২৭০৫৩৫" class="inp"/></div>
-            <div><label class="lbl">Bank Name</label><input type="text" id="p2Bank" placeholder="ডাচ বাংলা ব্যাংক" class="inp"/></div>
-            <div><label class="lbl">Branch</label><input type="text" id="p2Branch" placeholder="টাঙ্গাইল শাখা" class="inp"/></div>
-            <div><label class="lbl">Account Type</label>
-              <select id="p2Type" class="inp">
-                <option value="সঞ্চয়">সঞ্চয় (Savings)</option>
-                <option value="চলতি">চলতি (Current)</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── Bank 3 ── -->
-        <div class="border-t border-white/5 pt-4">
-          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
-            <i class="fas fa-university"></i> ব্যাংক ৩ (ঐচ্ছিক)
-          </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><label class="lbl">Account Name</label><input type="text" id="p3AN" placeholder="Pushpanjali Yuva Sangh" class="inp"/></div>
-            <div><label class="lbl">Account Number</label><input type="text" id="p3Num" placeholder="১২৩৪৫৬৭৮৯০" class="inp"/></div>
-            <div><label class="lbl">Routing Number</label><input type="text" id="p3Route" placeholder="২৬০২৭০৫৩৫" class="inp"/></div>
-            <div><label class="lbl">Bank Name</label><input type="text" id="p3Bank" placeholder="সোনালী ব্যাংক" class="inp"/></div>
-            <div><label class="lbl">Branch</label><input type="text" id="p3Branch" placeholder="টাঙ্গাইল শাখা" class="inp"/></div>
-          </div>
-        </div>
-
-        <div id="payErr" class="ebox hidden"></div>
-        <button onclick="saveSet('payment')" id="btnSPay" class="br text-sm"><i class="fas fa-save"></i> সব পেমেন্ট তথ্য সেভ করুন</button>
-      </div>
-    </div>
-
-    <!-- ===== MESSAGES ===== -->
-    <div id="p-messages" class="panel">
-      <div class="sh"><i class="fas fa-envelope text-yellow-500"></i> যোগাযোগ বার্তা</div>
-      <div class="flex items-center justify-between mb-4">
-        <p class="text-white/50 text-sm">ওয়েবসাইটের Contact Form থেকে আসা বার্তা</p>
-        <button onclick="loadMessages()" class="bg-btn text-xs"><i class="fas fa-sync-alt mr-1"></i>রিফ্রেশ</button>
-      </div>
-      <div class="box overflow-hidden" id="msgContainer">
-        <div class="text-center text-white/30 py-8">লোড হচ্ছে...</div>
-      </div>
-    </div>
-
-    <!-- ===== APPEARANCE ===== -->
-    <div id="p-appearance" class="panel">
-      <div class="sh"><i class="fas fa-paint-brush text-yellow-500"></i> লোগো ও ছবি</div>
-      <div class="box p-4 space-y-5">
-        <!-- Logo -->
-        <div>
-          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">সংগঠনের লোগো</h3>
-          <div class="flex items-start gap-4 flex-wrap">
-            <div id="logoPv" class="w-20 h-20 rounded-full border-2 border-yellow-400/30 overflow-hidden bg-red-900/30 flex items-center justify-center text-3xl flex-shrink-0">🪷</div>
-            <div class="flex-1 min-w-0">
-              <div><label class="lbl">লোগো ছবি (PNG)</label>
-                <input type="file" id="logoFile" accept="image/*" class="inp" onchange="prvLogo(event)"/></div>
-              <button onclick="upLogo()" id="btnLogo" class="br mt-2 text-sm"><i class="fas fa-upload"></i> লোগো আপলোড</button>
-            </div>
-          </div>
-        </div>
-        <!-- Hero Banner -->
-        <div class="border-t border-white/5 pt-4">
-          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">হিরো ব্যানার (Background)</h3>
-          <div id="heroPvW" class="mb-3 hidden"><img id="heroPv" class="bthumb"/></div>
-          <div><label class="lbl">ব্যানার ছবি আপলোড (১৯২০×১০৮০px)</label>
-            <input type="file" id="heroFile" accept="image/*" class="inp" onchange="pImg('heroFile','heroPv','heroPvW')"/></div>
-          <button onclick="upHero()" id="btnHero" class="br mt-2 text-sm"><i class="fas fa-upload"></i> ব্যানার আপলোড</button>
-        </div>
-        <!-- About img -->
-        <div class="border-t border-white/5 pt-4">
-          <h3 class="text-yellow-400/70 text-xs font-bold uppercase tracking-wider mb-3">About সেকশনের ছবি</h3>
-          <div id="abImgPvW" class="mb-3 hidden"><img id="abImgPv" class="bthumb"/></div>
-          <div><label class="lbl">ছবি আপলোড</label>
-            <input type="file" id="abImgFile" accept="image/*" class="inp" onchange="pImg('abImgFile','abImgPv','abImgPvW')"/></div>
-          <button onclick="upAboutImg()" id="btnAbout" class="br mt-2 text-sm"><i class="fas fa-upload"></i> ছবি আপলোড</button>
-        </div>
-        <div id="appErr" class="ebox hidden"></div>
-      </div>
-    </div>
-
-    </div><!-- /px-3 -->
-  </div><!-- /mainContent -->
-</div><!-- /adminApp -->
-
-<!-- ACTIVITY MODAL -->
-<div class="mbg" id="actModal">
-  <div class="mbox">
-    <div class="flex items-center justify-between mb-4">
-      <h3 class="text-yellow-400 font-bold" id="actMT">কার্যক্রম যোগ করুন</h3>
-      <button onclick="cM('actModal')" class="text-white/40 hover:text-white text-2xl leading-none">×</button>
-    </div>
-    <input type="hidden" id="actEId"/>
-    <div class="space-y-3">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div><label class="lbl">বাংলা শিরোনাম *</label><input type="text" id="actBn" class="inp" placeholder="পুজো ও ধর্মীয় অনুষ্ঠান"/></div>
-        <div><label class="lbl">English Title</label><input type="text" id="actEn" class="inp" placeholder="Puja & Religious Events"/></div>
-      </div>
-      <div><label class="lbl">বিবরণ</label><textarea id="actDesc" rows="3" class="inp inp-ta" placeholder="কার্যক্রমের বিস্তারিত..."></textarea></div>
-      <div class="grid grid-cols-3 gap-3">
-        <div><label class="lbl">ইমোজি</label><input type="text" id="actEmoji" class="inp text-xl text-center" placeholder="🪷"/></div>
-        <div><label class="lbl">Tag</label><input type="text" id="actTag" class="inp" placeholder="ধর্মীয়"/></div>
-        <div><label class="lbl">ক্রম #</label><input type="number" id="actOrd" class="inp" placeholder="1"/></div>
-      </div>
-      <div><label class="lbl">ছবি আপলোড</label>
-        <input type="file" id="actFile" accept="image/*" class="inp" onchange="pImg('actFile','actPv','actPvW')"/>
-        <div id="actPvW" class="mt-2 hidden"><img id="actPv" class="thumb"/></div>
-      </div>
-      <div id="actErr" class="ebox hidden"></div>
-      <div class="flex gap-3 pt-1">
-        <button onclick="saveAct()" id="btnSAct" class="br flex-1 justify-center text-sm"><i class="fas fa-save"></i> সেভ</button>
-        <button onclick="cM('actModal')" class="bg-btn flex-1 justify-center text-sm">বাতিল</button>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- MEMBER MODAL -->
-<div class="mbg" id="memModal">
-  <div class="mbox">
-    <div class="flex items-center justify-between mb-4">
-      <h3 class="text-yellow-400 font-bold" id="memMT">সদস্য যোগ করুন</h3>
-      <button onclick="cM('memModal')" class="text-white/40 hover:text-white text-2xl leading-none">×</button>
+<!-- ===================================================
+     FOOTER
+=================================================== -->
+<footer class="bg-gradient-to-b from-red-950 to-black text-white pt-12 pb-5 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7 mb-8">
+      <div>
+        <div class="flex items-center gap-3 mb-3">
+          <div id="footLogo"
+               class="w-11 h-11 rounded-full flex items-center justify-center border-2 border-yellow-400 bg-gradient-to-br from-red-800 to-red-600 overflow-hidden flex-shrink-0 text-xl">🪷</div>
+          <div>
+            <div class="text-yellow-400 font-bold" style="font-family:'Cinzel Decorative',serif;font-size:.9rem" id="footOEn">Pushpanjali</div>
+            <div class="text-white/50 text-xs" id="footOBn">Yuva Sangh</div>
+          </div>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed mb-3">ধর্ম, সংস্কৃতি ও সমাজসেবায় নিবেদিত।</p>
+        <div class="flex gap-2 flex-wrap" id="footSocLinks">
+          <a href="#" class="soc-a"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+      <div>
+        <h5 class="text-yellow-400 font-bold mb-3 text-xs uppercase tracking-wider">Quick Links</h5>
+        <ul class="space-y-1.5 text-sm">
+          <li><a href="#home"       class="text-white/50 hover:text-yellow-400 transition-colors">Home</a></li>
+          <li><a href="#about"      class="text-white/50 hover:text-yellow-400 transition-colors">About</a></li>
+          <li><a href="#activities" class="text-white/50 hover:text-yellow-400 transition-colors">Activities</a></li>
+          <li><a href="#gallery"    class="text-white/50 hover:text-yellow-400 transition-colors">Gallery</a></li>
+          <li><a href="#committee"  class="text-white/50 hover:text-yellow-400 transition-colors">Committee</a></li>
+          <li><a href="#notice"     class="text-white/50 hover:text-yellow-400 transition-colors">Notice Board</a></li>
+          <li><a href="#donations"  class="text-white/50 hover:text-yellow-400 transition-colors">Donations</a></li>
+          <li><a href="#contact"    class="text-white/50 hover:text-yellow-400 transition-colors">Contact</a></li>
+          <li class="pt-1 border-t border-white/10 mt-1">
+            <a href="admin.html" class="text-yellow-600/60 hover:text-yellow-400 transition-colors flex items-center gap-1.5">
+              <i class="fas fa-lock text-xs"></i> Admin Panel
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="text-yellow-400 font-bold mb-3 text-xs uppercase tracking-wider">Contact</h5>
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-start gap-2 text-white/50"><i class="fas fa-map-marker-alt text-yellow-500 mt-0.5 flex-shrink-0"></i><span id="footAddr">বহরিয়া মির্জাপুর, টাঙ্গাইল</span></li>
+          <li class="flex items-center gap-2 text-white/50"><i class="fas fa-phone text-yellow-500 flex-shrink-0"></i><span id="footPhone">01728018956</span></li>
+          <li class="flex items-start gap-2 text-white/50"><i class="fas fa-envelope text-yellow-500 mt-0.5 flex-shrink-0"></i><span id="footEmail" class="break-all"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="48383d3b2038292622292421313d3e293b29262f20082f25292124662b2725">[email&#160;protected]</a></span></li>
+        </ul>
+      </div>
     </div>
-    <input type="hidden" id="memEId"/>
-    <div class="space-y-3">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div><label class="lbl">নাম *</label><input type="text" id="memName" class="inp" placeholder="রাম কুমার দাস"/></div>
-        <div><label class="lbl">পদবি *</label><input type="text" id="memRole" class="inp" placeholder="সভাপতি"/></div>
-        <div><label class="lbl">মোবাইল</label><input type="tel" id="memPhone" class="inp" placeholder="01XXXXXXXXX"/></div>
-        <div><label class="lbl">ক্রম #</label><input type="number" id="memOrd" class="inp" placeholder="1"/></div>
-      </div>
-      <div><label class="lbl">ছবি আপলোড</label>
-        <input type="file" id="memFile" accept="image/*" class="inp" onchange="pImg('memFile','memPv','memPvW')"/>
-        <div id="memPvW" class="mt-2 hidden"><img id="memPv" class="thumb"/></div>
-      </div>
-      <div id="memErr" class="ebox hidden"></div>
-      <div class="flex gap-3 pt-1">
-        <button onclick="saveMem()" id="btnSMem" class="br flex-1 justify-center text-sm"><i class="fas fa-save"></i> সেভ</button>
-        <button onclick="cM('memModal')" class="bg-btn flex-1 justify-center text-sm">বাতিল</button>
-      </div>
+    <div class="gl mb-4"></div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/30">
+      <p>© <span id="footYr"></span> পুষ্পাঞ্জলি যুব সংঘ। সর্বস্বত্ব সংরক্ষিত।</p>
+      <p>Made with <span class="text-red-500">❤️</span> for our community</p>
+    </div>
+    <div class="text-center mt-3 pt-3 border-t border-white/10">
+      <p class="text-xs text-white/25">
+        Designed &amp; Developed by
+        <a href="https://avijitio.github.io/my-portfolio/" target="_blank" rel="noopener"
+           class="text-yellow-500/60 hover:text-yellow-400 transition-colors font-semibold ml-1">
+          <i class="fas fa-code mr-1"></i>Avijit Paul
+        </a>
+      </p>
     </div>
   </div>
-</div>
+</footer>
 
-<!-- TOAST -->
-<div id="toast"></div>
-
-<!-- ============ FIREBASE SCRIPT ============ -->
-<script type="module">
+<!-- ===================================================
+     FIREBASE + APP SCRIPT
+=================================================== -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getFirestore, collection, getDocs, addDoc, deleteDoc,
-  doc, getDoc, setDoc, updateDoc, query, orderBy, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import {
-  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, doc, getDoc, query, orderBy }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const FC = {
   apiKey:"AIzaSyC0izv3_60aDF_qqIcwzn27MFGCIoCYYp4",
@@ -697,599 +907,491 @@ const FC = {
   messagingSenderId:"137246397056",
   appId:"1:137246397056:web:3ebaacdcf522cf4b920c65"
 };
-const CLOUD = 'dkt1zlbvx';
-const PRESET = 'pushpanjali_uploads';
-
 const fApp = initializeApp(FC);
 const db   = getFirestore(fApp);
-const auth = getAuth(fApp);
+const g    = id => document.getElementById(id);
+const st   = (id, val) => { const el = g(id); if (el && val != null) el.textContent = val; };
 
-/* ── AUTH ── */
-onAuthStateChanged(auth, u => {
-  if (u) {
-    g('loginPage').style.display = 'none';
-    g('adminApp').style.display  = 'block';
-    g('aEmail').textContent = u.email || '';
-    g('aAv').textContent    = (u.email || 'A')[0].toUpperCase();
-    g('fbDot').className    = 'w-2 h-2 rounded-full bg-green-400';
-    init();
-  } else {
-    g('loginPage').style.display = 'flex';
-    g('adminApp').style.display  = 'none';
-    g('fbDot').className = 'w-2 h-2 rounded-full bg-gray-600';
-  }
-});
+/* ── BENGALI DIGITS ── */
+const toBn = n => String(n).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
 
-window.doLogin = async () => {
-  const email = v('loginEmail'), pass = v('loginPass');
-  const err = g('loginErr');
-  err.classList.add('hidden');
-  if (!email || !pass) { showE(err, 'Email ও Password দিন'); return; }
-  sLoad(g('loginBtn'), true, 'লগইন হচ্ছে...');
+/* ── SETTINGS ── */
+async function loadSettings() {
   try {
-    await signInWithEmailAndPassword(auth, email, pass);
-  } catch(e) {
-    const m = {
-      'auth/invalid-credential':'ভুল Email বা Password।',
-      'auth/user-not-found':'Email খুঁজে পাওয়া যায়নি।',
-      'auth/wrong-password':'ভুল Password।',
-      'auth/too-many-requests':'অনেকবার ভুল। কিছুক্ষণ পরে চেষ্টা করুন।'
-    };
-    showE(err, m[e.code] || 'লগইন ব্যর্থ: ' + e.message);
-    sLoad(g('loginBtn'), false, '<i class="fas fa-sign-in-alt"></i> লগইন করুন');
-  }
-};
-window.doLogout = async () => { if (confirm('লগআউট করবেন?')) await signOut(auth); };
+    const snap = await getDoc(doc(db, 'settings', 'main'));
+    const s = snap.exists() ? snap.data() : {};
 
-function init() {
-  loadDash(); loadNotices(); loadActivities(); loadCommittee();
-  loadGallery(); loadUpcoming(); loadAllSettings(); loadMessages();
+    /* Org names */
+    if (s.org_bn) {
+      st('hOBn', s.org_bn);
+      st('navOBn', s.org_bn.split(' ')[0] || s.org_bn);
+      st('footOBn', s.org_bn);
+    }
+    if (s.org_en) {
+      const pts = s.org_en.split(' ');
+      st('hOEn',  pts[0] || s.org_en);
+      st('hOEn2', pts.slice(1).join(' ') || '');
+      st('navOEn', s.org_en.toUpperCase());
+      st('footOEn', s.org_en);
+    }
+    if (s.slogan_bn) st('hSBn', s.slogan_bn);
+    if (s.slogan_en) st('hSEn', '"' + s.slogan_en + '"');
+
+    /* Logo — update navbar + footer + hero */
+    if (s.logo_url) {
+      const logoHtml = `<img src="${s.logo_url}" style="width:100%;height:100%;object-fit:cover;" alt="Logo"/>`;
+      g('navLogo').innerHTML  = logoHtml;
+      g('footLogo').innerHTML = logoHtml;
+      g('heroLogo').src = s.logo_url;
+      g('heroLogoWrap').style.display = 'flex';
+    }
+
+    /* Hero slides — if hero_url is set, use it as first custom slide */
+    if (s.hero_url) {
+      window._customHeroSlides = [s.hero_url];
+      /* also check hero_url2, hero_url3 */
+      if (s.hero_url2) window._customHeroSlides.push(s.hero_url2);
+      if (s.hero_url3) window._customHeroSlides.push(s.hero_url3);
+      initSlider(window._customHeroSlides);
+    }
+
+    /* About image */
+    if (s.about_img) g('aboutImg').src = s.about_img;
+
+    /* QR / bKash */
+    if (s.qr_url) g('qrImg').src = s.qr_url;
+    if (s.bkash)  st('bkashNum', s.bkash);
+
+    /* About text */
+    if (s.about_p1) st('aboutP1', s.about_p1);
+    if (s.about_en) st('aboutEn', s.about_en);
+    if (s.stat_members) st('statMem', s.stat_members);
+    if (s.stat_events)  st('statEv',  s.stat_events);
+
+    /* Goals */
+    const goals = [s.goal1, s.goal2, s.goal3, s.goal4, s.goal5].filter(Boolean);
+    if (goals.length) {
+      g('goalsList').innerHTML = goals.map(x =>
+        `<li class="flex items-start gap-2"><span class="text-yellow-500 mt-0.5 flex-shrink-0">🪷</span>${x}</li>`
+      ).join('');
+    }
+
+    /* Founding year */
+    if (s.founding_year) {
+      const age = new Date().getFullYear() - parseInt(s.founding_year);
+      st('yearsEl',  toBn(age));
+      st('statYr',   toBn(age) + '+');
+    }
+
+    /* Countdown */
+    if (s.festival_name) st('festTitle', s.festival_name);
+    if (s.festival_date) startCD(s.festival_date);
+
+    /* Contact */
+    if (s.address) { st('cAddr', s.address); st('footAddr', s.address); }
+    const ph = s.phone1 || '';
+    if (ph) {
+      g('cPhone').textContent = ph;
+      g('cPhone').href = 'tel:' + ph.replace(/\s/g, '');
+      st('footPhone', ph);
+    }
+    if (s.email) {
+      g('cEmail').textContent = s.email;
+      g('cEmail').href = 'mailto:' + s.email;
+      st('footEmail', s.email);
+    }
+
+    /* Map — only set if valid URL */
+    if (s.map_url && s.map_url.startsWith('http')) {
+      g('mapPlaceholder').style.display = 'none';
+      const mf = g('mapFrame');
+      mf.src = s.map_url;
+      mf.style.display = 'block';
+    }
+
+    /* Bank */
+    const bf = [
+      { l: 'Account Name',  v: s.bank_acc_name || '—' },
+      { l: 'Account No.',   v: s.bank_acc      || '—', cp: true },
+      { l: 'Routing No.',   v: s.bank_routing  || '—', cp: true },
+      { l: 'Bank',          v: s.bank_name     || '—' },
+      { l: 'Branch',        v: s.bank_branch   || '—' },
+    ];
+    g('bankBox').innerHTML = bf.map(f => `
+      <div class="bank-row">
+        <span class="text-gray-500 text-sm">${f.l}</span>
+        <span class="flex items-center gap-1.5 font-semibold text-gray-800 text-sm">${f.v}
+          ${f.cp && f.v && f.v !== '—'
+            ? `<button class="cp-btn" onclick="window.cpTxt('${f.v}',this)"><i class="fas fa-copy mr-0.5"></i>কপি</button>`
+            : ''}
+        </span>
+      </div>`).join('');
+
+    /* Update WhatsApp float button */
+    const _waNum = s.wa_direct ? '88'+s.wa_direct.replace(/^0/,'') : '8801728018956';
+    const _waEl = g('waFloat');
+    if (_waEl) _waEl.href = `https://wa.me/${_waNum}`;
+
+    /* Social links — build from Firebase settings */
+    const WA_NUMBER = s.wa_direct ? '88'+s.wa_direct.replace(/^0/,'') : '8801728018956';
+    const waLink = s.wa || `https://wa.me/${WA_NUMBER}`;
+    const sm = [
+      { k: 'fb', ic: 'fab fa-facebook-f',  t: 'Facebook',  url: s.fb  },
+      { k: 'ig', ic: 'fab fa-instagram',   t: 'Instagram', url: s.ig  },
+      { k: 'yt', ic: 'fab fa-youtube',     t: 'YouTube',   url: s.yt  },
+      { k: 'wa', ic: 'fab fa-whatsapp',    t: 'WhatsApp',  url: waLink },
+      { k: 'tg', ic: 'fab fa-telegram',    t: 'Telegram',  url: s.tg  },
+    ];
+    const sh = sm.filter(x => x.url)
+      .map(x => `<a href="${x.url}" target="_blank" rel="noopener" title="${x.t}" class="soc-a"><i class="${x.ic}"></i></a>`)
+      .join('');
+    /* Always at least show WhatsApp */
+    const socialHtml = sh || `<a href="${waLink}" target="_blank" rel="noopener" title="WhatsApp" class="soc-a"><i class="fab fa-whatsapp"></i></a>`;
+    g('socLinks').innerHTML = socialHtml;
+    g('footSocLinks').innerHTML = socialHtml;
+
+  } catch(e) { console.warn('Settings:', e); }
 }
 
-/* ── CLOUDINARY ── */
-async function cloudUp(file) {
-  const fd = new FormData();
-  fd.append('file', file);
-  fd.append('upload_preset', PRESET);
-  const r = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`, { method:'POST', body:fd });
-  if (!r.ok) {
-    const e = await r.json().catch(() => ({}));
-    throw new Error(e.error?.message || `Cloudinary error. Preset "${PRESET}" চেক করুন।`);
-  }
-  return (await r.json()).secure_url;
-}
-
-/* ── FB TEST (tests write + delete) ── */
-window.testFb = async () => {
-  const el = g('fbTR');
-  el.className = 'mt-3 rounded-lg p-3 bg-yellow-900/30 text-yellow-300 text-xs';
-  el.classList.remove('hidden');
-  el.textContent = '⏳ পরীক্ষা চলছে...';
-  try {
-    const testRef = doc(db, '_test', 'ping');
-    await setDoc(testRef, { ts: new Date().toISOString() });
-    await deleteDoc(testRef);
-    el.className = 'mt-3 rounded-lg p-3 bg-green-900/40 text-green-300 text-xs';
-    el.innerHTML = '✅ Firebase Read/Write/Delete সব কাজ করছে!';
-  } catch(e) {
-    el.className = 'mt-3 rounded-lg p-3 bg-red-900/40 text-red-300 text-xs leading-relaxed';
-    el.innerHTML = `❌ ত্রুটি: ${e.message}<br/><br/>
-      <strong>Firebase Console → Firestore → Rules:</strong><br/>
-      <code class="block mt-1 bg-black/30 p-2 rounded font-mono">
-      rules_version = '2';<br/>
-      service cloud.firestore {<br/>
-      &nbsp;&nbsp;match /databases/{database}/documents {<br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;match /{document=**} {<br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow read: if true;<br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow write: if request.auth != null;<br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-      &nbsp;&nbsp;}<br/>
-      }</code>`;
-  }
-};
-
-/* ── HELPERS ── */
-const g   = id => document.getElementById(id);
-const v   = id => (g(id)?.value || '').trim();
-const sv  = (id, val) => { const el = g(id); if (el && val != null) el.value = val; };
-function showE(el, msg) { el.innerHTML = `<i class="fas fa-exclamation-circle mr-1"></i>${msg}`; el.classList.remove('hidden'); }
-function sLoad(btn, on, label) { if (!btn) return; btn.disabled = on; btn.innerHTML = on ? `<i class="fas fa-spinner fa-spin mr-1"></i>${label}` : label; }
-function toast(msg, isErr = false) {
-  const t = g('toast');
-  t.textContent = msg;
-  t.className = isErr ? 'err' : 'ok';
-  clearTimeout(window._tt);
-  window._tt = setTimeout(() => t.className = '', 3500);
-}
-window.oM = id => g(id).classList.add('open');
-window.cM = id => g(id).classList.remove('open');
-document.querySelectorAll('.mbg').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); }));
-window.pImg = (fi, pi, wi) => {
-  const f = g(fi)?.files[0]; if (!f) return;
-  const r = new FileReader();
-  r.onload = ev => { g(pi).src = ev.target.result; g(wi).classList.remove('hidden'); };
-  r.readAsDataURL(f);
-};
-
-/* ── ★★★ DELETE — exposed as window function ★★★ ── */
-window.delItem = async (col, id, reloadFn) => {
-  if (!confirm('এই আইটেমটি মুছে ফেলতে চান?')) return;
-  try {
-    const ref = doc(db, col, id);
-    await deleteDoc(ref);
-    toast('✅ মুছে ফেলা হয়েছে!');
-    // Call reload function by name
-    if (typeof reloadFn === 'function') reloadFn();
-    loadDash();
-  } catch(e) {
-    toast('মুছতে ব্যর্থ: ' + e.message + ' — Firebase Rules চেক করুন।', true);
-  }
-};
-
-/* ── FIRESTORE HELPERS ── */
-async function fbSet(col, id, data) { await setDoc(doc(db, col, id), data, { merge:true }); }
-async function fbAdd(col, data) { return await addDoc(collection(db, col), data); }
-async function fbUpd(col, id, data) { await updateDoc(doc(db, col, id), data); }
-async function fbAll(col, ...args) {
-  const q = args.length ? query(collection(db, col), ...args) : collection(db, col);
-  return (await getDocs(q)).docs.map(d => ({ id: d.id, ...d.data() }));
-}
-async function fbDoc(col, id) {
-  const s = await getDoc(doc(db, col, id));
-  return s.exists() ? s.data() : null;
-}
-
-/* ── DASHBOARD ── */
-async function loadDash() {
-  try {
-    const [n,a,c,gal] = await Promise.all([
-      getDocs(collection(db,'notices')), getDocs(collection(db,'activities')),
-      getDocs(collection(db,'committee')), getDocs(collection(db,'gallery'))
-    ]);
-    g('st-n').textContent = n.size; g('st-a').textContent = a.size;
-    g('st-c').textContent = c.size; g('st-g').textContent = gal.size;
-  } catch(e) {}
+/* ── COUNTDOWN ── */
+function startCD(ds) {
+  const run = () => {
+    const diff = new Date(ds).getTime() - Date.now();
+    if (diff <= 0) {
+      ['cd-d','cd-h','cd-m','cd-s'].forEach(i => { const el = g(i); if (el) el.textContent = '০০'; });
+      return;
+    }
+    const pad = n => toBn(n).padStart(2, '০');
+    st('cd-d', pad(Math.floor(diff / 86400000)));
+    st('cd-h', pad(Math.floor(diff % 86400000 / 3600000)));
+    st('cd-m', pad(Math.floor(diff % 3600000  / 60000)));
+    st('cd-s', pad(Math.floor(diff % 60000    / 1000)));
+  };
+  run(); setInterval(run, 1000);
 }
 
 /* ── NOTICES ── */
 async function loadNotices() {
   try {
-    const items = await fbAll('notices', orderBy('created_at','desc'));
-    g('nTbl').innerHTML = items.length
-      ? items.map(n => `
-        <tr>
-          <td class="text-white/80"><div class="max-w-xs truncate text-sm">${n.title||'—'}</div></td>
-          <td class="text-white/50 text-xs whitespace-nowrap">${n.date_bn||'—'}</td>
-          <td><span class="${n.is_new ? 'bdg-n':'bdg-o'}">${n.is_new?'NEW':'পুরানো'}</span></td>
-          <td>
-            <button class="bd" onclick="window.delItem('notices','${n.id}',loadNotices)">
-              <i class="fas fa-trash"></i> মুছুন
-            </button>
-          </td>
-        </tr>`).join('')
-      : '<tr><td colspan="4" class="text-center text-white/30 py-6">কোনো নোটিশ নেই।</td></tr>';
-  } catch(e) {
-    g('nTbl').innerHTML = `<tr><td colspan="4" class="py-3"><div class="ebox m-2">${e.message}</div></td></tr>`;
-  }
+    const items = (await getDocs(query(collection(db, 'notices'), orderBy('created_at','desc'))))
+      .docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!items.length) {
+      g('nList').innerHTML = '<div class="px-5 py-6 text-center text-white/50 text-sm">কোনো নোটিশ নেই।</div>';
+      return;
+    }
+    g('nList').innerHTML = items.map(n => `
+      <div class="n-item px-5 py-3.5 flex items-start gap-3">
+        <div class="flex-shrink-0 mt-0.5">
+          ${n.is_new ? '<span class="bdg-new">NEW</span>' : '<span class="text-yellow-300/50 text-xs">📌</span>'}
+        </div>
+        <div>
+          <p class="text-white text-sm leading-relaxed">${n.title || ''}</p>
+          <p class="text-yellow-300/50 text-xs mt-0.5">
+            <i class="fas fa-calendar-alt mr-1"></i>${n.date_bn || ''}
+          </p>
+        </div>
+      </div>`).join('');
+    /* ticker */
+    const t = items.slice(0, 5).map(n =>
+      `<span class="mr-10"><i class="fas fa-star text-yellow-500 mr-1"></i> ${n.title}</span>`).join('');
+    if (t) g('tickerTxt').innerHTML = t;
+  } catch(e) { console.warn(e); }
 }
-window.addNotice = async () => {
-  const title = v('nTitle'); const errEl = g('nErr');
-  if (!title) { showE(errEl, 'নোটিশের বিষয় লিখুন!'); return; }
-  errEl.classList.add('hidden');
-  sLoad(g('btnAN'), true, 'যোগ হচ্ছে...');
-  try {
-    await fbAdd('notices', { title, date_bn:v('nDate'), is_new:g('nNew').checked, created_at:serverTimestamp() });
-    g('nTitle').value = ''; g('nDate').value = '';
-    toast('✅ নোটিশ যোগ হয়েছে!'); loadNotices(); loadDash();
-  } catch(e) { showE(errEl, `ত্রুটি: ${e.message}`); }
-  sLoad(g('btnAN'), false, '<i class="fas fa-plus"></i> নোটিশ যোগ করুন');
-};
 
 /* ── ACTIVITIES ── */
-async function loadActivities() {
+async function loadActs() {
   try {
-    const items = await fbAll('activities', orderBy('display_order','asc'));
-    g('actGrid').innerHTML = items.length
-      ? items.map(a => `
-        <div class="box overflow-hidden">
-          <div class="relative" style="height:110px;">
-            <img src="${a.image_url||'https://placehold.co/400x200/C41E3A/FFF8E7?text=Activity'}"
-                 class="w-full h-full object-cover"
-                 onerror="this.src='https://placehold.co/400x200/C41E3A/FFF8E7?text=Photo'"/>
-            ${a.tag ? `<span class="absolute top-2 left-2 bg-red-700 text-white text-xs px-2 py-0.5 rounded-full">${a.tag}</span>` : ''}
-          </div>
-          <div class="p-3">
-            <div class="font-semibold text-white text-sm truncate">${a.emoji||''} ${a.title_bn||''}</div>
-            <div class="text-white/40 text-xs mt-0.5 truncate">${a.title_en||''}</div>
-            <div class="flex gap-2 mt-2">
-              <button class="be text-xs" onclick="editAct('${a.id}')"><i class="fas fa-edit"></i></button>
-              <button class="bd text-xs" onclick="window.delItem('activities','${a.id}',loadActivities)">
-                <i class="fas fa-trash"></i> মুছুন
-              </button>
-            </div>
-          </div>
-        </div>`).join('')
-      : '<div class="col-span-3 text-white/30 text-center py-8">কোনো কার্যক্রম নেই।</div>';
-  } catch(e) { g('actGrid').innerHTML = `<div class="col-span-3"><div class="ebox">${e.message}</div></div>`; }
+    const items = (await getDocs(query(collection(db, 'activities'), orderBy('display_order','asc'))))
+      .docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!items.length) {
+      g('actGrid').innerHTML = '<div class="sm:col-span-2 lg:col-span-3 text-white/60 text-center py-8 text-sm">Admin Panel থেকে কার্যক্রম যোগ করুন।</div>';
+      return;
+    }
+    g('actGrid').innerHTML = items.map(a => `
+      <div class="act-card rv">
+        <div class="relative overflow-hidden" style="height:160px;">
+          <img src="${a.image_url || 'https://placehold.co/600x300/C41E3A/FFF8E7?text=Activity'}"
+               alt="${a.title_bn || ''}"
+               class="w-full h-full object-cover" loading="lazy"
+               onerror="this.src='https://placehold.co/600x300/C41E3A/FFF8E7?text=Photo'"/>
+          ${a.tag ? `<span class="absolute top-2 left-2 bg-red-700 text-white text-xs px-2.5 py-0.5 rounded-full font-semibold">${a.tag}</span>` : ''}
+        </div>
+        <div class="p-4">
+          <div class="text-2xl mb-2">${a.emoji || '🪷'}</div>
+          <h3 class="font-bold text-gray-900 text-base leading-snug mb-0.5">${a.title_bn || ''}</h3>
+          <p class="text-gray-500 text-xs mb-2 italic">${a.title_en || ''}</p>
+          <p class="text-gray-600 text-sm leading-relaxed">${a.description || ''}</p>
+        </div>
+      </div>`).join('');
+    activateReveal();
+  } catch(e) {
+    g('actGrid').innerHTML = `<div class="sm:col-span-2 lg:col-span-3 text-white/40 text-center py-6 text-sm">${e.message}</div>`;
+  }
 }
-window.openActM = (id = null) => {
-  g('actEId').value = id || '';
-  g('actMT').textContent = id ? 'কার্যক্রম সম্পাদনা' : 'কার্যক্রম যোগ করুন';
-  if (!id) { ['actBn','actEn','actDesc','actEmoji','actTag','actOrd'].forEach(i => g(i).value = ''); g('actPvW').classList.add('hidden'); }
-  g('actErr').classList.add('hidden'); oM('actModal');
-};
-window.editAct = async id => {
-  try {
-    const a = await fbDoc('activities', id); if (!a) return;
-    g('actBn').value = a.title_bn||''; g('actEn').value = a.title_en||''; g('actDesc').value = a.description||'';
-    g('actEmoji').value = a.emoji||''; g('actTag').value = a.tag||''; g('actOrd').value = a.display_order||0;
-    if (a.image_url) { g('actPv').src = a.image_url; g('actPvW').classList.remove('hidden'); }
-    window.openActM(id);
-  } catch(e) { toast('লোড ত্রুটি', true); }
-};
-window.saveAct = async () => {
-  const bn = v('actBn'); const errEl = g('actErr');
-  if (!bn) { showE(errEl, 'বাংলা শিরোনাম লিখুন!'); return; }
-  errEl.classList.add('hidden');
-  sLoad(g('btnSAct'), true, 'সেভ হচ্ছে...');
-  try {
-    let img = '';
-    const cur = g('actPv').src;
-    if (cur && cur.startsWith('http')) img = cur;
-    const file = g('actFile').files[0];
-    if (file) img = await cloudUp(file);
-    const data = { title_bn:bn, title_en:v('actEn'), description:v('actDesc'), emoji:v('actEmoji')||'🪷', tag:v('actTag'), display_order:parseInt(v('actOrd'))||0, image_url:img };
-    const eid = v('actEId');
-    if (eid) await fbUpd('activities', eid, data); else await fbAdd('activities', data);
-    toast('✅ সেভ হয়েছে!'); cM('actModal'); loadActivities(); loadDash();
-  } catch(e) { showE(errEl, `ত্রুটি: ${e.message}`); }
-  sLoad(g('btnSAct'), false, '<i class="fas fa-save"></i> সেভ');
-};
 
 /* ── COMMITTEE ── */
-async function loadCommittee() {
+async function loadCom() {
   try {
-    const items = await fbAll('committee', orderBy('display_order','asc'));
-    g('comGrid').innerHTML = items.length
-      ? items.map(m => `
-        <div class="box overflow-hidden">
-          <div class="relative" style="height:100px;">
-            <img src="${m.image_url||'https://placehold.co/300x150/C41E3A/FFF8E7?text=Member'}"
-                 class="w-full h-full object-cover object-top"
-                 onerror="this.src='https://placehold.co/300x150/C41E3A/FFF8E7?text=Photo'"/>
-            <div style="position:absolute;bottom:.4rem;left:.4rem;">
-              <span class="bg-yellow-400 text-red-900 text-xs font-bold px-2 py-0.5 rounded-full">${m.role||''}</span>
-            </div>
+    const items = (await getDocs(query(collection(db, 'committee'), orderBy('display_order','asc'))))
+      .docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!items.length) {
+      g('comGrid').innerHTML = '<div class="col-span-2 sm:col-span-3 lg:col-span-4 text-gray-400 text-center py-8 text-sm">Admin Panel থেকে সদস্য যোগ করুন।</div>';
+      return;
+    }
+    g('comGrid').innerHTML = items.map(m => `
+      <div class="mem-card rv">
+        <div class="mem-img-wrap">
+          <img src="${m.image_url || 'https://placehold.co/300x280/C41E3A/FFF8E7?text=' + encodeURIComponent(m.name || '')}"
+               alt="${m.name || ''}" loading="lazy"
+               onerror="this.src='https://placehold.co/300x280/C41E3A/FFF8E7?text=Photo'"/>
+          <div style="position:absolute;bottom:.6rem;left:.6rem;z-index:2;">
+            <span class="bg-yellow-400 text-red-900 text-xs font-bold px-2 py-0.5 rounded-full">${m.role || ''}</span>
           </div>
-          <div class="p-3">
-            <div class="font-semibold text-white text-sm truncate">${m.name||''}</div>
-            <div class="text-white/40 text-xs mt-0.5">${m.phone||''}</div>
-            <div class="flex gap-2 mt-2">
-              <button class="be text-xs" onclick="editMem('${m.id}')"><i class="fas fa-edit"></i></button>
-              <button class="bd text-xs" onclick="window.delItem('committee','${m.id}',loadCommittee)">
-                <i class="fas fa-trash"></i> মুছুন
-              </button>
-            </div>
-          </div>
-        </div>`).join('')
-      : '<div class="col-span-3 text-white/30 text-center py-8">কোনো সদস্য নেই।</div>';
-  } catch(e) { g('comGrid').innerHTML = `<div class="col-span-3"><div class="ebox">${e.message}</div></div>`; }
+        </div>
+        <div class="p-3 text-center">
+          <h4 class="font-bold text-gray-800 text-sm">${m.name || ''}</h4>
+          <p class="text-red-700 text-xs font-medium mt-0.5">${m.role || ''}</p>
+          ${m.phone ? `<a href="tel:${m.phone}" class="text-gray-400 hover:text-red-700 text-xs mt-0.5 block"><i class="fas fa-phone mr-0.5"></i>${m.phone}</a>` : ''}
+        </div>
+      </div>`).join('');
+    activateReveal();
+  } catch(e) { console.warn(e); }
 }
-window.openMemM = (id = null) => {
-  g('memEId').value = id || '';
-  g('memMT').textContent = id ? 'সদস্য সম্পাদনা' : 'নতুন সদস্য';
-  if (!id) { ['memName','memRole','memPhone','memOrd'].forEach(i => g(i).value = ''); g('memPvW').classList.add('hidden'); }
-  g('memErr').classList.add('hidden'); oM('memModal');
-};
-window.editMem = async id => {
-  try {
-    const m = await fbDoc('committee', id); if (!m) return;
-    g('memName').value = m.name||''; g('memRole').value = m.role||''; g('memPhone').value = m.phone||''; g('memOrd').value = m.display_order||0;
-    if (m.image_url) { g('memPv').src = m.image_url; g('memPvW').classList.remove('hidden'); }
-    window.openMemM(id);
-  } catch(e) { toast('লোড ত্রুটি', true); }
-};
-window.saveMem = async () => {
-  const name = v('memName'); const errEl = g('memErr');
-  if (!name) { showE(errEl, 'নাম লিখুন!'); return; }
-  errEl.classList.add('hidden');
-  sLoad(g('btnSMem'), true, 'সেভ হচ্ছে...');
-  try {
-    let img = '';
-    const cur = g('memPv').src;
-    if (cur && cur.startsWith('http')) img = cur;
-    const file = g('memFile').files[0];
-    if (file) img = await cloudUp(file);
-    const data = { name, role:v('memRole'), phone:v('memPhone'), display_order:parseInt(v('memOrd'))||0, image_url:img };
-    const eid = v('memEId');
-    if (eid) await fbUpd('committee', eid, data); else await fbAdd('committee', data);
-    toast('✅ সেভ হয়েছে!'); cM('memModal'); loadCommittee(); loadDash();
-  } catch(e) { showE(errEl, `ত্রুটি: ${e.message}`); }
-  sLoad(g('btnSMem'), false, '<i class="fas fa-save"></i> সেভ');
-};
 
 /* ── GALLERY ── */
-async function loadGallery() {
+let allGal = [];
+async function loadGal() {
   try {
-    const items = await fbAll('gallery');
-    // Gallery cards always show delete button (not hover-only)
-    g('galGrid').innerHTML = items.length
-      ? items.map(gal => `
-        <div class="gcard">
-          <img src="${gal.image_url||'https://placehold.co/300x200/C41E3A/FFF8E7?text=Photo'}"
-               onerror="this.src='https://placehold.co/300x200/C41E3A/FFF8E7?text=Photo'"
-               onclick="if(window.gLb) window.gLb('${gal.image_url||''}')"/>
-          <div class="gc-info">
-            <div class="min-w-0">
-              <p class="text-white text-xs truncate">${gal.caption||''}</p>
-              <p class="text-yellow-300 text-xs opacity-70">${gal.category||''}</p>
-            </div>
-            <button class="bd flex-shrink-0 text-xs py-1.5"
-                    onclick="window.delItem('gallery','${gal.id}',loadGallery)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        </div>`).join('')
-      : '<div class="col-span-4 text-white/30 text-center py-8">কোনো ছবি নেই।</div>';
-  } catch(e) { g('galGrid').innerHTML = `<div class="col-span-4"><div class="ebox">${e.message}</div></div>`; }
+    allGal = (await getDocs(collection(db, 'gallery'))).docs.map(d => ({ id: d.id, ...d.data() }));
+    renderGal('all');
+  } catch(e) { console.warn(e); }
 }
-window.uploadGal = async () => {
-  const file = g('galFile').files[0]; const errEl = g('galErr');
-  if (!file) { showE(errEl, 'ছবি বেছে নিন!'); return; }
-  errEl.classList.add('hidden');
-  sLoad(g('btnGU'), true, 'আপলোড হচ্ছে...');
-  try {
-    const url = await cloudUp(file);
-    await fbAdd('gallery', { image_url:url, caption:v('galCap'), category:v('galCat'), is_tall:false });
-    g('galFile').value = ''; g('galCap').value = ''; g('galPvW').classList.add('hidden');
-    toast('✅ ছবি আপলোড হয়েছে!'); loadGallery(); loadDash();
-  } catch(e) { showE(errEl, `আপলোড ব্যর্থ: ${e.message}`); }
-  sLoad(g('btnGU'), false, '<i class="fas fa-upload"></i> আপলোড করুন');
+function renderGal(f) {
+  const data = f === 'all' ? allGal : allGal.filter(x => x.category === f);
+  if (!data.length) {
+    g('galGrid').innerHTML = '<div class="col-span-2 sm:col-span-3 lg:col-span-4 text-white/50 text-center py-8 text-sm">কোনো ছবি নেই।</div>';
+    return;
+  }
+  g('galGrid').innerHTML = data.map(x => `
+    <div class="gal-item rv" onclick="window.openLb('${x.image_url || ''}')">
+      <img src="${x.image_url || 'https://placehold.co/300x220/C41E3A/FFF8E7?text=Photo'}"
+           alt="${x.caption || ''}" loading="lazy"
+           onerror="this.src='https://placehold.co/300x220/C41E3A/FFF8E7?text=Photo'"/>
+      <div class="gal-ov"><p class="text-white text-xs font-medium">${x.caption || ''}</p></div>
+    </div>`).join('');
+  activateReveal();
+}
+window.filterGal = (cat, btn) => {
+  document.querySelectorAll('.gf').forEach(b => b.classList.remove('af'));
+  btn.classList.add('af');
+  renderGal(cat);
 };
 
 /* ── UPCOMING ── */
-async function loadUpcoming() {
+async function loadUp() {
   try {
-    const items = await fbAll('upcoming_events');
-    g('evTbl').innerHTML = items.length
-      ? items.map(e => `
-        <tr>
-          <td class="text-white/80 text-sm">${e.icon||''} ${e.title||'—'}</td>
-          <td class="text-white/50 text-xs whitespace-nowrap">${e.date||''} ${e.month||''}</td>
-          <td class="text-white/50 text-xs">${e.location||'—'}</td>
-          <td>
-            <button class="bd" onclick="window.delItem('upcoming_events','${e.id}',loadUpcoming)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </td>
-        </tr>`).join('')
-      : '<tr><td colspan="4" class="text-center text-white/30 py-6">কোনো অনুষ্ঠান নেই।</td></tr>';
-  } catch(e) { g('evTbl').innerHTML = `<tr><td colspan="4"><div class="ebox m-3">${e.message}</div></td></tr>`; }
-}
-window.addEv = async () => {
-  const title = v('evT'); const errEl = g('evErr');
-  if (!title) { showE(errEl, 'অনুষ্ঠানের নাম লিখুন!'); return; }
-  errEl.classList.add('hidden');
-  try {
-    await fbAdd('upcoming_events', { title, date:v('evD'), month:v('evM'), location:v('evL'), icon:v('evI')||'📅' });
-    ['evT','evD','evM','evL','evI'].forEach(i => g(i).value = '');
-    toast('✅ অনুষ্ঠান যোগ হয়েছে!'); loadUpcoming();
-  } catch(e) { showE(errEl, `ত্রুটি: ${e.message}`); }
-};
-
-/* ── MAP TEST ── */
-window.testMap = () => {
-  const url = v('sMap');
-  if (!url) { toast('Map URL দিন!', true); return; }
-  g('mapPvF').src = url;
-  g('mapPvBox').classList.remove('hidden');
-};
-
-/* ── SETTINGS LOAD ── */
-async function loadAllSettings() {
-  try {
-    const s = await fbDoc('settings','main') || {};
-    sv('sOBn',s.org_bn); sv('sOEn',s.org_en); sv('sTBn',s.slogan_bn); sv('sTEn',s.slogan_en);
-    sv('sYear',s.founding_year); sv('sFN',s.festival_name);
-    if (s.festival_date) try { g('sFD').value = s.festival_date.slice(0,16); } catch {}
-    sv('sAddr',s.address); sv('sP1',s.phone1); sv('sP2',s.phone2);
-    sv('sEmail',s.email); sv('sWA',s.whatsapp); sv('sMap',s.map_url);
-    // About
-    sv('ab1',s.about_p1); sv('abEn',s.about_en);
-    sv('abM',s.stat_members); sv('abF',s.stat_events);
-    sv('abG1',s.goal1); sv('abG2',s.goal2); sv('abG3',s.goal3); sv('abG4',s.goal4); sv('abG5',s.goal5);
-    // Social
-    sv('soFb',s.fb); sv('soIg',s.ig); sv('soYt',s.yt); sv('soWa',s.wa); sv('soTg',s.tg);
-    // Payment
-    sv('pBkash',s.bkash); sv('pNagad',s.nagad); sv('pRocket',s.rocket);
-    sv('pAN',s.bank_acc_name); sv('pNum',s.bank_acc); sv('pRoute',s.bank_routing);
-    sv('pBank',s.bank_name); sv('pBranch',s.bank_branch);
-    if (s.acc_type) try{g('pType').value=s.acc_type;}catch{}
-    sv('p2AN',s.bank2_acc_name); sv('p2Num',s.bank2_acc); sv('p2Route',s.bank2_routing);
-    sv('p2Bank',s.bank2_name); sv('p2Branch',s.bank2_branch);
-    if (s.bank2_type) try{g('p2Type').value=s.bank2_type;}catch{}
-    sv('p3AN',s.bank3_acc_name); sv('p3Num',s.bank3_acc); sv('p3Route',s.bank3_routing);
-    sv('p3Bank',s.bank3_name); sv('p3Branch',s.bank3_branch);
-    if (s.bkash_qr)  { g('bkashQrPv').src=s.bkash_qr;  g('bkashQrPvW').classList.remove('hidden'); }
-    if (s.nagad_qr)  { g('nagadQrPv').src=s.nagad_qr;  g('nagadQrPvW').classList.remove('hidden'); }
-    if (s.rocket_qr) { g('rocketQrPv').src=s.rocket_qr; g('rocketQrPvW').classList.remove('hidden'); }
-    // Appearance previews
-    if (s.logo_url) { g('logoPv').innerHTML = `<img src="${s.logo_url}" style="width:100%;height:100%;object-fit:cover;" alt="Logo"/>`; g('sbLogo').innerHTML = g('logoPv').innerHTML; }
-    if (s.qr_url)   { g('qrPv').src = s.qr_url;   g('qrPvW').classList.remove('hidden'); }
-    if (s.hero_url) { g('heroPv').src = s.hero_url; g('heroPvW').classList.remove('hidden'); }
-    if (s.about_img){ g('abImgPv').src = s.about_img; g('abImgPvW').classList.remove('hidden'); }
-  } catch(e) { console.warn('Settings load:', e); }
-}
-
-/* ── SETTINGS SAVE ── */
-window.saveSet = async sec => {
-  const errIds = { site:'siteErr', about:'aboutErr', social:'socialErr', payment:'payErr' };
-  const btnIds = { site:'btnSS', about:'btnSA', social:'btnSSoc', payment:'btnSPay' };
-  const labels = {
-    site:    '<i class="fas fa-save"></i> সেটিংস সেভ করুন',
-    about:   '<i class="fas fa-save"></i> সেভ করুন',
-    social:  '<i class="fas fa-save"></i> সেভ করুন',
-    payment: '<i class="fas fa-save"></i> সেভ করুন'
-  };
-  const errEl = g(errIds[sec]); const btn = g(btnIds[sec]);
-  errEl.classList.add('hidden');
-  sLoad(btn, true, 'সেভ হচ্ছে...');
-  try {
-    let data = {};
-    if (sec === 'site') {
-      const fd = v('sFD');
-      data = { org_bn:v('sOBn'), org_en:v('sOEn'), slogan_bn:v('sTBn'), slogan_en:v('sTEn'),
-               founding_year:v('sYear'), festival_name:v('sFN'),
-               festival_date: fd ? fd.replace('T',' ') + ':00' : '',
-               address:v('sAddr'), phone1:v('sP1'), phone2:v('sP2'),
-               email:v('sEmail'), whatsapp:v('sWA'), map_url:v('sMap') };
-    } else if (sec === 'about') {
-      data = { about_p1:v('ab1'), about_en:v('abEn'), stat_members:v('abM'), stat_events:v('abF'),
-               goal1:v('abG1'), goal2:v('abG2'), goal3:v('abG3'), goal4:v('abG4'), goal5:v('abG5') };
-    } else if (sec === 'social') {
-      data = { fb:v('soFb'), ig:v('soIg'), yt:v('soYt'), wa:v('soWa'), tg:v('soTg') };
-    } else if (sec === 'payment') {
-      data = {
-        bkash: v('pBkash'), nagad: v('pNagad'), rocket: v('pRocket'),
-        bank_acc_name: v('pAN'), bank_acc: v('pNum'), bank_routing: v('pRoute'),
-        bank_name: v('pBank'), bank_branch: v('pBranch'), acc_type: g('pType').value,
-        bank2_acc_name: v('p2AN'), bank2_acc: v('p2Num'), bank2_routing: v('p2Route'),
-        bank2_name: v('p2Bank'), bank2_branch: v('p2Branch'), bank2_type: g('p2Type').value,
-        bank3_acc_name: v('p3AN'), bank3_acc: v('p3Num'), bank3_routing: v('p3Route'),
-        bank3_name: v('p3Bank'), bank3_branch: v('p3Branch'),
-      };
-      const bkashF = g('bkashQrFile').files[0];
-      const nagadF = g('nagadQrFile').files[0];
-      const rocketF= g('rocketQrFile').files[0];
-      if (bkashF)  { data.bkash_qr  = await cloudUp(bkashF); }
-      if (nagadF)  { data.nagad_qr  = await cloudUp(nagadF); }
-      if (rocketF) { data.rocket_qr = await cloudUp(rocketF); }
+    const items = (await getDocs(collection(db, 'upcoming_events'))).docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!items.length) {
+      g('upList').innerHTML = '<div class="text-center text-gray-400 py-3 text-sm">কোনো অনুষ্ঠান নেই।</div>';
+      return;
     }
-    await fbSet('settings', 'main', data);
-    toast('✅ সেটিংস সেভ হয়েছে!');
-  } catch(e) {
-    showE(errEl, `সেভ ব্যর্থ: ${e.message}`);
-  }
-  sLoad(btn, false, labels[sec]);
-};
-
-/* ── APPEARANCE UPLOADS ── */
-window.prvLogo = e => {
-  const f = e.target.files[0]; if (!f) return;
-  const r = new FileReader();
-  r.onload = ev => g('logoPv').innerHTML = `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover;"/>`;
-  r.readAsDataURL(f);
-};
-window.upLogo = async () => {
-  const file = g('logoFile').files[0]; const errEl = g('appErr');
-  if (!file) { showE(errEl, 'ছবি বেছে নিন!'); return; }
-  errEl.classList.add('hidden');
-  sLoad(g('btnLogo'), true, 'আপলোড হচ্ছে...');
-  try {
-    const url = await cloudUp(file);
-    await fbSet('settings','main',{ logo_url:url });
-    g('sbLogo').innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover;"/>`;
-    toast('✅ লোগো আপলোড হয়েছে!');
-  } catch(e) { showE(errEl, `ত্রুটি: ${e.message}`); }
-  sLoad(g('btnLogo'), false, '<i class="fas fa-upload"></i> লোগো আপলোড');
-};
-window.upHero = async () => {
-  const file = g('heroFile').files[0]; const errEl = g('appErr');
-  if (!file) { showE(errEl, 'ছবি বেছে নিন!'); return; }
-  errEl.classList.add('hidden');
-  sLoad(g('btnHero'), true, 'আপলোড হচ্ছে...');
-  try {
-    const url = await cloudUp(file);
-    await fbSet('settings','main',{ hero_url:url });
-    toast('✅ ব্যানার আপলোড হয়েছে! ওয়েবসাইট রিফ্রেশ করুন।');
-  } catch(e) { showE(errEl, `ত্রুটি: ${e.message}`); }
-  sLoad(g('btnHero'), false, '<i class="fas fa-upload"></i> ব্যানার আপলোড');
-};
-window.upAboutImg = async () => {
-  const file = g('abImgFile').files[0]; const errEl = g('appErr');
-  if (!file) { showE(errEl, 'ছবি বেছে নিন!'); return; }
-  errEl.classList.add('hidden');
-  sLoad(g('btnAbout'), true, 'আপলোড হচ্ছে...');
-  try {
-    const url = await cloudUp(file);
-    await fbSet('settings','main',{ about_img:url });
-    toast('✅ About ছবি আপলোড হয়েছে!');
-  } catch(e) { showE(errEl, `ত্রুটি: ${e.message}`); }
-  sLoad(g('btnAbout'), false, '<i class="fas fa-upload"></i> ছবি আপলোড');
-};
-
-/* ── NAV ── */
-const PTITLES = {
-  dashboard:'Dashboard', notices:'নোটিশ বোর্ড', activities:'কার্যক্রম',
-  committee:'কমিটি সদস্য', gallery:'গ্যালারি', upcoming:'আসন্ন অনুষ্ঠান',
-  site:'সাইট সেটিংস', about:'আমাদের সম্পর্কে', social:'সোশ্যাল মিডিয়া',
-  payment:'পেমেন্ট তথ্য', appearance:'লোগো ও ছবি', messages:'যোগাযোগ বার্তা'
-};
-
-/* ── MESSAGES ── */
-async function loadMessages() {
-  const box = g('msgContainer');
-  if (!box) return;
-  box.innerHTML = '<div class="text-center text-white/30 py-8">লোড হচ্ছে...</div>';
-  try {
-    const items = await fbAll('messages', orderBy('created_at','desc'));
-    if (!items.length) { box.innerHTML = '<div class="text-center text-white/30 py-8">কোনো বার্তা নেই।</div>'; return; }
-    box.innerHTML = '<div class="divide-y divide-white/5">' + items.map(m => {
-      const ts = m.created_at?.toDate?.() ? m.created_at.toDate().toLocaleDateString('bn-BD') : '—';
-      return `<div class="p-4 hover:bg-white/5 transition-colors">
-        <div class="flex items-start justify-between gap-3 flex-wrap">
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-2 mb-1 flex-wrap">
-              <span class="font-semibold text-white text-sm">${m.name||'—'}</span>
-              ${m.status==='unread' ? '<span class="bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">নতুন</span>' : ''}
-              ${m.subject ? `<span class="bg-yellow-900/40 text-yellow-300 text-xs px-2 py-0.5 rounded-full">${m.subject}</span>` : ''}
-            </div>
-            <p class="text-white/70 text-sm leading-relaxed mb-2">${m.message||''}</p>
-            <div class="flex gap-4 flex-wrap text-xs text-white/35">
-              ${m.phone ? `<span><i class="fas fa-phone mr-1"></i>${m.phone}</span>` : ''}
-              ${m.email ? `<span><i class="fas fa-envelope mr-1"></i>${m.email}</span>` : ''}
-              <span><i class="fas fa-clock mr-1"></i>${ts}</span>
-            </div>
-          </div>
-          <div class="flex gap-2 flex-shrink-0">
-            ${m.phone ? `<a href="tel:${m.phone}" class="be text-xs"><i class="fas fa-phone"></i></a>` : ''}
-            <button class="bd text-xs" onclick="window.delItem('messages','${m.id}',loadMessages)"><i class="fas fa-trash"></i></button>
-          </div>
+    g('upList').innerHTML = items.map(e => `
+      <div class="flex items-start gap-3 border-l-4 border-red-400 bg-red-50 pl-3 py-2 rounded-r-xl">
+        <div class="flex-shrink-0">
+          <div class="font-black text-red-700 text-sm leading-none">${e.date || ''}</div>
+          <div class="text-gray-400 text-xs">${e.month || ''}</div>
         </div>
-      </div>`;
-    }).join('') + '</div>';
-  } catch(e) { box.innerHTML = `<div class="ebox m-4">${e.message}</div>`; }
+        <div>
+          <div class="font-semibold text-gray-800 text-sm">${e.icon || '📅'} ${e.title || ''}</div>
+          <div class="text-gray-400 text-xs">${e.location || ''}</div>
+        </div>
+      </div>`).join('');
+  } catch(e) { console.warn(e); }
 }
-window.loadMessages = loadMessages;
-window.goP = (id, el) => {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  g('p-' + id).classList.add('active');
-  g('pgTitle').textContent = PTITLES[id] || id;
-  if (el) { document.querySelectorAll('.ni').forEach(n => n.classList.remove('active')); el.classList.add('active'); }
-  closeSide();
-};
-window.toggleSide = () => {
-  const s = g('sidebar'), ov = g('sov');
-  if (window.innerWidth < 1024) { s.classList.toggle('open'); ov.classList.toggle('on'); }
-  else {
-    const mc = g('mainContent');
-    if (s.style.transform === 'translateX(-240px)') { s.style.transform = ''; mc.style.marginLeft = '240px'; }
-    else { s.style.transform = 'translateX(-240px)'; mc.style.marginLeft = '0'; }
-  }
-};
-window.closeSide = () => {
-  if (window.innerWidth < 1024) { g('sidebar').classList.remove('open'); g('sov').classList.remove('on'); }
-};
 
 /* ── INIT ── */
-g('ly').textContent = new Date().getFullYear();
+st('footYr', String(new Date().getFullYear()));
+loadSettings();
+loadNotices();
+loadActs();
+loadCom();
+loadGal();
+loadUp();
+setTimeout(activateReveal, 500);
 
-// expose reload functions globally so onclick strings can call them
-window.loadNotices    = loadNotices;
-window.loadActivities = loadActivities;
-window.loadCommittee  = loadCommittee;
-window.loadGallery    = loadGallery;
-window.loadUpcoming   = loadUpcoming;
+/* ── REVEAL ── */
+function activateReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+    });
+  }, { threshold: .08 });
+  document.querySelectorAll('.rv,.rvl,.rvr').forEach(el => {
+    if (!el.classList.contains('vis')) obs.observe(el);
+  });
+}
+
+/* ── GLOBALS ── */
+window.openLb   = src => { g('lbImg').src = src; g('lb').classList.add('on'); document.body.style.overflow = 'hidden'; };
+window.closeLb  = ()  => { g('lb').classList.remove('on'); document.body.style.overflow = ''; };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') window.closeLb(); });
+
+window.cpTxt = (text, btn) => {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.innerHTML = '✅ কপি হয়েছে';
+    setTimeout(() => btn.innerHTML = '<i class="fas fa-copy mr-0.5"></i>কপি', 2000);
+  });
+};
+
+window.subForm = async e => {
+  e.preventDefault();
+  const btn = g('cf-btn');
+  if (!btn) return;
+  const name = (g('cf-name')?.value||'').trim();
+  const phone= (g('cf-phone')?.value||'').trim();
+  const email= (g('cf-email')?.value||'').trim();
+  const subj = (g('cf-subject')?.value||'');
+  const msg  = (g('cf-msg')?.value||'').trim();
+  if (!name || !msg) { alert('নাম ও বার্তা আবশ্যক।'); return; }
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>পাঠানো হচ্ছে...';
+  btn.disabled = true;
+  try {
+    const { addDoc, collection:col, serverTimestamp:sts } = await import(
+      'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    await addDoc(col(db,'messages'),{
+      name, phone, email, subject:subj, message:msg,
+      status:'unread', created_at:sts()
+    });
+  } catch(err){ console.warn('Message save:',err); }
+  g('contactForm').reset();
+  btn.innerHTML = '<i class="fas fa-paper-plane mr-1"></i>বার্তা পাঠান';
+  btn.disabled = false;
+  const ok = g('formOk');
+  ok.textContent = '✅ আপনার বার্তা পাঠানো হয়েছে! শীঘ্রই যোগাযোগ করব।';
+  ok.classList.remove('hidden');
+  setTimeout(()=>ok.classList.add('hidden'), 7000);
+};
+
+window.toggleM = () => {
+  const m = g('mMenu'); const i = g('hIcon');
+  m.classList.toggle('open');
+  i.className = m.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+};
+
+window.addEventListener('scroll', () => {
+  const n = g('navbar'); const s = g('st');
+  if (window.scrollY > 60) { n.classList.add('scrolled'); s.classList.add('on'); }
+  else { n.classList.remove('scrolled'); s.classList.remove('on'); }
+  /* active nav link */
+  const secs = ['home','about','activities','notice','committee','gallery','donations','contact'];
+  let cur = '';
+  secs.forEach(id => { const el = g(id); if (el && window.scrollY >= el.offsetTop - 100) cur = id; });
+  document.querySelectorAll('.nav-link').forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + cur) l.classList.add('active');
+  });
+});
+
+/* ══════════════════════════════════════════
+   HERO SLIDER ENGINE
+   ★ Uses real <img> tags — works on all mobile browsers ★
+══════════════════════════════════════════ */
+(function() {
+  const INTERVAL_MS = 5500;
+  let currentIndex = 0;
+  let timerID = null;
+
+  const DEFAULT_SLIDES = []; /* Admin uploads hero images via Admin Panel */
+
+  function buildSlides(urls) {
+    const track = document.getElementById('slideTrack');
+    const dots  = document.getElementById('sliderDots');
+    if (!track || !dots) return;
+    track.innerHTML = '';
+    dots.innerHTML  = '';
+    urls.forEach((url, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
+      slide.id = 'slide-' + i;
+      const img = document.createElement('img');
+      img.className = 'slide-img';
+      img.alt = 'Slide ' + (i + 1);
+      img.src = url;
+      img.onerror = () => { img.style.display = 'none'; slide.style.background = 'linear-gradient(135deg,#7B0D1E,#C41E3A)'; };
+      const ov = document.createElement('div');
+      ov.className = 'slide-overlay';
+      slide.appendChild(img);
+      slide.appendChild(ov);
+      track.appendChild(slide);
+      const dot = document.createElement('div');
+      dot.className = 'sdot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goTo(i);
+      dots.appendChild(dot);
+    });
+    currentIndex = 0;
+  }
+
+  function goTo(idx) {
+    const allSlides = document.querySelectorAll('.hero-slide');
+    const allDots   = document.querySelectorAll('.sdot');
+    if (!allSlides.length) return;
+    idx = ((idx % allSlides.length) + allSlides.length) % allSlides.length;
+    allSlides[currentIndex].classList.remove('active');
+    if (allDots[currentIndex]) allDots[currentIndex].classList.remove('active');
+    currentIndex = idx;
+    allSlides[currentIndex].classList.add('active');
+    if (allDots[currentIndex]) allDots[currentIndex].classList.add('active');
+    resetProgress();
+  }
+
+  function startAuto() {
+    clearInterval(timerID);
+    timerID = setInterval(() => goTo(currentIndex + 1), INTERVAL_MS);
+  }
+
+  function resetProgress() {
+    const bar = document.getElementById('sliderProgress');
+    if (!bar) return;
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    bar.offsetWidth; /* reflow */
+    bar.style.transition = 'width ' + INTERVAL_MS + 'ms linear';
+    bar.style.width = '100%';
+  }
+
+  window.sliderMove = function(delta) {
+    clearInterval(timerID);
+    goTo(currentIndex + delta);
+    startAuto();
+  };
+
+  window.initSlider = function(urls) {
+    if (!urls || !urls.length) return;
+    clearInterval(timerID);
+    buildSlides(urls);
+    startAuto();
+    resetProgress();
+  };
+
+  /* Touch swipe */
+  let tx = 0;
+  const slider = document.getElementById('heroSlider');
+  if (slider) {
+    slider.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+    slider.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 40) window.sliderMove(dx < 0 ? 1 : -1);
+    }, { passive: true });
+    slider.addEventListener('mouseenter', () => clearInterval(timerID));
+    slider.addEventListener('mouseleave', () => startAuto());
+  }
+
+  /* Start auto-play; if admin uploaded images they load via initSlider() from Firebase */
+  if (DEFAULT_SLIDES.length > 0) buildSlides(DEFAULT_SLIDES);
+  startAuto();
+  resetProgress();
+
+})();
 </script>
 </body>
 </html>
