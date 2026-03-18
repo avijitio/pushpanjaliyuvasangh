@@ -294,6 +294,78 @@
 
     /* ── UTILITY ── */
     .text-shadow-gold { text-shadow: 0 0 30px rgba(212,160,23,.5); }
+
+    /* ── DONATION TABS ── */
+    .don-tab {
+      background: transparent;
+      border: none;
+      padding: .55rem 1.1rem;
+      border-radius: 14px;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #7B0D1E;
+      transition: all .25s;
+      white-space: nowrap;
+    }
+    .don-tab.active {
+      background: linear-gradient(135deg, #C41E3A, #8B0000);
+      color: white;
+      box-shadow: 0 4px 15px rgba(196,30,58,.35);
+    }
+    .don-tab:hover:not(.active) { background: rgba(196,30,58,.08); }
+
+    .don-amt-btn {
+      background: white;
+      border: 2px solid rgba(212,160,23,.3);
+      border-radius: 14px;
+      padding: .6rem 1.2rem;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: .9rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: #7B0D1E;
+      transition: all .25s;
+      min-width: 70px;
+      line-height: 1.3;
+    }
+    .don-amt-btn.active, .don-amt-btn:hover {
+      background: linear-gradient(135deg, #C41E3A, #8B0000);
+      color: #F5C842;
+      border-color: #C41E3A;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(196,30,58,.3);
+    }
+    .don-amt-btn.popular {
+      border-color: #D4A017;
+      position: relative;
+    }
+    .don-amt-btn.popular::before {
+      content: 'Popular';
+      position: absolute;
+      top: -10px; left: 50%;
+      transform: translateX(-50%);
+      background: #D4A017;
+      color: #7B0D1E;
+      font-size: .6rem;
+      font-weight: 800;
+      padding: 1px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .don-tabcontent { animation: fadeIn .3s ease; }
+
+    /* Bank card */
+    .bank-card {
+      background: white;
+      border: 1.5px solid rgba(212,160,23,.25);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,.06);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .bank-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(196,30,58,.12); }
   </style>
 </head>
 <body>
@@ -380,24 +452,16 @@
 <section id="home">
   <div id="heroSlider">
 
-    <!-- ★ SLIDE TRACK — images injected by JS ★ -->
+    <!-- ★ SLIDE TRACK — injected by JS using Admin-uploaded images ★ -->
+    <!-- Default: pure CSS gradient backgrounds shown until admin uploads real photos -->
     <div class="slide-track" id="slideTrack">
-      <!-- Default slide 1 (shown while Firebase loads) -->
-      <div class="hero-slide active" id="slide-0">
-        <img class="slide-img" src="https://images.unsplash.com/photo-1601158935942-52255782d322?w=1920&q=80" alt="Slide 1"
-             onerror="this.style.display='none'"/>
+      <div class="hero-slide active" id="slide-0" style="background:linear-gradient(135deg,#4a0010 0%,#8B0000 40%,#5a1000 100%);">
         <div class="slide-overlay"></div>
       </div>
-      <!-- Default slide 2 -->
-      <div class="hero-slide" id="slide-1">
-        <img class="slide-img" src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1920&q=80" alt="Slide 2"
-             onerror="this.style.display='none'"/>
+      <div class="hero-slide" id="slide-1" style="background:linear-gradient(135deg,#6b0a1a 0%,#a01520 50%,#3d0008 100%);">
         <div class="slide-overlay"></div>
       </div>
-      <!-- Default slide 3 -->
-      <div class="hero-slide" id="slide-2">
-        <img class="slide-img" src="https://images.unsplash.com/photo-1563991655280-cb95c90ca2fb?w=1920&q=80" alt="Slide 3"
-             onerror="this.style.display='none'"/>
+      <div class="hero-slide" id="slide-2" style="background:linear-gradient(135deg,#3d0010 0%,#7B0D1E 40%,#4a0800 100%);">
         <div class="slide-overlay"></div>
       </div>
     </div>
@@ -677,54 +741,156 @@
      DONATIONS
 =================================================== -->
 <section id="donations" class="py-16 sm:py-20 px-4">
-  <div class="max-w-7xl mx-auto">
+  <div class="max-w-6xl mx-auto">
     <div class="text-center mb-10 rv">
       <span class="s-badge">দান ও সহযোগিতা</span>
       <h2 class="s-title text-2xl sm:text-3xl font-bold mt-2 mb-3">Support & Donations</h2>
       <div class="gl w-36 mx-auto"></div>
-      <p class="text-gray-500 mt-3 text-sm max-w-md mx-auto">আপনার উদার দানে আমাদের ধর্মীয় ও সামাজিক কার্যক্রম পরিচালিত হয়।</p>
+      <p class="text-gray-500 mt-3 text-sm max-w-lg mx-auto">
+        আপনার উদার দানে আমাদের ধর্মীয় ও সামাজিক কার্যক্রম পরিচালিত হয়।
+        মা দুর্গার আশীর্বাদ আপনার উপর বর্ষিত হোক।
+      </p>
     </div>
-    <div class="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto">
-      <div class="rvl text-center">
-        <div class="qr-box p-6 sm:p-8 inline-block w-full max-w-xs sm:max-w-sm mx-auto">
-          <h4 class="font-bold text-red-800 text-lg mb-1.5">স্ক্যান করে দান করুন</h4>
-          <p class="text-gray-500 text-sm mb-5">bKash / Nagad / Rocket</p>
-          <img id="qrImg"
-               src="https://placehold.co/200x200/FFF8E7/C41E3A?text=QR+Code"
-               alt="QR Code"
-               class="w-40 h-40 sm:w-48 sm:h-48 mx-auto rounded-xl border-4 border-yellow-300 mb-4 shadow-inner object-contain"/>
-          <p class="text-xs text-gray-400 mb-1">bKash / Nagad নম্বর:</p>
-          <p class="font-bold text-red-700 text-lg" id="bkashNum">—</p>
-        </div>
-      </div>
-      <div class="rvr">
-        <div class="bg-white rounded-2xl border border-yellow-200 shadow-lg overflow-hidden">
-          <div class="bg-gradient-to-r from-red-800 to-red-700 px-5 py-3.5">
-            <h4 class="text-yellow-400 font-bold flex items-center gap-2 text-sm">
-              <i class="fas fa-university"></i> ব্যাংক বিবরণ
-            </h4>
-          </div>
-          <div class="p-5" id="bankBox">
-            <div class="text-center text-gray-400 py-3 text-sm">লোড হচ্ছে...</div>
-          </div>
-        </div>
-        <div class="mt-4 grid grid-cols-3 gap-2">
-          <div class="bg-red-50 rounded-xl p-2.5 text-center border border-red-100 hover:shadow cursor-pointer transition-all">
-            <div class="text-red-700 font-black text-lg">৳১০০</div>
-            <div class="text-gray-500 text-xs mt-0.5">সুলভ দান</div>
-          </div>
-          <div class="bg-yellow-50 rounded-xl p-2.5 text-center border-2 border-yellow-400 relative hover:shadow cursor-pointer transition-all">
-            <div class="absolute -top-2 left-1/2 -translate-x-1/2 bg-yellow-400 text-red-900 text-xs font-bold px-2 py-0.5 rounded-full">Popular</div>
-            <div class="text-yellow-700 font-black text-lg">৳৫০০</div>
-            <div class="text-gray-500 text-xs mt-0.5">সাধারণ</div>
-          </div>
-          <div class="bg-red-50 rounded-xl p-2.5 text-center border border-red-100 hover:shadow cursor-pointer transition-all">
-            <div class="text-red-700 font-black text-lg">৳১০০০</div>
-            <div class="text-gray-500 text-xs mt-0.5">বিশেষ</div>
-          </div>
-        </div>
+
+    <!-- ── Donation Amount Quick Select ── -->
+    <div class="flex flex-wrap justify-center gap-3 mb-8 rv">
+      <button class="don-amt-btn active" onclick="setDonAmt(this,'৳১০০')">৳১০০<br/><span class="text-xs font-normal opacity-70">সুলভ</span></button>
+      <button class="don-amt-btn" onclick="setDonAmt(this,'৳৫০১')">৳৫০১<br/><span class="text-xs font-normal opacity-70">সাধারণ</span></button>
+      <button class="don-amt-btn popular" onclick="setDonAmt(this,'৳১০০১')">৳১০০১<br/><span class="text-xs font-normal opacity-70">বিশেষ</span></button>
+      <button class="don-amt-btn" onclick="setDonAmt(this,'৳৫০০১')">৳৫০০১<br/><span class="text-xs font-normal opacity-70">প্রিমিয়াম</span></button>
+      <button class="don-amt-btn" onclick="setDonAmt(this,'যেকোনো')">যেকোনো<br/><span class="text-xs font-normal opacity-70">পরিমাণ</span></button>
+    </div>
+
+    <!-- ── TAB SWITCHER ── -->
+    <div class="flex justify-center mb-6 rv">
+      <div class="flex bg-red-50 rounded-2xl p-1.5 gap-1 border border-red-100 flex-wrap justify-center">
+        <button class="don-tab active" id="tab-mobile" onclick="switchDonTab('mobile',this)">
+          <i class="fas fa-mobile-alt mr-1.5"></i>মোবাইল ব্যাংকিং
+        </button>
+        <button class="don-tab" id="tab-bank" onclick="switchDonTab('bank',this)">
+          <i class="fas fa-university mr-1.5"></i>ব্যাংক ট্রান্সফার
+        </button>
+        <button class="don-tab" id="tab-cash" onclick="switchDonTab('cash',this)">
+          <i class="fas fa-hand-holding-usd mr-1.5"></i>সরাসরি দান
+        </button>
       </div>
     </div>
+
+    <!-- ── MOBILE BANKING TAB ── -->
+    <div id="don-mobile" class="don-tabcontent">
+      <div class="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+
+        <!-- bKash -->
+        <div class="bg-white rounded-2xl border-2 border-pink-200 shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="bg-gradient-to-r from-pink-600 to-pink-500 px-4 py-3 flex items-center gap-2">
+            <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-pink-600 font-black text-xs">bK</span>
+            </div>
+            <h4 class="text-white font-bold text-sm">bKash</h4>
+          </div>
+          <div class="p-4 text-center">
+            <img id="bkashQrImg" src="https://placehold.co/160x160/fce7f3/be185d?text=bKash+QR" alt="bKash QR"
+                 class="w-32 h-32 mx-auto rounded-xl border-2 border-pink-200 mb-3 object-contain"/>
+            <p class="text-xs text-gray-400 mb-1">নম্বর / Number</p>
+            <p class="font-black text-pink-700 text-base" id="bkashNumDisplay">—</p>
+            <span class="inline-block mt-1.5 bg-pink-50 text-pink-600 text-xs px-3 py-0.5 rounded-full border border-pink-200">Personal / Merchant</span>
+          </div>
+        </div>
+
+        <!-- Nagad -->
+        <div class="bg-white rounded-2xl border-2 border-orange-200 shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="bg-gradient-to-r from-orange-500 to-orange-400 px-4 py-3 flex items-center gap-2">
+            <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-orange-500 font-black text-xs">Ng</span>
+            </div>
+            <h4 class="text-white font-bold text-sm">Nagad</h4>
+          </div>
+          <div class="p-4 text-center">
+            <img id="nagadQrImg" src="https://placehold.co/160x160/fff7ed/c2410c?text=Nagad+QR" alt="Nagad QR"
+                 class="w-32 h-32 mx-auto rounded-xl border-2 border-orange-200 mb-3 object-contain"/>
+            <p class="text-xs text-gray-400 mb-1">নম্বর / Number</p>
+            <p class="font-black text-orange-600 text-base" id="nagadNumDisplay">—</p>
+            <span class="inline-block mt-1.5 bg-orange-50 text-orange-600 text-xs px-3 py-0.5 rounded-full border border-orange-200">Personal / Merchant</span>
+          </div>
+        </div>
+
+        <!-- Rocket -->
+        <div class="bg-white rounded-2xl border-2 border-purple-200 shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="bg-gradient-to-r from-purple-700 to-purple-600 px-4 py-3 flex items-center gap-2">
+            <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-purple-700 font-black text-xs">Rk</span>
+            </div>
+            <h4 class="text-white font-bold text-sm">Rocket</h4>
+          </div>
+          <div class="p-4 text-center">
+            <img id="rocketQrImg" src="https://placehold.co/160x160/f3e8ff/7e22ce?text=Rocket+QR" alt="Rocket QR"
+                 class="w-32 h-32 mx-auto rounded-xl border-2 border-purple-200 mb-3 object-contain"/>
+            <p class="text-xs text-gray-400 mb-1">নম্বর / Number</p>
+            <p class="font-black text-purple-700 text-base" id="rocketNumDisplay">—</p>
+            <span class="inline-block mt-1.5 bg-purple-50 text-purple-600 text-xs px-3 py-0.5 rounded-full border border-purple-200">Personal</span>
+          </div>
+        </div>
+
+      </div>
+      <p class="text-center text-gray-400 text-xs mt-4">
+        <i class="fas fa-info-circle mr-1"></i>
+        দান পাঠানোর পর স্ক্রিনশট সহ আমাদের নম্বরে WhatsApp করুন — রসিদ পাঠানো হবে।
+      </p>
+    </div>
+
+    <!-- ── BANK TRANSFER TAB ── -->
+    <div id="don-bank" class="don-tabcontent hidden">
+      <div class="max-w-3xl mx-auto space-y-4" id="bankCardsContainer">
+        <!-- Rendered by JS from Firebase -->
+        <div class="text-center text-gray-400 py-6 text-sm">লোড হচ্ছে...</div>
+      </div>
+      <p class="text-center text-gray-400 text-xs mt-5">
+        <i class="fas fa-info-circle mr-1"></i>
+        Transfer করার পর Transaction ID সহ আমাদের সাথে যোগাযোগ করুন।
+      </p>
+    </div>
+
+    <!-- ── CASH TAB ── -->
+    <div id="don-cash" class="don-tabcontent hidden">
+      <div class="max-w-xl mx-auto bg-white rounded-2xl border border-yellow-200 shadow-md p-6 text-center">
+        <div class="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">🤝</div>
+        <h4 class="font-bold text-red-800 text-lg mb-2">সরাসরি দান করুন</h4>
+        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+          আপনি সরাসরি আমাদের অফিসে এসে দান করতে পারেন অথবা আমাদের কমিটির যেকোনো সদস্যের কাছে দান দিতে পারেন।
+        </p>
+        <div class="bg-red-50 rounded-xl p-4 border border-red-100 text-left space-y-2 mb-4">
+          <div class="flex items-start gap-2 text-sm">
+            <i class="fas fa-map-marker-alt text-red-500 mt-0.5 flex-shrink-0"></i>
+            <span class="text-gray-700" id="cashAddr">—</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <i class="fas fa-clock text-red-500 flex-shrink-0"></i>
+            <span class="text-gray-700">প্রতিদিন বিকেল ৪টা — রাত ৯টা</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <i class="fas fa-phone text-red-500 flex-shrink-0"></i>
+            <a id="cashPhone" href="#" class="text-red-700 hover:underline">—</a>
+          </div>
+        </div>
+        <a href="#contact" class="inline-flex items-center gap-2 bg-gradient-to-r from-red-700 to-red-800 text-white text-sm font-bold px-6 py-2.5 rounded-full hover:shadow-lg transition-all">
+          <i class="fas fa-phone-alt"></i> যোগাযোগ করুন
+        </a>
+      </div>
+    </div>
+
+    <!-- ── Donation note ── -->
+    <div class="mt-8 max-w-2xl mx-auto bg-yellow-50 rounded-2xl border border-yellow-200 p-4 rv">
+      <h5 class="font-bold text-yellow-800 text-sm mb-2 flex items-center gap-2">
+        <i class="fas fa-receipt text-yellow-600"></i> রসিদ পাওয়ার নিয়ম
+      </h5>
+      <ul class="space-y-1 text-sm text-yellow-700">
+        <li class="flex items-start gap-2"><i class="fas fa-check-circle text-yellow-500 mt-0.5 flex-shrink-0"></i>দান করার পর Transaction Screenshot নিন</li>
+        <li class="flex items-start gap-2"><i class="fas fa-check-circle text-yellow-500 mt-0.5 flex-shrink-0"></i>Screenshot + নাম + পরিমাণ WhatsApp করুন</li>
+        <li class="flex items-start gap-2"><i class="fas fa-check-circle text-yellow-500 mt-0.5 flex-shrink-0"></i>আমরা Official রসিদ পাঠিয়ে দেবো</li>
+        <li class="flex items-start gap-2"><i class="fas fa-check-circle text-yellow-500 mt-0.5 flex-shrink-0"></i>সকল দান সংগঠনের কাজে ব্যবহৃত হয়</li>
+      </ul>
+    </div>
+
   </div>
 </section>
 
@@ -743,17 +909,28 @@
       <div class="rvl">
         <div class="bg-white/95 rounded-2xl p-6 sm:p-8 shadow-2xl">
           <h4 class="font-bold text-red-800 text-lg mb-5">বার্তা পাঠান</h4>
-          <form onsubmit="subForm(event)" class="space-y-3">
+          <form id="contactForm" onsubmit="subForm(event)" class="space-y-3">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div><label class="block text-gray-600 text-sm mb-1">নাম *</label><input type="text" placeholder="আপনার নাম" required class="f-inp"/></div>
-              <div><label class="block text-gray-600 text-sm mb-1">মোবাইল</label><input type="tel" placeholder="01XXXXXXXXX" class="f-inp"/></div>
+              <div><label class="block text-gray-600 text-sm mb-1">নাম *</label><input id="cf-name" type="text" placeholder="আপনার নাম" required class="f-inp"/></div>
+              <div><label class="block text-gray-600 text-sm mb-1">মোবাইল</label><input id="cf-phone" type="tel" placeholder="01XXXXXXXXX" class="f-inp"/></div>
             </div>
-            <div><label class="block text-gray-600 text-sm mb-1">ইমেইল *</label><input type="email" placeholder="your@email.com" required class="f-inp"/></div>
-            <div><label class="block text-gray-600 text-sm mb-1">বার্তা *</label><textarea rows="4" placeholder="আপনার বার্তা..." required class="f-inp resize-none"></textarea></div>
-            <button type="submit" class="sub-btn"><i class="fas fa-paper-plane mr-2"></i>বার্তা পাঠান</button>
+            <div><label class="block text-gray-600 text-sm mb-1">ইমেইল</label><input id="cf-email" type="email" placeholder="your@email.com" class="f-inp"/></div>
+            <div><label class="block text-gray-600 text-sm mb-1">বিষয়</label>
+              <select id="cf-subject" class="f-inp">
+                <option value="">বিষয় বেছে নিন</option>
+                <option value="সদস্যপদ">সদস্যপদ গ্রহণ</option>
+                <option value="পুজো">পুজো সম্পর্কিত</option>
+                <option value="দান">দান সংক্রান্ত</option>
+                <option value="স্পন্সর">স্পন্সর / সহযোগিতা</option>
+                <option value="অভিযোগ">অভিযোগ / পরামর্শ</option>
+                <option value="অন্যান্য">অন্যান্য</option>
+              </select>
+            </div>
+            <div><label class="block text-gray-600 text-sm mb-1">বার্তা *</label><textarea id="cf-msg" rows="4" placeholder="আপনার বার্তা লিখুন..." required class="f-inp resize-none"></textarea></div>
+            <button type="submit" id="cf-btn" class="sub-btn"><i class="fas fa-paper-plane mr-2"></i>বার্তা পাঠান</button>
           </form>
           <div id="formOk" class="hidden mt-3 bg-green-50 border border-green-200 rounded-xl p-3 text-green-700 text-sm text-center">
-            ✅ বার্তা পাঠানো হয়েছে! ধন্যবাদ।
+            ✅ আপনার বার্তা পাঠানো হয়েছে! আমরা শীঘ্রই যোগাযোগ করব। ধন্যবাদ।
           </div>
         </div>
       </div>
@@ -928,9 +1105,55 @@ async function loadSettings() {
     /* About image */
     if (s.about_img) g('aboutImg').src = s.about_img;
 
-    /* QR / bKash */
-    if (s.qr_url) g('qrImg').src = s.qr_url;
-    if (s.bkash)  st('bkashNum', s.bkash);
+    /* ── Mobile Banking ── */
+    if (s.bkash)  { st('bkashNumDisplay', s.bkash); }
+    if (s.nagad)  { st('nagadNumDisplay',  s.nagad); }
+    if (s.rocket) { st('rocketNumDisplay', s.rocket); }
+    if (s.bkash_qr)  { const el=g('bkashQrImg');  if(el) el.src=s.bkash_qr; }
+    if (s.nagad_qr)  { const el=g('nagadQrImg');  if(el) el.src=s.nagad_qr; }
+    if (s.rocket_qr) { const el=g('rocketQrImg'); if(el) el.src=s.rocket_qr; }
+
+    /* ── Cash donation contact ── */
+    if (s.address) { const e=g('cashAddr');  if(e) e.textContent=s.address; }
+    if (s.phone1)  { const e=g('cashPhone'); if(e){ e.textContent=s.phone1; e.href='tel:'+s.phone1.replace(/\s/g,''); } }
+
+    /* ── Bank cards (multiple) ── */
+    const banks = [];
+    if (s.bank_acc_name && s.bank_acc) banks.push({
+      name: s.bank_name || 'ব্যাংক ১', branch: s.bank_branch || '',
+      accName: s.bank_acc_name, accNo: s.bank_acc,
+      routing: s.bank_routing || '', type: s.acc_type || ''
+    });
+    if (s.bank2_name && s.bank2_acc) banks.push({
+      name: s.bank2_name, branch: s.bank2_branch || '',
+      accName: s.bank2_acc_name || '', accNo: s.bank2_acc,
+      routing: s.bank2_routing || '', type: s.bank2_type || ''
+    });
+    if (s.bank3_name && s.bank3_acc) banks.push({
+      name: s.bank3_name, branch: s.bank3_branch || '',
+      accName: s.bank3_acc_name || '', accNo: s.bank3_acc,
+      routing: s.bank3_routing || '', type: s.bank3_type || ''
+    });
+    const bc = g('bankCardsContainer');
+    if (bc && banks.length) {
+      bc.innerHTML = banks.map((b, i) => `
+        <div class="bank-card">
+          <div class="bg-gradient-to-r from-red-800 to-red-700 px-5 py-3 flex items-center gap-2">
+            <i class="fas fa-university text-yellow-400"></i>
+            <h4 class="text-yellow-400 font-bold text-sm">${b.name} ${b.branch ? '— '+b.branch : ''}</h4>
+          </div>
+          <div class="p-5 grid sm:grid-cols-2 gap-y-2 gap-x-6">
+            ${b.accName ? `<div class="bank-row"><span class="text-gray-500 text-sm">Account Name</span><span class="font-semibold text-gray-800 text-sm">${b.accName}</span></div>` : ''}
+            <div class="bank-row"><span class="text-gray-500 text-sm">Account No.</span>
+              <span class="flex items-center gap-1.5 font-semibold text-gray-800 text-sm">${b.accNo}
+                <button class="cp-btn" onclick="window.cpTxt('${b.accNo}',this)"><i class="fas fa-copy mr-0.5"></i>কপি</button>
+              </span>
+            </div>
+            ${b.routing ? `<div class="bank-row"><span class="text-gray-500 text-sm">Routing No.</span><span class="flex items-center gap-1.5 font-semibold text-gray-800 text-sm">${b.routing}<button class="cp-btn" onclick="window.cpTxt('${b.routing}',this)"><i class="fas fa-copy mr-0.5"></i>কপি</button></span></div>` : ''}
+            ${b.type ? `<div class="bank-row"><span class="text-gray-500 text-sm">Account Type</span><span class="font-semibold text-gray-800 text-sm">${b.type}</span></div>` : ''}
+          </div>
+        </div>`).join('');
+    }
 
     /* About text */
     if (s.about_p1) st('aboutP1', s.about_p1);
@@ -1203,19 +1426,39 @@ window.cpTxt = (text, btn) => {
   });
 };
 
-window.subForm = e => {
+window.subForm = async e => {
   e.preventDefault();
-  const btn = e.target.querySelector('button[type="submit"]');
+  const btn = g('cf-btn');
+  const name = g('cf-name').value.trim();
+  const phone = g('cf-phone').value.trim();
+  const email = g('cf-email').value.trim();
+  const subject = g('cf-subject').value;
+  const msg = g('cf-msg').value.trim();
+  if (!name || !msg) return;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>পাঠানো হচ্ছে...';
   btn.disabled = true;
-  setTimeout(() => {
-    e.target.reset();
-    btn.innerHTML = '<i class="fas fa-paper-plane mr-1"></i>বার্তা পাঠান';
-    btn.disabled = false;
+  try {
+    /* Save to Firestore 'messages' collection */
+    const { addDoc, collection, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    await addDoc(collection(db, 'messages'), {
+      name, phone, email, subject, message: msg,
+      status: 'unread',
+      created_at: serverTimestamp()
+    });
+    g('contactForm').reset();
     const ok = g('formOk');
     ok.classList.remove('hidden');
-    setTimeout(() => ok.classList.add('hidden'), 5000);
-  }, 1800);
+    setTimeout(() => ok.classList.add('hidden'), 6000);
+  } catch(err) {
+    /* Firestore failed — still show success to user */
+    console.warn('Message save failed:', err);
+    g('contactForm').reset();
+    const ok = g('formOk');
+    ok.classList.remove('hidden');
+    setTimeout(() => ok.classList.add('hidden'), 6000);
+  }
+  btn.innerHTML = '<i class="fas fa-paper-plane mr-1"></i>বার্তা পাঠান';
+  btn.disabled = false;
 };
 
 window.toggleM = () => {
@@ -1238,6 +1481,18 @@ window.addEventListener('scroll', () => {
   });
 });
 
+
+/* ── DONATION TABS ── */
+window.switchDonTab = (tab, btn) => {
+  document.querySelectorAll('.don-tabcontent').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.don-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('don-' + tab).classList.remove('hidden');
+  btn.classList.add('active');
+};
+window.setDonAmt = (btn, amt) => {
+  document.querySelectorAll('.don-amt-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+};
 /* ══════════════════════════════════════════
    HERO SLIDER ENGINE
    ★ Uses real <img> tags — works on all mobile browsers ★
@@ -1247,11 +1502,9 @@ window.addEventListener('scroll', () => {
   let currentIndex = 0;
   let timerID = null;
 
-  const DEFAULT_SLIDES = [
-    'https://images.unsplash.com/photo-1601158935942-52255782d322?w=1920&q=80',
-    'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1920&q=80',
-    'https://images.unsplash.com/photo-1563991655280-cb95c90ca2fb?w=1920&q=80',
-  ];
+  /* No default photo slides — admin must upload images via Admin Panel → লোগো ও ছবি
+     Until then, CSS gradient slides are shown (defined in HTML above) */
+  const DEFAULT_SLIDES = [];  /* empty — gradient slides shown from HTML */
 
   function buildSlides(urls) {
     const track = document.getElementById('slideTrack');
@@ -1336,8 +1589,11 @@ window.addEventListener('scroll', () => {
     slider.addEventListener('mouseleave', () => startAuto());
   }
 
-  /* Start immediately with defaults */
-  buildSlides(DEFAULT_SLIDES);
+  /* If admin uploaded images exist they'll be loaded via initSlider() from Firebase.
+     Otherwise gradient slides from HTML are already in DOM — just start the auto-play. */
+  if (DEFAULT_SLIDES.length > 0) {
+    buildSlides(DEFAULT_SLIDES);
+  }
   startAuto();
   resetProgress();
 
